@@ -39,6 +39,9 @@ namespace Luminosity.IO
         private float camRotX;
         private float camRotY;
 
+        //Brady: This Bool is used to see what type of car exit it is (button press<true> or collision<false>).
+        private bool buttonLaunch = true;
+
         // Use this for initialization
         void Start()
         {
@@ -75,6 +78,15 @@ namespace Luminosity.IO
                     {
                         
                         ExitVehicle();
+                        break;
+                    }
+
+                    //Brady: vehicle destroyed in crash. Should eventually destroy vehicle.
+                    if (curVehicle.GetComponent<BasicVehicle>().broken)
+                    {
+                        buttonLaunch = false;
+                        ExitVehicle();
+                        // Destroy(curVehicle);
                         break;
                     }
 
@@ -204,6 +216,7 @@ namespace Luminosity.IO
             }
         }
 
+        //Brady: Added if statement to determine physics of launch. For the time being, the beginCarJump variable for carspeed is simply the car magnitude divided by 5.
         public void ExitVehicle()
         {
 
@@ -221,7 +234,17 @@ namespace Luminosity.IO
                 curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(0,curVehicle.transform.eulerAngles.y,0)).GetComponent<BasicRider>();
 
                 curRider.externalStart(mainCamera.transform);
-                curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude);
+
+                if (buttonLaunch)
+                {
+                    //Based on button press, so gives good potential for long distance travel.
+                    curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude);
+                }
+                else
+                {
+                    //Based on collision, so gives poor potential for long distance travel
+                    curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude / 5f);
+                }
             }
             else
             {
