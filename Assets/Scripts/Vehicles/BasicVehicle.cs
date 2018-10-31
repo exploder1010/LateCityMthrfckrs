@@ -26,7 +26,6 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         axleInfos[0].leftWheel.GetComponent<WheelCollider>().ConfigureVehicleSubsteps(5, 12, 15);
  
         rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * startSpeed;
     }
 
     private void FixedUpdate()
@@ -65,6 +64,12 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         actualMaxSpeed = Mathf.Max(newMaxSpeed, normalMaxSpeed);
 
         startSpeed = newStartSpeed;
+
+        if (rb)
+        {
+
+            rb.velocity = transform.forward * startSpeed;
+        }
     }
 
     private void Stablization()
