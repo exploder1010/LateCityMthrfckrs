@@ -16,6 +16,7 @@ public class BasicRider : MonoBehaviour, IRider {
     //close vehicles
     protected List<BasicVehicle> closeVehicles = new List<BasicVehicle>();
     protected BasicVehicle targetedVehicle;
+    protected BasicVehicle hitVehicle;
 
     //current variables
     protected Vector3 vectorToAdd;
@@ -155,26 +156,29 @@ public class BasicRider : MonoBehaviour, IRider {
 
     public virtual BasicVehicle vehicleToEnter()
     {
-        if (targetedVehicle)
-        {
-            float dist = (transform.position - targetedVehicle.transform.position).magnitude;
-            if (dist < 1)
-            {
-                return targetedVehicle; //return targeted vehicle
-            }
-            return null; //return targeted vehicle
-        }
+        return hitVehicle;
 
-        BasicVehicle closestVehicle = null;
-        foreach(BasicVehicle bv in closeVehicles)
-        {
-            float dist = (transform.position - bv.transform.position).magnitude;
-            if (dist < 1 && (closestVehicle == null || dist < (transform.position - closestVehicle.transform.position).magnitude))
-            {
-                closestVehicle = bv; 
-            }
-        }
-        return closestVehicle; // return the closest vehicle that is less than 1 unit away
+        //dont delete this, it will be used eventually
+        //if (targetedVehicle)
+        //{
+        //    float dist = (transform.position - targetedVehicle.transform.position).magnitude;
+        //    if (dist < 1)
+        //    {
+        //        return targetedVehicle; //return targeted vehicle
+        //    }
+        //    return null; //return targeted vehicle
+        //}
+
+        //BasicVehicle closestVehicle = null;
+        //foreach(BasicVehicle bv in closeVehicles)
+        //{
+        //    float dist = (transform.position - bv.transform.position).magnitude;
+        //    if (dist < 1 && (closestVehicle == null || dist < (transform.position - closestVehicle.transform.position).magnitude))
+        //    {
+        //        closestVehicle = bv; 
+        //    }
+        //}
+        //return closestVehicle; // return the closest vehicle that is less than 1 unit away
     }
 
     //kill player
@@ -186,6 +190,10 @@ public class BasicRider : MonoBehaviour, IRider {
             currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
             currentRagdoll.SetActive(true);
             currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = rb.velocity * 5f;
+        }
+        if (other.transform.root.transform.GetComponent<BasicVehicle>())
+        {
+            hitVehicle = other.transform.root.transform.GetComponent<BasicVehicle>();
         }
     }
 

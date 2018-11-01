@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BasicVehicle : MonoBehaviour, IVehicle {
 
+    public float breakInDistance;
     public List<AxleInfo> axleInfos;
     public float MotorTorque = 5000;
     public float MaxSteeringAngle = 45;
@@ -50,6 +51,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             }
         }
         Stablization();
+        TransformWheelMeshes();
         //Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100); -- todo: add marissa's script
     }
 
@@ -76,7 +78,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         }
     }
 
-    private void Stablization()
+    void Stablization()
     {
         bool wheelsOnGround = true;
         foreach (AxleInfo axle in axleInfos)
@@ -92,6 +94,24 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         {
             Vector3 force = rb.velocity.magnitude * GroundedStablizationRate * -1 * transform.up;
             rb.AddForce(force);
+        }
+    }
+
+    void TransformWheelMeshes()
+    {
+        foreach(AxleInfo axle in axleInfos)
+        {
+            Transform l_mesh = axle.leftWheel.transform.GetChild(0);
+            Transform r_mesh = axle.rightWheel.transform.GetChild(0);
+            
+            Vector3 loc = new Vector3();
+            Quaternion rot = new Quaternion();
+
+            axle.leftWheel.GetWorldPose(out loc, out rot);
+            l_mesh.SetPositionAndRotation(loc, rot);
+
+            axle.rightWheel.GetWorldPose(out loc, out rot);
+            r_mesh.SetPositionAndRotation(loc, rot);
         }
     }
 
