@@ -15,9 +15,7 @@ namespace Luminosity.IO
 
         public GameObject selectedRider_Prefab; // to do: set this with playerprefs in menu
 
-        public Vector3 spawnLocation; // to do: set this with playerprefs in menu
-
-        public Vector3 spawnRotation; // to do: set this with playerprefs in menu
+        public Transform spawnLocation; // to do: set this with playerprefs in menu
 
         public bool startInAir; // to do: set this with playerprefs in menu
 
@@ -33,16 +31,16 @@ namespace Luminosity.IO
             if (!startInAir)
             {
                 curPlayerController.SelectRider(selectedRider_Prefab);
-
-                BasicVehicle startingVehicle = GameObject.Instantiate(startingVehicle_Prefab, spawnLocation, Quaternion.Euler(spawnRotation)).transform.GetComponent<BasicVehicle>();
+                
+                BasicVehicle startingVehicle = GameObject.Instantiate(startingVehicle_Prefab, spawnLocation.position, spawnLocation.rotation).GetComponent<BasicVehicle>();
 
                 curPlayerController.EnterVehicle(startingVehicle);
             }
             //begin level in air
             else
             {
-                selectedRider_Prefab.transform.position = spawnLocation;
-                selectedRider_Prefab.transform.rotation = Quaternion.Euler(spawnRotation);
+                selectedRider_Prefab.transform.position = spawnLocation.position;
+                selectedRider_Prefab.transform.rotation = spawnLocation.rotation;
 
                 curPlayerController.SelectRider(selectedRider_Prefab);
 
