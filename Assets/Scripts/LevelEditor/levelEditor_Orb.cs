@@ -33,19 +33,29 @@ public class levelEditor_Orb : MonoBehaviour {
 
     public void ResetOrb()
     {
-        //if (Selection.activeGameObject == null || Selection.activeGameObject != gameObject){
-            // this orb is not selected so hide it
-            mesh.enabled = false;
-        //}
-
+        mesh.enabled = false;
+        
         if (Selection.activeGameObject == gameObject){
             mesh.enabled = true;
         }
     }
-    public void Look(){
-        Vector3 direction = transform.position - selectedObject.transform.position;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit, size)){
+
+    //Looks to see if orb is already touching another levelblock
+    public void Look()
+    {
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("LevelBlock");
+        Collider myCollider = GetComponent<Collider>();
+        int count = 0;
+        foreach (GameObject g in gameObjects)
+        {
+            Collider theirCollider = g.GetComponent<Collider>();
+            if (myCollider.bounds.Intersects(theirCollider.bounds))
+            {
+                count++;
+            }
+        }
+        if (count > 1)
+        {
             ResetOrb();
         }
     }
@@ -53,6 +63,7 @@ public class levelEditor_Orb : MonoBehaviour {
         this.size = size;
     }
     public void GenerateRoad(GameObject roadType){
+        GameObject parent = GameObject.Find("LevelBlocks");
         GameObject clone = PrefabUtility.InstantiatePrefab(roadType) as GameObject;
         clone.name = "GeneratedBlock";
 
@@ -79,6 +90,7 @@ public class levelEditor_Orb : MonoBehaviour {
             //place at orb
         }
         clone.transform.position = orbPosition;
+        clone.transform.parent = parent.transform;
         Selection.activeGameObject = clone;
     }
 }

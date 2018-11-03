@@ -28,21 +28,23 @@ public class levelEditor : MonoBehaviour
         upOrb = GameObject.Find("LevelEditorORB_Up");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DrawOrbs()
     {
-
         InformOrbs("ResetOrb", null);
         if (Active){
             GameObject selectedObject = Selection.activeGameObject;
             if (selectedObject == null){
                 return;
             }
-            while(selectedObject.transform.parent != null){
+            while(selectedObject.transform.parent != null && selectedObject.transform.parent.name != "LevelBlocks"){
                 selectedObject = selectedObject.transform.parent.gameObject;
             }
-
-            if (selectedObject.name.Contains("LevelEditor")){
+            if (selectedObject.name.Contains("LevelEditor"))
+            {
+                return;
+            }
+            if (!selectedObject.CompareTag("LevelBlock"))
+            {
                 return;
             }
             InformOrbs("SetSize", blockSize);
@@ -78,6 +80,21 @@ public class levelEditor : MonoBehaviour
         eastOrb.SendMessage(methodName, message);
         westOrb.SendMessage(methodName, message);
         upOrb.SendMessage(methodName, message);
+    }
+    public void GenerateRoad(GameObject roadType)
+    {
+        GameObject parent = GameObject.Find("LevelBlocks");
+        if (parent == null)
+        {
+            parent = new GameObject();
+            parent.transform.position = Vector3.zero;
+        }
+        GameObject clone = PrefabUtility.InstantiatePrefab(roadType) as GameObject;
+        clone.name = "GeneratedBlock";
+        Vector3 orbPosition = transform.position;
+        clone.transform.position = orbPosition;
+        clone.transform.parent = parent.transform;
+        Selection.activeGameObject = clone;
     }
 }
 #endif
