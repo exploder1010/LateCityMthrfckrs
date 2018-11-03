@@ -47,7 +47,10 @@ namespace Luminosity.IO
                 curPlayerController.ExitVehicle();
             }
             
-
+            GameObject levelEditor = GameObject.Find("LevelEditor");
+            if (levelEditor != null){
+                Destroy(levelEditor);
+            }
         }
 
         // Update is called once per frame
