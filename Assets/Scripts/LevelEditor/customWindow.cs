@@ -4,7 +4,7 @@ using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
 // Creates an instance of a primitive depending on the option selected by the user.
-public class customWindow : EditorWindow
+public class CustomWindow : EditorWindow
 {
     public string[] options = new string[] { "Straight Road", "Curved Road" };
     public int index = 0;
@@ -14,7 +14,7 @@ public class customWindow : EditorWindow
     [MenuItem("Tools/LevelEditor")]
     static void Init()
     {
-        EditorWindow window = GetWindow(typeof(customWindow));
+        EditorWindow window = GetWindow(typeof(CustomWindow));
         window.Show();
     }
 
@@ -30,7 +30,7 @@ public class customWindow : EditorWindow
     {
         if (Selection.activeGameObject != null && Selection.activeGameObject.name.Contains("LevelEditorORB"))
         {
-            levelEditor le = GameObject.Find("LevelEditor").GetComponent<levelEditor>();
+            LevelEditor le = GameObject.Find("LevelEditor").GetComponent<LevelEditor>();
             roadPrefabs = le.RoadPrefabs;
             options = new string[roadPrefabs.Length];
             for (int i = 0; i < roadPrefabs.Length; i++)
@@ -51,7 +51,7 @@ public class customWindow : EditorWindow
         }
         if (Selection.activeGameObject != null && Selection.activeGameObject.name.Contains("LevelEditor") && GameObject.FindGameObjectsWithTag("LevelBlock").Length == 0)
         {
-            levelEditor le = GameObject.Find("LevelEditor").GetComponent<levelEditor>();
+            LevelEditor le = GameObject.Find("LevelEditor").GetComponent<LevelEditor>();
             roadPrefabs = le.RoadPrefabs;
             options = new string[roadPrefabs.Length];
             for (int i = 0; i < roadPrefabs.Length; i++)

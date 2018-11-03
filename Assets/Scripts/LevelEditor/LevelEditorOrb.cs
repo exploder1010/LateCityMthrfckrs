@@ -5,7 +5,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 [ExecuteInEditMode]
-public class levelEditor_Orb : MonoBehaviour {
+public class LevelEditorOrb : MonoBehaviour {
 
     public string choice;
     public string[] roadPrefabsNames;
@@ -13,17 +13,12 @@ public class levelEditor_Orb : MonoBehaviour {
 
     private GameObject selectedObject;
     private MeshRenderer mesh;
-    private float size;
+    private float defaultSize;
     private GameObject[] roadPrefabs;
 
 	// Use this for initialization
 	void Start () {
         mesh = GetComponent<MeshRenderer>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
 	}
 
     public void SetObject(GameObject selectedObj){
@@ -49,7 +44,7 @@ public class levelEditor_Orb : MonoBehaviour {
         foreach (GameObject g in gameObjects)
         {
             Collider theirCollider = g.GetComponent<Collider>();
-            if (myCollider.bounds.Intersects(theirCollider.bounds))
+            if (theirCollider != null && myCollider.bounds.Intersects(theirCollider.bounds))
             {
                 count++;
             }
@@ -60,11 +55,13 @@ public class levelEditor_Orb : MonoBehaviour {
         }
     }
     public void SetSize(float size){
-        this.size = size;
+        defaultSize = size;
     }
     public void GenerateRoad(GameObject roadType){
         GameObject parent = GameObject.Find("LevelBlocks");
         GameObject clone = PrefabUtility.InstantiatePrefab(roadType) as GameObject;
+        LevelBlock blockScript = clone.GetComponent<LevelBlock>();
+        float size = blockScript == null ? defaultSize : blockScript.BlockSize;
         clone.name = "GeneratedBlock";
 
         //Figure out position

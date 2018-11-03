@@ -6,10 +6,10 @@ using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
 [ExecuteInEditMode]
-public class levelEditor : MonoBehaviour
+public class LevelEditor : MonoBehaviour
 {
     public bool Active = true;
-    public float blockSize;
+    public float defaultBlockSize;
     public GameObject[] roadPrefabs;
 
     private GameObject northOrb;
@@ -17,6 +17,7 @@ public class levelEditor : MonoBehaviour
     private GameObject eastOrb;
     private GameObject westOrb;
     private GameObject upOrb;
+    private float blockSize;
 
     // Use this for initialization
     void Start()
@@ -26,6 +27,7 @@ public class levelEditor : MonoBehaviour
         eastOrb = GameObject.Find("LevelEditorORB_East");
         westOrb = GameObject.Find("LevelEditorORB_West");
         upOrb = GameObject.Find("LevelEditorORB_Up");
+        InformOrbs("SetSize", defaultBlockSize);
     }
 
     public void DrawOrbs()
@@ -47,7 +49,8 @@ public class levelEditor : MonoBehaviour
             {
                 return;
             }
-            InformOrbs("SetSize", blockSize);
+            LevelBlock blockScript = selectedObject.GetComponent<LevelBlock>();
+            blockSize = blockScript == null ? defaultBlockSize : blockScript.BlockSize;
 
             SetOrbPosition(selectedObject);
             InformOrbs("SetObject", selectedObject);
@@ -70,7 +73,7 @@ public class levelEditor : MonoBehaviour
         objPosition.z -= 2 * blockSize;
         westOrb.transform.position = objPosition;
         objPosition = selectedObject.transform.position;
-        objPosition.y += blockSize;
+        objPosition.y += defaultBlockSize;
         upOrb.transform.position = objPosition;
     }
 
@@ -88,6 +91,7 @@ public class levelEditor : MonoBehaviour
         {
             parent = new GameObject();
             parent.transform.position = Vector3.zero;
+            parent.name = "LevelBlocks";
         }
         GameObject clone = PrefabUtility.InstantiatePrefab(roadType) as GameObject;
         clone.name = "GeneratedBlock";

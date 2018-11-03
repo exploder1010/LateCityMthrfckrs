@@ -1,0 +1,22 @@
+Adding Level Editor to Scene:
+	1. Add the LevelEditor prefab to the Scene
+	2. Open the LevelEditor CustomWindow (Tools > LevelEditor)
+	3. In the custom window click the dropdown and select the first block you wish to add to scene
+	4. Click the Create button
+	5. *** This will add a LevelBlocks objects to the scene for all generated blocks to be placed
+	6. *** When a generated block is selected the custom window gives the option to rotate the block
+	7. Click on one of the level editor orbs to add a block at that location
+	8. With an orb selected repeat steps 3 and 4 to finish creating the level.
+	
+Adding Prefabs to LevelEditor:
+	1. Add the mesh to a scene.
+	2. On the parent GameObject add the tag "LevelBlock"
+	3. If the block is larger then the standard block size add the LevelBlock script and modify the Block Size
+	*** NOTE: with the way the orbs spawn a non-standard block must be an odd multiple of the standard block size
+	    ex. BigBlock is 3x3 standard block size so the Block Size property would be 3
+		ex. SuperBlock is 5x5 standard block size so the Block Size property would be 5
+	4. Save as a prefab in the LevelBlocks folder.
+	5. Click on the LevelEditor GameObject
+	6. Expand the Road Prefabs dropdown
+	7. Add one to the Size property
+	8. Drag and drop the newly created prefab into the bottom most Element.
