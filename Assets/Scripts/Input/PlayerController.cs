@@ -23,44 +23,18 @@ namespace Luminosity.IO
         private enum PlayerState { Vehicle = 0, Rider, Dead };
         private PlayerState curState;
 
-        //camera variables
-        public float cameraDistance;
-        private Quaternion originalRotation;
-
-        public float camSensX; //todo: set with player prefs
-        public float camSensY; //todo: set with player prefs
-
-        float camMinX = -360; //todo: set with player prefs
-        public float camMinY; //todo: set with player prefs
-
-        float camMaxX = 360; //todo: set with player prefs
-        public float camMaxY; //todo: set with player prefs
-
-        private float camRotX;
-        private float camRotY;
-
         //Brady: This Bool is used to see what type of car exit it is (button press<true> or collision<false>).
         private bool buttonLaunch = true;
 
         // Use this for initialization
         void Start()
         {
-            originalRotation = transform.localRotation;
+            
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
-            //update camera input
-            camRotX += (InputManager.GetAxis("LookHorizontal")) * camSensX;
-            camRotY -= (InputManager.GetAxis("LookVertical")) * camSensY;
-
-            camRotX = ClampAngle(camRotX, camMinX, camMaxX);
-            camRotY = ClampAngle(camRotY, camMinY, camMaxY);
-
-            Quaternion xQuaternion = Quaternion.AngleAxis(camRotX, Vector3.up);
-            Quaternion yQuaternion = Quaternion.AngleAxis(camRotY, -Vector3.right);
-
             //update vehicle or rider respectively, depending on state.
             switch (curState)
             {
@@ -90,12 +64,8 @@ namespace Luminosity.IO
                         break;
                     }
 
-                    //camera follow vehicle:
-                    mainCamera.transform.position = curVehicle.transform.position - (Vector3.forward * 10f) + (Vector3.up * 2f);//default rotation behind vehicle
-                    mainCamera.transform.LookAt(curVehicle.transform.position + (Vector3.up * 2f));//look slightly about vehicle
-                    mainCamera.transform.RotateAround(curVehicle.transform.position, Vector3.up, camRotX);//x rot
-                    mainCamera.transform.RotateAround(curVehicle.transform.position, mainCamera.transform.right, camRotY);//y rot
-
+                    mainCamera.SendMessage("ChangeFocus", curVehicle.transform);
+                    mainCamera.SendMessage("ChangeDistance", 10f);
                     break;
 
                 //process input for air movement
@@ -157,20 +127,13 @@ namespace Luminosity.IO
                         curRider.inputBreakIn(0);
                     }
 
-                    //camera follow rider:
-                    mainCamera.transform.position = curRider.transform.position - (Vector3.forward * 10f) + (Vector3.up * 2f); //default rotation behind rider
-                    mainCamera.transform.LookAt(curRider.transform.position + (Vector3.up * 2f)); //look slightly about rider
-                    mainCamera.transform.RotateAround(curRider.transform.position, Vector3.up, camRotX); //rotate to current x rot
-                    mainCamera.transform.RotateAround(curRider.transform.position, mainCamera.transform.right, camRotY); //rotate y rot
+                    mainCamera.SendMessage("ChangeFocus", curRider.transform);
+                    mainCamera.SendMessage("ChangeDistance", 10f);
                     break;
 
                 case PlayerState.Dead:
-
-                    //camera follow ragdoll:
-                    mainCamera.transform.position = curRagdoll.transform.position - (Vector3.forward * 10f) + (Vector3.up * 2f); //default rotation behind rider
-                    mainCamera.transform.LookAt(curRagdoll.transform.position + (Vector3.up * 2f)); //look slightly about rider
-                    mainCamera.transform.RotateAround(curRagdoll.transform.position, Vector3.up, camRotX); //rotate to current x rot
-                    mainCamera.transform.RotateAround(curRagdoll.transform.position, mainCamera.transform.right, camRotY); //rotate y rot
+                    mainCamera.SendMessage("ChangeFocus", curRagdoll.transform);
+                    mainCamera.SendMessage("ChangeDistance", 5f);
                     break;
 
                 default:
@@ -179,14 +142,6 @@ namespace Luminosity.IO
             }
         }
 
-        public static float ClampAngle(float angle, float min, float max)
-        {
-            if (angle <= -360F)
-                angle += 360F;
-            if (angle >= 360F)
-                angle -= 360F;
-            return Mathf.Clamp(angle, min, max);
-        }
 
         public void SetCamera(GameObject newCamera)
         {
