@@ -17,6 +17,8 @@ public class BasicRider : MonoBehaviour, IRider {
     protected List<BasicVehicle> closeVehicles = new List<BasicVehicle>();
     protected BasicVehicle targetedVehicle;
     protected BasicVehicle hitVehicle;
+    protected float storedNewCarStartSpeed;
+    protected float storedNewCarMaxSpeed;
 
     //current variables
     protected Vector3 vectorToAdd;
@@ -24,25 +26,32 @@ public class BasicRider : MonoBehaviour, IRider {
     protected float maxSpeedThisJump;
 
     //movement variables
-    public float airAccel; //Rate at which player accelerates in air
-    public float boostThreshold; //Point that previous car speed needs to surpass for player to move faster than the previous car
+    public float airAccel = 20f; //Rate at which player accelerates in air
+    public float boostThreshold = 30f; //Point that previous car speed needs to surpass for player to move faster than the previous car
 
     //car jump variables
     protected float carJumpTimer;
     protected float carJumpVelocity;
-    public float carJumpTimeSet;
-    public float carJumpStartImpulse;
-    public float carJumpVelocityAdd;
+    public float carJumpTimeSet = 0.15f;
+    public float carJumpStartImpulse = 100f;
+    public float carJumpVelocityAdd = 250f;
+
+    //gravity variable
+    public float gravityMagnitude = 18f;
 
     // basic player doesn't use these variables but all characters will use them so storing them here
     public int charAbilityAmmo = 1;
     protected int curAbilityAmmo = 0;
+
+
 
     // Use this for initialization (to ensure things happen in proper order)
     public void externalStart(Transform newCam)
     {
         cTransform = newCam;
         curAbilityAmmo = charAbilityAmmo;
+        storedNewCarStartSpeed = 0;
+        storedNewCarMaxSpeed = 0;
     }
 	
 	// Update is called once per frame
@@ -81,7 +90,11 @@ public class BasicRider : MonoBehaviour, IRider {
             //apply force to rigidbody
             rb.AddForce(vectorToAdd);
 
+            //constrain to max speed
             updateMaxSpeedCheck();
+
+            //apply gravity
+            rb.AddForce(Vector3.down * gravityMagnitude);
 
         }
 
@@ -149,6 +162,8 @@ public class BasicRider : MonoBehaviour, IRider {
                 if (targetedVehicle == null || dist < (transform.position - targetedVehicle.transform.position).magnitude)
                 {
                     targetedVehicle = bv;
+                    storedNewCarMaxSpeed = rb.velocity.magnitude;
+                    storedNewCarStartSpeed = rb.velocity.magnitude * 0.75f;
                 }
             }
         }
@@ -248,12 +263,20 @@ public class BasicRider : MonoBehaviour, IRider {
 
     public virtual float calculateNewCarMaxSpeed()
     {
-        return rb.velocity.magnitude;
+        if (!targetedVehicle)
+        {
+            return rb.velocity.magnitude;
+        }
+        return storedNewCarMaxSpeed;
     }
 
     public virtual float calculateNewCarStartSpeed()
     {
-        return rb.velocity.magnitude * 0.75f;
+        if (!targetedVehicle)
+        {
+            return rb.velocity.magnitude * 0.75f;
+        }
+        return storedNewCarStartSpeed;
     }
 
     protected Vector3 calculateForward()

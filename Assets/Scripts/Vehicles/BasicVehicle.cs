@@ -11,7 +11,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public float SteeringRate = 500;
     public float GroundedStablizationRate = 1000;
 
-    public float normalMaxSpeed;
+    public float normalMaxSpeed = 40f;
     float actualMaxSpeed;
     float startSpeed;
 
@@ -52,6 +52,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         }
         Stablization();
         TransformWheelMeshes();
+        constrainMaxSpeed();
+        Debug.Log(rb.velocity.magnitude);
         //Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100); -- todo: add marissa's script
     }
 
@@ -65,6 +67,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         motor = MotorTorque * direction;
     }
 
+    //nick 
     public void initializeSpeed(float newMaxSpeed, float newStartSpeed)
     {
         actualMaxSpeed = Mathf.Max(newMaxSpeed, normalMaxSpeed);
@@ -75,6 +78,19 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         {
 
             rb.velocity = transform.forward * startSpeed;
+        }
+    }
+
+    //nick
+    private void constrainMaxSpeed()
+    {
+        if (rb)
+        {
+            if(rb.velocity.magnitude > actualMaxSpeed)
+            {
+                rb.velocity = rb.velocity.normalized * actualMaxSpeed;
+            }
+            
         }
     }
 
@@ -122,19 +138,19 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     {
         if (LayerMask.LayerToName(other.gameObject.layer) != "Road")
         {
-            Debug.Log("Crash Collision = " + rb.velocity.magnitude);
+            //Debug.Log("Crash Collision = " + rb.velocity.magnitude);
             if (rb.velocity.magnitude > crashSpeed)
             {
                 //High impact crash. Play crash sound and set broken to true.
                 //When car checks if broken is true or false, result will cause a crash from within PlayerController.
-                Debug.Log("Major Crash on Late City Highway");
+                //Debug.Log("Major Crash on Late City Highway");
                 broken = true;
             }
             else
             {
                 //Low impact crash. Play scrape sound.
                 //broken remains false, so checking from PlayerController will cause no difference.
-                Debug.Log("Minor Fender Bender");
+                //Debug.Log("Minor Fender Bender");
             }
         }
     }
@@ -146,15 +162,15 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     {
         if (LayerMask.LayerToName(other.gameObject.layer) != "Road" && LayerMask.LayerToName(other.gameObject.layer) != "Rider")
         {
-            Debug.Log(other.gameObject.name + " Crash Trigger = " + rb.velocity.magnitude);
+            //Debug.Log(other.gameObject.name + " Crash Trigger = " + rb.velocity.magnitude);
             if (rb.velocity.magnitude > crashSpeed)
             {
-                Debug.Log("Major Crash on Late City Highway");
+                //Debug.Log("Major Crash on Late City Highway");
                 broken = true;
             }
             else
             {
-                Debug.Log("Minor Fender Bender");
+                //Debug.Log("Minor Fender Bender");
             }
         }
     }

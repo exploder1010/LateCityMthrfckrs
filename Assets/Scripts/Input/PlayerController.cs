@@ -32,8 +32,9 @@ namespace Luminosity.IO
             
         }
 
-        // Update is called once per frame
-        void FixedUpdate()
+        // IMPORTANT: This should never be fixed update. Input always needs to be in normal update, or you constantly drop inputs.
+        // TLDR: Use Update() for input and FixedUpdate() for motors/movement
+        void Update()
         {
             //update vehicle or rider respectively, depending on state.
             switch (curState)
@@ -156,63 +157,77 @@ namespace Luminosity.IO
         public void EnterVehicle(BasicVehicle newVehicle)
         {
             Debug.Log("ENTER CAR " + Time.time);
-
-            curState = PlayerState.Vehicle;
-            curVehicle = newVehicle;
-            
-            if(curRider != null)
+            if (curState != PlayerState.Dead)
             {
-                curVehicle.initializeSpeed(curRider.calculateNewCarMaxSpeed(),curRider.calculateNewCarStartSpeed());
-                Destroy(curRider.transform.gameObject);
+                curState = PlayerState.Vehicle;
+                curVehicle = newVehicle;
+
+                if (curRider != null)
+                {
+                    curVehicle.initializeSpeed(curRider.calculateNewCarMaxSpeed(), curRider.calculateNewCarStartSpeed());
+                    Destroy(curRider.transform.gameObject);
+                }
+                else
+                {
+                    curVehicle.initializeSpeed(0, 0);
+                }
             }
             else
             {
-                curVehicle.initializeSpeed(0,0);
+                Debug.Log("big no no error");
             }
+           
         }
 
         //Brady: Added if statement to determine physics of launch. For the time being, the beginCarJump variable for carspeed is simply the car magnitude divided by 5.
         public void ExitVehicle()
         {
-
             Debug.Log("EXIT CAR " + Time.time);
-
-            curState = PlayerState.Rider;
-
-            if (curVehicle != null)
+            if (curState != PlayerState.Dead)
             {
-                //let go of steering wheel
-                curVehicle.inputHorz(0);
-                curVehicle.inputAccel(0);
 
-                //spawn rider above car.
-                curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(0,curVehicle.transform.eulerAngles.y,0)).GetComponent<BasicRider>();
 
-                curRider.externalStart(mainCamera.transform);
+                curState = PlayerState.Rider;
 
-                if (buttonLaunch)
+                if (curVehicle != null)
                 {
-                    //Based on button press, so gives good potential for long distance travel.
-                    curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude);
+                    //let go of steering wheel
+                    curVehicle.inputHorz(0);
+                    curVehicle.inputAccel(0);
+
+                    //spawn rider above car.
+                    curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+
+                    curRider.externalStart(mainCamera.transform);
+
+                    if (buttonLaunch)
+                    {
+                        //Based on button press, so gives good potential for long distance travel.
+                        curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude);
+                    }
+                    else
+                    {
+                        //Based on collision, so gives poor potential for long distance travel
+                        curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude / 5f);
+                    }
                 }
                 else
                 {
-                    //Based on collision, so gives poor potential for long distance travel
-                    curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude / 5f);
+                    //spawn rider at prefab coordinates.
+                    curRider = Instantiate(selectedCharacter_Prefab, selectedCharacter_Prefab.transform.position, selectedCharacter_Prefab.transform.rotation).GetComponent<BasicRider>();
+
+                    curRider.externalStart(mainCamera.transform);
+                    curRider.beginCarJump(30f);
                 }
+
+                curVehicle = null;
             }
             else
             {
-                //spawn rider at prefab coordinates.
-                curRider = Instantiate(selectedCharacter_Prefab, selectedCharacter_Prefab.transform.position, selectedCharacter_Prefab.transform.rotation).GetComponent<BasicRider>();
-
-                curRider.externalStart(mainCamera.transform);
-                curRider.beginCarJump(30f);
+                Debug.Log("big no no error");
             }
 
-            curVehicle = null;
 
-            
         }
     }
 }
