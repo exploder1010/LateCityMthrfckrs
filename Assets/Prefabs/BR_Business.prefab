@@ -5866,16 +5866,17 @@ MonoBehaviour:
   rb: {fileID: 54512190633680160}
   charAnim: {fileID: 95798064763271876}
   ragdollPrefab: {fileID: 1279109049040664}
-  airAccel: 10
-  boostThreshold: 45
+  airAccel: 30
+  boostThreshold: 40
   carJumpTimeSet: 0.15
-  carJumpStartImpulse: 250
-  carJumpVelocityAdd: 100
+  carJumpStartImpulse: 300
+  carJumpVelocityAdd: 200
+  gravityMagnitude: 18
   charAbilityAmmo: 1
   briefcasePrefab: {fileID: 0}
   doubleJumpTimeSet: 0.15
-  doubleJumpStartImpulse: 250
-  doubleJumpVelocityAdd: 100
+  doubleJumpStartImpulse: 300
+  doubleJumpVelocityAdd: 200
 --- !u!114 &114806804970768116
 MonoBehaviour:
   m_ObjectHideFlags: 1

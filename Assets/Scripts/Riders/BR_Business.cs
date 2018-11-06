@@ -12,9 +12,9 @@ public class BR_Business : BasicRider {
     //double jump variables
     protected float doubleJumpTimer;
     protected float doubleJumpVelocity;
-    public float doubleJumpTimeSet;
-    public float doubleJumpStartImpulse;
-    public float doubleJumpVelocityAdd;
+    public float doubleJumpTimeSet = 0.15f;
+    public float doubleJumpStartImpulse = 300f;
+    public float doubleJumpVelocityAdd = 200f;
 
     // Use this for initialization
     void Start () {
@@ -55,7 +55,7 @@ public class BR_Business : BasicRider {
         //add full hop to car jump while jump is held
         if (carJumpTimer > 0)
         {
-            carJumpVelocity += (carJumpVelocityAdd / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
+            carJumpVelocity += (carJumpVelocityAdd * (carLaunchSpeed / boostThreshold) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
 
             carJumpTimer -= Time.deltaTime;
 
@@ -64,7 +64,7 @@ public class BR_Business : BasicRider {
         }
         else if (doubleJumpTimer > 0)
         {
-            doubleJumpVelocity += (doubleJumpVelocityAdd / doubleJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
+            doubleJumpVelocity += (doubleJumpVelocityAdd * (carLaunchSpeed / boostThreshold) / doubleJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
 
             doubleJumpTimer -= Time.deltaTime;
 
@@ -78,7 +78,7 @@ public class BR_Business : BasicRider {
         if(curAbilityAmmo > 0)
         {
             curAbilityAmmo--;
-
+            
             rb.velocity = rb.velocity.normalized * maxSpeedThisJump * 0.2f;
 
             doubleJumpTimer = doubleJumpTimeSet;
