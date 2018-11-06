@@ -51,7 +51,7 @@ namespace Luminosity.IO
                     //input jump
                     if (InputManager.GetButtonDown("Jump"))
                     {
-                        
+                        //SoundScript.PlayJump();
                         ExitVehicle();
                         break;
                     }

@@ -55,7 +55,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         constrainMaxSpeed();
         if(motor != 0)
         Debug.Log(rb.velocity.magnitude);
-        //Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100); -- todo: add marissa's script
+        Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
     }
 
     public void inputHorz(float direction)
