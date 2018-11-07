@@ -28,6 +28,7 @@ public class LevelEditor : MonoBehaviour
         westOrb = GameObject.Find("LevelEditorORB_West");
         upOrb = GameObject.Find("LevelEditorORB_Up");
         InformOrbs("SetSize", defaultBlockSize);
+        PrefabUtility.DisconnectPrefabInstance(gameObject);
     }
 
     public void DrawOrbs()
@@ -38,7 +39,9 @@ public class LevelEditor : MonoBehaviour
             if (selectedObject == null){
                 return;
             }
-            while(selectedObject.transform.parent != null && selectedObject.transform.parent.name != "LevelBlocks"){
+            while(selectedObject.transform.parent != null 
+                && selectedObject.transform.parent.name != "LevelBlocks"
+                && !selectedObject.name.Contains("LevelEditor")){
                 selectedObject = selectedObject.transform.parent.gameObject;
             }
             if (selectedObject.name.Contains("LevelEditor"))

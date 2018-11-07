@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -20,7 +21,7 @@ public class CustomWindow : EditorWindow
 
     void Update()
     {
-        if (!Application.isPlaying)
+        if (!Application.isPlaying && GameObject.Find("LevelEditor") != null)
         {
             Repaint();
             GameObject.Find("LevelEditor").SendMessage("DrawOrbs");
@@ -28,17 +29,13 @@ public class CustomWindow : EditorWindow
     }
     void OnGUI()
     {
+        GameObject levelEditor = GameObject.Find("LevelEditor");
+        GUILayout.Label("Level Editor", EditorStyles.boldLabel, GUILayout.Height(30));
         if (Selection.activeGameObject != null && Selection.activeGameObject.name.Contains("LevelEditorORB"))
         {
-            LevelEditor le = GameObject.Find("LevelEditor").GetComponent<LevelEditor>();
-            roadPrefabs = le.RoadPrefabs;
-            options = new string[roadPrefabs.Length];
-            for (int i = 0; i < roadPrefabs.Length; i++)
-            {
-                options[i] = roadPrefabs[i].name;
-            }
-            index = EditorGUILayout.Popup(index, options);
-            if (GUILayout.Button("Create"))
+            fillDropdownOptions();
+            index = EditorGUILayout.Popup(index, options, GUILayout.Width(240));
+            if (GUILayout.Button("Create", GUILayout.Width(240)))
                 InstantiatePrimitive(Selection.activeGameObject);
         }
         else if (Selection.activeGameObject != null && Selection.activeGameObject.name.Contains("GeneratedBlock"))
@@ -48,16 +45,22 @@ public class CustomWindow : EditorWindow
                 Quaternion toAngle = Quaternion.Euler(Selection.activeTransform.eulerAngles + byAngle);
                 Selection.activeTransform.rotation = toAngle;
             }
-        }
-        if (Selection.activeGameObject != null && Selection.activeGameObject.name.Contains("LevelEditor") && GameObject.FindGameObjectsWithTag("LevelBlock").Length == 0)
-        {
-            LevelEditor le = GameObject.Find("LevelEditor").GetComponent<LevelEditor>();
-            roadPrefabs = le.RoadPrefabs;
-            options = new string[roadPrefabs.Length];
-            for (int i = 0; i < roadPrefabs.Length; i++)
+
+            EditorGUILayout.LabelField("", GUILayout.Height(60));
+            EditorGUILayout.LabelField("Switch block");
+            fillDropdownOptions();
+            index = EditorGUILayout.Popup(index, options, GUILayout.Width(240));
+            if (GUILayout.Button("Switch", GUILayout.Width(240)))
             {
-                options[i] = roadPrefabs[i].name;
+                Vector3 pos = Selection.activeTransform.position;
+                DestroyImmediate(Selection.activeGameObject);
+                levelEditor.transform.position = pos;
+                InstantiatePrimitive(levelEditor);
             }
+        }
+        else if (Selection.activeGameObject != null && Selection.activeGameObject.name.Contains("LevelEditor") && GameObject.FindGameObjectsWithTag("LevelBlock").Length == 0)
+        {
+            fillDropdownOptions();
             index = EditorGUILayout.Popup(index, options);
             if (GUILayout.Button("Create"))
                 InstantiatePrimitive(Selection.activeGameObject);
@@ -68,7 +71,18 @@ public class CustomWindow : EditorWindow
         }
     }
 
-    void InstantiatePrimitive(GameObject selectedOrb)
+    private void fillDropdownOptions()
+    {
+        LevelEditor le = GameObject.Find("LevelEditor").GetComponent<LevelEditor>();
+        roadPrefabs = le.RoadPrefabs;
+        options = new string[roadPrefabs.Length];
+        for (int i = 0; i < roadPrefabs.Length; i++)
+        {
+            options[i] = roadPrefabs[i].name;
+        }
+    }
+
+    private void InstantiatePrimitive(GameObject selectedOrb)
     {
         GameObject newRoadType = roadPrefabs[index];
         selectedOrb.SendMessage("GenerateRoad", newRoadType);
