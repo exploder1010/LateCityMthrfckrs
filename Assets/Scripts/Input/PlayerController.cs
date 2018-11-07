@@ -208,7 +208,7 @@ namespace Luminosity.IO
                     else
                     {
                         //Based on collision, so gives poor potential for long distance travel
-                        curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude / 5f);
+                        curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude / 2.5f);
                     }
                 }
                 else
