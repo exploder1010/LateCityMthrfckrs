@@ -59,21 +59,48 @@ namespace Luminosity.IO
                     //Now moving backward and speeding up or slowing down = backward jump.
                     if (InputManager.GetAxis("Accelerate") == 1)
                     {
-                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude - previousVelocity >= 0)
+                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude >= previousVelocity)
+                        {
+                            Debug.Log("A");
                             directedMovement = 0;
+                        }
                         else
-                            directedMovement = 2;
+                        {
+                            if (InputManager.GetAxis("Horizontal") == -1 || InputManager.GetAxis("Horizontal") == 1)
+                            {
+                                Debug.Log("B");
+                                directedMovement = 0;
+                            }
+                            else
+                            {
+                                Debug.Log("C");
+                                directedMovement = 2;
+                            }
+                        }
                     }
                     else if (InputManager.GetAxis("Accelerate") == -1)
                     {
-                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude - previousVelocity >= 0)
+                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude >= previousVelocity)
+                        {
+                            Debug.Log("D");
                             directedMovement = 3;
+                        }
                         else
-                            directedMovement = 1;
+                        { 
+                            if (InputManager.GetAxis("Horizontal") == -1 || InputManager.GetAxis("Horizontal") == 1)
+                            {
+                                Debug.Log("E");
+                                directedMovement = 3;
+                            }
+                            else
+                            {
+                                Debug.Log("F");
+                                directedMovement = 1;
+                            }
+                        }
                     }
                     previousVelocity = curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude;
-
-
+                 
                     //input jump
                     if (InputManager.GetButtonDown("Jump"))
                     {
@@ -208,7 +235,7 @@ namespace Luminosity.IO
         //Brady: Added if statement to determine physics of launch. For the time being, the beginCarJump variable for carspeed is simply the car magnitude divided by 5.
         public void ExitVehicle()
         {
-            Debug.Log("EXIT CAR " + Time.time);
+            Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {
                 curState = PlayerState.Rider;

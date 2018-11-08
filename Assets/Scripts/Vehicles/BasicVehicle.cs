@@ -137,9 +137,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     //Should we use enter or stay. Will scraping against walls be counted as possible crashed?
     void OnCollisionEnter(Collision other)
     {
-        if (LayerMask.LayerToName(other.gameObject.layer) != "Road")
+        if (LayerMask.LayerToName(other.gameObject.layer) != "Road" && LayerMask.LayerToName(other.gameObject.layer) != "Rider")
         {
-            //Debug.Log("Crash Collision = " + rb.velocity.magnitude);
+            Debug.Log("Crash Collision = " + other.gameObject.name);
             if (rb.velocity.magnitude > crashSpeed)
             {
                 //High impact crash. Play crash sound and set broken to true.
@@ -163,7 +163,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     {
         if (LayerMask.LayerToName(other.gameObject.layer) != "Road" && LayerMask.LayerToName(other.gameObject.layer) != "Rider")
         {
-            //Debug.Log(other.gameObject.name + " Crash Trigger = " + rb.velocity.magnitude);
+            Debug.Log("Crash Collision = " + other.gameObject.name);
             if (rb.velocity.magnitude > crashSpeed)
             {
                 //Debug.Log("Major Crash on Late City Highway");
