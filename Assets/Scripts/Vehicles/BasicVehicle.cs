@@ -54,7 +54,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         TransformWheelMeshes();
         constrainMaxSpeed();
         if(motor != 0)
-        Debug.Log(rb.velocity.magnitude);
+        //Debug.Log(rb.velocity.magnitude);
         Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
     }
 
