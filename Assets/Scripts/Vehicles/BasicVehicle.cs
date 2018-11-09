@@ -24,6 +24,10 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public float crashSpeed;
     public bool broken;
 
+    //nick: dunkey's trademark spin move
+    bool spinMove;
+    
+
     private void Start()
     {
         // Needed to keep it from being all wobbly
@@ -36,23 +40,36 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     private void FixedUpdate()
     {
 
-        foreach (AxleInfo axle in axleInfos)
-        {
-            if (axle.motor)
+        //if (!spinMove)
+        //{
+            foreach (AxleInfo axle in axleInfos)
             {
-                axle.leftWheel.motorTorque = motor;
-                axle.rightWheel.motorTorque = motor;
+                if (axle.motor)
+                {
+                    axle.leftWheel.motorTorque = motor;
+                    axle.rightWheel.motorTorque = motor;
+                }
+                if (axle.steering)
+                {
+                    float newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                    axle.leftWheel.steerAngle = newSteering;
+                    axle.rightWheel.steerAngle = newSteering;
+                }
             }
-            if (axle.steering)
+            Stablization();
+            TransformWheelMeshes();
+            constrainMaxSpeed();
+        //}
+        
+
+        if (spinMove)
+        {
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            if (CheckWheelsOnGround() && rb.velocity.y < 0)
             {
-                float newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
-                axle.leftWheel.steerAngle = newSteering;
-                axle.rightWheel.steerAngle = newSteering;
+                endSpinMove();
             }
         }
-        Stablization();
-        TransformWheelMeshes();
-        constrainMaxSpeed();
         //if(motor != 0)
         //Debug.Log(rb.velocity.magnitude);
         //Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100); -- todo: add marissa's script
@@ -77,9 +94,23 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
         if (rb)
         {
-
-            rb.velocity = transform.forward * startSpeed;
+            startSpinMove();
         }
+       
+    }
+
+    protected virtual void startSpinMove()
+    {
+        spinMove = true;
+        //rb.velocity = transform.forward * startSpeed;
+        rb.velocity = transform.up * 10f;
+        //rb.AddForce(transform.up * 1000f, ForceMode.Impulse);
+    }
+
+    protected virtual void endSpinMove()
+    {
+        spinMove = false;
+        rb.velocity = transform.forward * startSpeed;
     }
 
     //nick
@@ -97,6 +128,15 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     void Stablization()
     {
+        if (CheckWheelsOnGround())
+        {
+            Vector3 force = rb.velocity.magnitude * GroundedStablizationRate * -1 * transform.up;
+            rb.AddForce(force);
+        }
+    }
+
+    bool CheckWheelsOnGround()
+    {
         bool wheelsOnGround = true;
         foreach (AxleInfo axle in axleInfos)
         {
@@ -106,13 +146,10 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 break;
             }
         }
+        return wheelsOnGround;
 
-        if (wheelsOnGround)
-        {
-            Vector3 force = rb.velocity.magnitude * GroundedStablizationRate * -1 * transform.up;
-            rb.AddForce(force);
-        }
     }
+
 
     void TransformWheelMeshes()
     {

@@ -80,9 +80,11 @@ public class BR_Business : BasicRider {
             curAbilityAmmo--;
             
             rb.velocity = rb.velocity.normalized * maxSpeedThisJump * 0.2f;
+            rb.velocity = Vector3.zero;
 
             doubleJumpTimer = doubleJumpTimeSet;
 
+            
             rb.AddForce(Vector3.up * doubleJumpStartImpulse);
 
             if (briefcasePrefab)

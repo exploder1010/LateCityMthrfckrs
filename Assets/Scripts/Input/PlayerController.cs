@@ -145,7 +145,7 @@ namespace Luminosity.IO
                     
                     if(curRider.checkRagdoll() != null)
                     {
-                        SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
+                        //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
                         curRider.destroyThis();
@@ -248,7 +248,7 @@ namespace Luminosity.IO
         //Brady: Added if statement to determine physics of launch. For the time being, the beginCarJump variable for carspeed is simply the car magnitude divided by 5.
         public void ExitVehicle()
         {
-            SoundScript.PlaySound(GetComponent<AudioSource>(), "Jump");
+            //SoundScript.PlaySound(GetComponent<AudioSource>(), "Jump");
             Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {
