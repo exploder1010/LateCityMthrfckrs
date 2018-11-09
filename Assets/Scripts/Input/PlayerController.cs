@@ -258,12 +258,12 @@ namespace Luminosity.IO
 
                 if (curRider != null)
                 {
-                    curVehicle.initializeSpeed(curRider.calculateNewCarMaxSpeed(), curRider.calculateNewCarStartSpeed());
+                    curVehicle.initializeSpeed(curRider.calculateNewCarMaxSpeed(), curRider.calculateNewCarStartSpeed(), InputManager.GetButton("BreakIn"));
                     curRider.destroyThis();
                 }
                 else
                 {
-                    curVehicle.initializeSpeed(0, 0);
+                    curVehicle.initializeSpeed(0, 0, InputManager.GetButton("BreakIn"));
                 }
             }
             else

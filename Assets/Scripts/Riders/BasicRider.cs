@@ -194,6 +194,8 @@ public class BasicRider : MonoBehaviour, IRider {
         maxSpeedThisJump = Mathf.Max(30, carSpeed * boostModifier);
         rb.velocity = transform.forward * carSpeed * boostModifier;
 
+        Debug.Log("carspeed: " + carSpeed + " boostModifier " + boostModifier);
+        
         carJumpTimer = carJumpTimeSet;
 
         rb.AddForce(Vector3.up * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * boostModifier));

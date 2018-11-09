@@ -114,7 +114,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     }
 
     //nick 
-    public void initializeSpeed(float newMaxSpeed, float newStartSpeed)
+    public void initializeSpeed(float newMaxSpeed, float newStartSpeed, bool startSMH)
     {
         actualMaxSpeed = Mathf.Max(newMaxSpeed, normalMaxSpeed);
 
@@ -122,7 +122,14 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
         if (rb)
         {
-            startSpinMoveHop();
+            if (startSMH)
+            {
+                startSpinMoveHop();
+            }
+            else
+            {
+                rb.velocity = transform.forward * startSpeed;
+            }
         }
        
     }
