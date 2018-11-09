@@ -15,7 +15,13 @@ public class BasicRider : MonoBehaviour, IRider {
     public Rigidbody rb;
     public Animator charAnim;
     public GameObject ragdollPrefab;
+    public HitBox roadCollider;
+    public HitBox vehicleCollider;
+    public HitBox lockOnCollider;
     protected GameObject currentRagdoll;
+
+    public GameObject targetIconPrefab;
+    GameObject currentTargetIcon;
 
     //references to set in external start
     protected Transform cTransform;
@@ -65,6 +71,7 @@ public class BasicRider : MonoBehaviour, IRider {
     // Update is called once per frame
     protected virtual void FixedUpdate()
     {
+        handleLockOnCollision();
 
         if (targetedVehicle)
         {
@@ -77,6 +84,9 @@ public class BasicRider : MonoBehaviour, IRider {
 
 
         updateAnimation();
+        handleRoadCollision();
+        handleVehicleCollision();
+
     }
 
     //---------------------------input:
@@ -125,17 +135,31 @@ public class BasicRider : MonoBehaviour, IRider {
         if (input == 1)
         {
             //BasicVehicle closestVehicle = null;
+            //handleLockOnCollision();
             foreach (BasicVehicle bv in closeVehicles)
             {
-                float dist = (transform.position - bv.transform.position).magnitude;
-                if (targetedVehicle == null || dist < (transform.position - targetedVehicle.transform.position).magnitude)
+                //vectorToAdd = vectorToAdd.normalized;
+
+                float dist = (transform.position + (vectorToAdd*lockOnCollider.transform.GetComponent<SphereCollider>().radius/2) - bv.transform.position).magnitude;
+                Debug.Log("dist" + dist);
+                //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
+                if (targetedVehicle == null || dist < (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius/2) - targetedVehicle.transform.position).magnitude)
                 {
                     targetedVehicle = bv;
-                    storedNewCarMaxSpeed = rb.velocity.magnitude;
-                    storedNewCarStartSpeed = rb.velocity.magnitude * 0.75f;
+
                 }
             }
+            if(targetedVehicle!= null)
+            {
+                storedNewCarMaxSpeed = rb.velocity.magnitude;
+                storedNewCarStartSpeed = rb.velocity.magnitude * 0.75f;
+            }
         }
+    }
+
+    public static float DistanceToLine(Ray ray, Vector3 point)
+    {
+        return Vector3.Cross(ray.direction, point - ray.origin).magnitude;
     }
 
     //---------------------------update movement:
@@ -181,7 +205,7 @@ public class BasicRider : MonoBehaviour, IRider {
         //add full hop to car jump while jump is held
         if (carJumpTimer > 0)
         {
-            carJumpVelocity += ((carJumpVelocityAdd * (carLaunchSpeed / boostThreshold)) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
+            carJumpVelocity += ((carJumpVelocityAdd * (carLaunchSpeed / boostThreshold)) / carJumpTimeSet); //add full hop normalized to 1 second
 
             carJumpTimer -= Time.deltaTime;
 
@@ -229,42 +253,91 @@ public class BasicRider : MonoBehaviour, IRider {
 
     //---------------------------update collisions:
 
-    //add cars to close cars list
-    protected virtual void OnTriggerStay(Collider other)
-    {
-        if (rb.velocity.y < 0)
-        {
-            if (other.transform.root.transform.GetComponent<BasicVehicle>() && !closeVehicles.Contains(other.transform.root.transform.GetComponent<BasicVehicle>()))
-            {
-                closeVehicles.Add(other.transform.root.transform.GetComponent<BasicVehicle>());
-            }
-        }
+    //old way
+    ////add cars to close cars list
+    //protected virtual void OnTriggerStay(Collider other)
+    //{
+    //    if (rb.velocity.y < 0)
+    //    {
+    //        if (other.transform.root.transform.GetComponent<BasicVehicle>() && !closeVehicles.Contains(other.transform.root.transform.GetComponent<BasicVehicle>()))
+    //        {
+    //            closeVehicles.Add(other.transform.root.transform.GetComponent<BasicVehicle>());
+    //        }
+    //    }
 
-    }
+    //}
 
-    //remove cars from close cars list
-    protected virtual void OnTriggerExit(Collider other)
+    ////remove cars from close cars list
+    //protected virtual void OnTriggerExit(Collider other)
+    //{
+    //    if (other.transform.root.transform.GetComponent<BasicVehicle>())
+    //    {
+    //        closeVehicles.Remove(other.transform.root.transform.GetComponent<BasicVehicle>());
+    //    }
+    //}
+
+    protected virtual void handleRoadCollision()
     {
-        if (other.transform.root.transform.GetComponent<BasicVehicle>())
-        {
-            closeVehicles.Remove(other.transform.root.transform.GetComponent<BasicVehicle>());
-        }
-    }
-    
-    //collision
-    protected virtual void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("hit " + LayerMask.LayerToName(other.gameObject.layer));
-        if(LayerMask.LayerToName( other.gameObject.layer) == "Road" && currentRagdoll == null)
+        //Debug.Log(roadCollider.collidersCount()); 
+
+        if (roadCollider.collidersCount() > 0)
         {
             currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
             currentRagdoll.SetActive(true);
             currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = rb.velocity * 5f;
         }
-        if (other.transform.root.transform.GetComponent<BasicVehicle>())
+    }
+
+    protected virtual void handleVehicleCollision()
+    {
+        if (vehicleCollider.collidersCount() > 0 && (rb.velocity.y <= 0 || targetedVehicle!= null))
         {
-            hitVehicle = other.transform.root.transform.GetComponent<BasicVehicle>();
+            hitVehicle = vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>();
         }
+    }
+
+    protected virtual void handleLockOnCollision()
+    {
+
+        closeVehicles = new List<BasicVehicle>();
+        //if (rb.velocity.y < 0)
+        //{
+        for (int i = 0; i < lockOnCollider.collidersCount(); i++)
+        {
+            closeVehicles.Add(lockOnCollider.returnColliders()[i].transform.root.transform.GetComponent<BasicVehicle>());
+        }
+        //}
+
+        if(targetIconPrefab != null)
+        {
+            BasicVehicle potentialTargetedVehicle = null;
+            Destroy(currentTargetIcon);
+            currentTargetIcon = null;
+            
+            if(vectorToAdd != Vector3.zero)
+            {
+                foreach (BasicVehicle bv in closeVehicles)
+                {
+                    //vectorToAdd = vectorToAdd.normalized;
+
+                    float dist = (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
+                    Debug.Log("dist" + dist);
+                    //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
+                    if (potentialTargetedVehicle == null || dist < (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - potentialTargetedVehicle.transform.position).magnitude)
+                    {
+                        potentialTargetedVehicle = bv;
+                    }
+                }
+                if (potentialTargetedVehicle != null)
+                {
+                    currentTargetIcon = Instantiate(targetIconPrefab, potentialTargetedVehicle.transform.position, Quaternion.identity);
+                    //currentTargetIcon.transform.parent = transform;
+                    currentTargetIcon.transform.LookAt(cTransform);
+                }
+            }
+
+        }
+        
     }
 
     //let playercontroller know player is dead
@@ -305,6 +378,12 @@ public class BasicRider : MonoBehaviour, IRider {
             return rb.velocity.magnitude * 0.75f;
         }
         return storedNewCarStartSpeed;
+    }
+
+    public virtual void destroyThis()
+    {
+        Destroy(currentTargetIcon);
+        Destroy(transform.gameObject);
     }
 
 }

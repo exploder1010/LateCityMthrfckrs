@@ -53,9 +53,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         Stablization();
         TransformWheelMeshes();
         constrainMaxSpeed();
-        if(motor != 0)
+        //if(motor != 0)
         //Debug.Log(rb.velocity.magnitude);
-        Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
+        //Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100); -- todo: add marissa's script
     }
 
     public void inputHorz(float direction)
@@ -137,9 +137,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     //Should we use enter or stay. Will scraping against walls be counted as possible crashed?
     void OnCollisionEnter(Collision other)
     {
-        if (LayerMask.LayerToName(other.gameObject.layer) != "Road" && LayerMask.LayerToName(other.gameObject.layer) != "Rider")
+        if (LayerMask.LayerToName(other.gameObject.layer) != "Road")
         {
-            Debug.Log("Crash Collision = " + other.gameObject.name);
+            //Debug.Log("Crash Collision = " + rb.velocity.magnitude);
             if (rb.velocity.magnitude > crashSpeed)
             {
                 //High impact crash. Play crash sound and set broken to true.
@@ -163,7 +163,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     {
         if (LayerMask.LayerToName(other.gameObject.layer) != "Road" && LayerMask.LayerToName(other.gameObject.layer) != "Rider")
         {
-            Debug.Log("Crash Collision = " + other.gameObject.name);
+            //Debug.Log(other.gameObject.name + " Crash Trigger = " + rb.velocity.magnitude);
             if (rb.velocity.magnitude > crashSpeed)
             {
                 //Debug.Log("Major Crash on Late City Highway");

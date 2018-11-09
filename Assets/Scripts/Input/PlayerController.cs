@@ -158,7 +158,7 @@ namespace Luminosity.IO
                         SoundScript.PlaySound(playerSource, "Death");
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
-                        Destroy(curRider.gameObject);
+                        curRider.destroyThis();
                         break;
                     }
 
@@ -241,7 +241,7 @@ namespace Luminosity.IO
                 if (curRider != null)
                 {
                     curVehicle.initializeSpeed(curRider.calculateNewCarMaxSpeed(), curRider.calculateNewCarStartSpeed());
-                    Destroy(curRider.transform.gameObject);
+                    curRider.destroyThis();
                 }
                 else
                 {

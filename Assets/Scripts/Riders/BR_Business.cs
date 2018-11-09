@@ -55,7 +55,7 @@ public class BR_Business : BasicRider {
         //add full hop to car jump while jump is held
         if (carJumpTimer > 0)
         {
-            carJumpVelocity += (carJumpVelocityAdd * (carLaunchSpeed / boostThreshold) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
+            carJumpVelocity += (carJumpVelocityAdd / carJumpTimeSet); //add full hop normalized to 1 second
 
             carJumpTimer -= Time.deltaTime;
 
@@ -64,7 +64,7 @@ public class BR_Business : BasicRider {
         }
         else if (doubleJumpTimer > 0)
         {
-            doubleJumpVelocity += (doubleJumpVelocityAdd * (carLaunchSpeed / boostThreshold) / doubleJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
+            doubleJumpVelocity += (doubleJumpVelocityAdd / doubleJumpTimeSet); //add full hop normalized to 1 second
 
             doubleJumpTimer -= Time.deltaTime;
 
