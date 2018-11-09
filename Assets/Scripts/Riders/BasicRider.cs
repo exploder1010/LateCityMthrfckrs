@@ -142,16 +142,20 @@ public class BasicRider : MonoBehaviour, IRider {
             //handleLockOnCollision();
             foreach (BasicVehicle bv in closeVehicles)
             {
-                //vectorToAdd = vectorToAdd.normalized;
-
-                float dist = (transform.position + (vectorToAdd*lockOnCollider.transform.GetComponent<SphereCollider>().radius/2) - bv.transform.position).magnitude;
-                Debug.Log("dist" + dist);
-                //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
-                if (targetedVehicle == null || dist < (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius/2) - targetedVehicle.transform.position).magnitude)
+                if (!bv.broken)
                 {
-                    targetedVehicle = bv;
+                    //vectorToAdd = vectorToAdd.normalized;
 
+                    float dist = (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
+                    Debug.Log("dist" + dist);
+                    //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
+                    if (targetedVehicle == null || dist < (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - targetedVehicle.transform.position).magnitude)
+                    {
+                        targetedVehicle = bv;
+
+                    }
                 }
+               
             }
             if(targetedVehicle!= null)
             {
@@ -329,14 +333,18 @@ public class BasicRider : MonoBehaviour, IRider {
                 foreach (BasicVehicle bv in closeVehicles)
                 {
                     //vectorToAdd = vectorToAdd.normalized;
-
-                    float dist = (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
-                    Debug.Log("dist" + dist);
-                    //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
-                    if (potentialTargetedVehicle == null || dist < (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - potentialTargetedVehicle.transform.position).magnitude)
+                    if (!bv.broken)
                     {
-                        potentialTargetedVehicle = bv;
+                        float dist = (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
+                        Debug.Log("dist" + dist);
+                        //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
+                        if (potentialTargetedVehicle == null || dist < (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - potentialTargetedVehicle.transform.position).magnitude)
+                        {
+                            potentialTargetedVehicle = bv;
+                        }
                     }
+
+                    
                 }
                 if (potentialTargetedVehicle != null)
                 {
