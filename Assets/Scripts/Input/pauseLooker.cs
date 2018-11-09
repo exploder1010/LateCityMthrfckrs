@@ -5,6 +5,7 @@ using UnityEngine;
 public class pauseLooker : MonoBehaviour {
 
     public GameObject pauseMenu;
+    public AudioSource uiSource;
 
     // Use this for initialization
     void Start()
@@ -18,6 +19,7 @@ public class pauseLooker : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundScript.PlaySound(uiSource, "UI Click");
 
             if (pauseMenu.activeSelf == true)
             {

@@ -7,7 +7,6 @@ namespace Luminosity.IO
     //Handles ALL in-game input.
     public class PlayerController : MonoBehaviour
     {
-        
         //type of character selected for this level
         GameObject selectedCharacter_Prefab;
 
@@ -104,7 +103,7 @@ namespace Luminosity.IO
                     //input jump
                     if (InputManager.GetButtonDown("Jump"))
                     {
-                        //SoundScript.PlayJump();
+               
                         ExitVehicle();
                         break;
                     }
@@ -133,6 +132,7 @@ namespace Luminosity.IO
                     
                     if(curRider.checkRagdoll() != null)
                     {
+                        SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
                         Destroy(curRider.gameObject);
@@ -235,6 +235,7 @@ namespace Luminosity.IO
         //Brady: Added if statement to determine physics of launch. For the time being, the beginCarJump variable for carspeed is simply the car magnitude divided by 5.
         public void ExitVehicle()
         {
+            SoundScript.PlaySound(GetComponent<AudioSource>(), "Jump");
             Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {
