@@ -138,8 +138,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public virtual void startSpinMove(Vector3 directionToSpin)
     {
         
-        if (!spinMove)
-        {
+        //if (!spinMove)
+        //{
             Debug.Log("spinmoe =" + calculateForward());
             spinMove = true;
             spinDirection = Vector3.zero;
@@ -156,7 +156,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
             //directionToSpin = Vector3.Cross(Vector3.up, calculateForward());
             //transform.LookAt(transform.position + actualDirection);
-        }
+        //}
     }
 
     protected Vector3 calculateForward()
