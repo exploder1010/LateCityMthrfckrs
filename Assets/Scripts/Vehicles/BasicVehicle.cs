@@ -25,7 +25,12 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public bool broken;
 
     //nick: dunkey's trademark spin move
+    bool spinMoveHop;
+    float curSpinJump;
     bool spinMove;
+    float spinLeft;
+    int spinDir;
+    Vector3 spinDirection;
     
 
     private void Start()
@@ -40,34 +45,57 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     private void FixedUpdate()
     {
 
-        //if (!spinMove)
-        //{
-            foreach (AxleInfo axle in axleInfos)
+
+        foreach (AxleInfo axle in axleInfos)
+        {
+            if (axle.motor)
             {
-                if (axle.motor)
-                {
-                    axle.leftWheel.motorTorque = motor;
-                    axle.rightWheel.motorTorque = motor;
-                }
-                if (axle.steering)
-                {
-                    float newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
-                    axle.leftWheel.steerAngle = newSteering;
-                    axle.rightWheel.steerAngle = newSteering;
-                }
+                axle.leftWheel.motorTorque = motor;
+                axle.rightWheel.motorTorque = motor;
             }
+            if (axle.steering)
+            {
+                float newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                axle.leftWheel.steerAngle = newSteering;
+                axle.rightWheel.steerAngle = newSteering;
+            }
+        }
+
+        if (!spinMoveHop)
+        {
+
             Stablization();
-            TransformWheelMeshes();
-            constrainMaxSpeed();
-        //}
+        }
+
+        TransformWheelMeshes();
+        constrainMaxSpeed();
+
         
 
-        if (spinMove)
+        if (spinMoveHop)
         {
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            if (spinMove)
+            {
+                if (spinMove && spinLeft > 0)
+                {
+                    float newSpin = spinDir * 2000f * Time.deltaTime;
+                    transform.RotateAround(transform.position, transform.up, newSpin);
+                    spinLeft -= newSpin;
+                }
+            }
+            else
+            {
+
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+
+            }
+
+            rb.velocity = new Vector3(rb.velocity.x,curSpinJump,rb.velocity.z);
+            curSpinJump -= Time.deltaTime * 30f;
+
             if (CheckWheelsOnGround() && rb.velocity.y < 0)
             {
-                endSpinMove();
+                endSpinMoveHop();
             }
         }
         //if(motor != 0)
@@ -94,21 +122,77 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
         if (rb)
         {
-            startSpinMove();
+            startSpinMoveHop();
         }
        
     }
 
-    protected virtual void startSpinMove()
+    //nick
+    public virtual void startSpinMove(Vector3 directionToSpin)
     {
-        spinMove = true;
+        
+        if (!spinMove)
+        {
+            Debug.Log("spinmoe =" + calculateForward());
+            spinMove = true;
+            spinDirection = Vector3.zero;
+            spinDirection = spinDirection + (Vector3.Cross(Vector3.up, calculateForward()) * directionToSpin.x);
+            spinDirection = spinDirection + (calculateForward() * directionToSpin.z);
+
+            float firstAngle = Vector3.SignedAngle(transform.forward, spinDirection, transform.up);
+            if (firstAngle != 0)
+            {
+                spinDir = (int)(Mathf.Abs(firstAngle) / firstAngle);
+            }
+            firstAngle += spinDir * 360f;
+            spinLeft = Mathf.Abs(firstAngle);
+
+            //directionToSpin = Vector3.Cross(Vector3.up, calculateForward());
+            //transform.LookAt(transform.position + actualDirection);
+        }
+    }
+
+    protected Vector3 calculateForward()
+    {
+        Transform cTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        if (GameObject.FindGameObjectWithTag("MainCamera").transform)
+        {
+            cTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
+            Vector3 forward = (this.transform.position - cTransform.position);
+            forward.y = 0;
+            forward = forward.normalized;
+            //Debug.Log("forward " + forward);
+            Debug.Log("SUCCESS");
+            return forward;
+        }
+        Debug.Log("FAILURE");
+        return Vector3.zero;
+    }
+
+    //nick
+    public virtual bool isSpinMoveHop()
+    {
+        return spinMoveHop;
+    }
+
+    //nick
+    protected virtual void startSpinMoveHop()
+    {
+        curSpinJump = 10f;
+        spinMoveHop = true;
         //rb.velocity = transform.forward * startSpeed;
-        rb.velocity = transform.up * 10f;
+        //rb.velocity = transform.up * 10f;
         //rb.AddForce(transform.up * 1000f, ForceMode.Impulse);
     }
 
-    protected virtual void endSpinMove()
+    //nick
+    protected virtual void endSpinMoveHop()
     {
+        spinMoveHop = false;
+        if (spinMove)
+        {
+            transform.LookAt(transform.position + spinDirection);
+        }
         spinMove = false;
         rb.velocity = transform.forward * startSpeed;
     }

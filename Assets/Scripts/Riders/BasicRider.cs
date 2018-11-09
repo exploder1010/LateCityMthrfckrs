@@ -132,7 +132,7 @@ public class BasicRider : MonoBehaviour, IRider {
     //attempt to start break in move
     public virtual void inputBreakIn(int input)
     {
-        if (input == 1)
+        if (input == 1 && rb.velocity.y < 0)
         {
             //BasicVehicle closestVehicle = null;
             //handleLockOnCollision();

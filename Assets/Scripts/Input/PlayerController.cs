@@ -36,6 +36,9 @@ namespace Luminosity.IO
         private bool recentDirection;
         private float previousVelocity;
 
+        //nick: needed for dunkey spin move
+        private Vector3 prevLStickInput;
+
         // Use this for initialization
         void Start()
         {
@@ -124,8 +127,10 @@ namespace Luminosity.IO
                     //input jump
                     if (InputManager.GetButtonDown("Jump"))
                     {
-               
-                        ExitVehicle();
+                        if (!curVehicle.isSpinMoveHop())
+                        {
+                            ExitVehicle();
+                        }
                         break;
                     }
 
@@ -138,6 +143,14 @@ namespace Luminosity.IO
                         break;
                     }
 
+                    //dunkey spin move
+                    
+                    Vector3 newLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
+                    if(curVehicle.isSpinMoveHop() && (newLStickInput - prevLStickInput).magnitude > 1f)
+                    {
+                        curVehicle.startSpinMove((newLStickInput - prevLStickInput).normalized);
+                    }
+                    
                     mainCamera.SendMessage("ChangeFocus", curVehicle.transform);
                     mainCamera.SendMessage("ChangeDistance", 10f);
                     break;
@@ -158,7 +171,7 @@ namespace Luminosity.IO
 
                         //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
 
-                        //SoundScript.PlaySound(playerSource, "Death");
+                        SoundScript.PlaySound(playerSource, "Death");
 
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
@@ -221,6 +234,7 @@ namespace Luminosity.IO
                     Debug.Log("ERROR - NO RIDER OR VEHICLE");
                     break;
             }
+            prevLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
         }
 
 
@@ -265,7 +279,7 @@ namespace Luminosity.IO
             //SoundScript.PlaySound(GetComponent<AudioSource>(), "Jump");
 
             curVehicle.GetComponent<AudioSource>().Stop();
-            //SoundScript.PlaySound(playerSource, "Jump");
+            SoundScript.PlaySound(playerSource, "Jump");
             Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {
