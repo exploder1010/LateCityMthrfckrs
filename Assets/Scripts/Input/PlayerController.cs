@@ -18,6 +18,11 @@ namespace Luminosity.IO
         //reference to camera
         GameObject mainCamera;
 
+        //references to audio sources
+        public AudioSource playerSource;
+        public AudioSource musicSource;
+        public AudioSource ambientSource;
+
         //states
         private enum PlayerState { Vehicle = 0, Rider, Dead };
         private PlayerState curState;
@@ -48,7 +53,10 @@ namespace Luminosity.IO
             {
                 //process input for vehicle
                 case PlayerState.Vehicle:
-
+                    if(curVehicle.GetComponent<AudioSource>().isPlaying == false)
+                    {
+                        SoundScript.PlaySound(curVehicle.GetComponent<AudioSource>(), "Engine");
+                    }
                     //input horizontal movement
                     curVehicle.inputHorz(InputManager.GetAxis("Horizontal"));
 
@@ -137,6 +145,8 @@ namespace Luminosity.IO
                 //process input for air movement
                 case PlayerState.Rider:
 
+                    ambientSource.volume = curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
+
                     if(curRider.vehicleToEnter() != null)
                     {
                         EnterVehicle(curRider.vehicleToEnter());
@@ -145,7 +155,11 @@ namespace Luminosity.IO
                     
                     if(curRider.checkRagdoll() != null)
                     {
+<<<<<<< HEAD
                         //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
+=======
+                        SoundScript.PlaySound(playerSource, "Death");
+>>>>>>> 639f551cc54fccfaad9b1811b5c46817a4e3f41c
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
                         curRider.destroyThis();
@@ -248,7 +262,12 @@ namespace Luminosity.IO
         //Brady: Added if statement to determine physics of launch. For the time being, the beginCarJump variable for carspeed is simply the car magnitude divided by 5.
         public void ExitVehicle()
         {
+<<<<<<< HEAD
             //SoundScript.PlaySound(GetComponent<AudioSource>(), "Jump");
+=======
+            curVehicle.GetComponent<AudioSource>().Stop();
+            SoundScript.PlaySound(playerSource, "Jump");
+>>>>>>> 639f551cc54fccfaad9b1811b5c46817a4e3f41c
             Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {
