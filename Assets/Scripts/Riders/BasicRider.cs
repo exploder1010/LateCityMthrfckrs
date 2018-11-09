@@ -292,7 +292,8 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
             currentRagdoll.SetActive(true);
-            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = rb.velocity * 5f;
+            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = new Vector3(rb.velocity.x * 5f,-rb.velocity.y * 2f, rb.velocity.z * 5f);
+            
         }
 
         
