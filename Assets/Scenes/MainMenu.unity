@@ -3633,6 +3633,7 @@ GameObject:
   - component: {fileID: 1925504078}
   - component: {fileID: 1925504077}
   - component: {fileID: 1925504081}
+  - component: {fileID: 1925504082}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -4269,6 +4270,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9721ac158bfa7e45a2658f916da3cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1925504082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1925504076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98b79d0d092b27f42b4008cfe92cc0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSound: {fileID: 0}
+  abilitySound: {fileID: 0}
+  caridleSound: {fileID: 0}
+  atmosphericSound: {fileID: 0}
+  uiSound: {fileID: 0}
+  winSound: {fileID: 0}
+  deathSound: {fileID: 0}
+  cliplist:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  atmosphericSource: {fileID: 0}
+  playerSource: {fileID: 0}
+  musicSource: {fileID: 0}
 --- !u!1 &1937505421
 GameObject:
   m_ObjectHideFlags: 0

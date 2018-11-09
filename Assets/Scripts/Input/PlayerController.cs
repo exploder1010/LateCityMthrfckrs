@@ -7,7 +7,6 @@ namespace Luminosity.IO
     //Handles ALL in-game input.
     public class PlayerController : MonoBehaviour
     {
-        
         //type of character selected for this level
         GameObject selectedCharacter_Prefab;
 
@@ -26,10 +25,18 @@ namespace Luminosity.IO
         //Brady: This Bool is used to see what type of car exit it is (button press<true> or collision<false>).
         private bool buttonLaunch = true;
 
+        //Brady: Attempt to fix leaping from forward or reverse.
+        //Likely a better approach...
+        private bool forwardMovement;
+        private bool recentDirection;
+        private float previousVelocity;
+
         // Use this for initialization
         void Start()
         {
-            
+            forwardMovement = true;
+            recentDirection = true;
+            previousVelocity = 0;
         }
 
         // IMPORTANT: This should never be fixed update. Input always needs to be in normal update, or you constantly drop inputs.
@@ -48,10 +55,68 @@ namespace Luminosity.IO
                     //input accelleration
                     curVehicle.inputAccel(InputManager.GetAxis("Accelerate"));
 
+                    // Brady: Attempt to fix bug where player jumps despite direction they're moving. 
+                    //Now moving forward and speeding up or slowing down = forward jump.
+                    //Now moving backward and speeding up or slowing down = backward jump.
+                    if (InputManager.GetAxis("Accelerate") == 1)
+                    {
+                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude > previousVelocity)
+                        {
+                            recentDirection = true;
+                            forwardMovement = true;
+                        }
+                        else
+                        {
+                            if (InputManager.GetAxis("Horizontal") == -1 || InputManager.GetAxis("Horizontal") == 1)
+                            {
+                                if(recentDirection)
+                                {
+                                    forwardMovement = true;
+                                }
+                                else
+                                {
+                                    forwardMovement = false;
+                                }
+                            }
+                            else
+                            {
+                                forwardMovement = false;
+                            }
+                        }
+                    }
+
+                    else if (InputManager.GetAxis("Accelerate") == -1)
+                    {
+                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude > previousVelocity)
+                        {
+                            recentDirection = false;
+                            forwardMovement = false;
+                        }
+                        else
+                        { 
+                            if (InputManager.GetAxis("Horizontal") == -1 || InputManager.GetAxis("Horizontal") == 1)
+                            {
+                                if (recentDirection)
+                                {
+                                    forwardMovement = true;
+                                }
+                                else
+                                {
+                                    forwardMovement = false;
+                                }
+                            }
+                            else
+                            {
+                                forwardMovement = true;
+                            }
+                        }
+                    }
+                    previousVelocity = curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude;
+
                     //input jump
                     if (InputManager.GetButtonDown("Jump"))
                     {
-                        
+               
                         ExitVehicle();
                         break;
                     }
@@ -80,6 +145,7 @@ namespace Luminosity.IO
                     
                     if(curRider.checkRagdoll() != null)
                     {
+                        SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
                         curRider.destroyThis();
@@ -182,11 +248,10 @@ namespace Luminosity.IO
         //Brady: Added if statement to determine physics of launch. For the time being, the beginCarJump variable for carspeed is simply the car magnitude divided by 5.
         public void ExitVehicle()
         {
-            Debug.Log("EXIT CAR " + Time.time);
+            SoundScript.PlaySound(GetComponent<AudioSource>(), "Jump");
+            Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {
-
-
                 curState = PlayerState.Rider;
 
                 if (curVehicle != null)
@@ -196,8 +261,16 @@ namespace Luminosity.IO
                     curVehicle.inputAccel(0);
 
                     //spawn rider above car.
-                    curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
-
+                    //Brady: Determines which way the characters jump.
+                    //Vector3 relative = transform.InverseTransformVector(curVehicle.transform.GetComponent<Rigidbody>().velocity);
+                    if (forwardMovement)
+                    {
+                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+                    }
+                    else
+                    {
+                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(180, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+                    }
                     curRider.externalStart(mainCamera.transform);
 
                     if (buttonLaunch)
@@ -208,7 +281,7 @@ namespace Luminosity.IO
                     else
                     {
                         //Based on collision, so gives poor potential for long distance travel
-                        curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude / 5f);
+                        curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude / 2.5f);
                     }
                 }
                 else
