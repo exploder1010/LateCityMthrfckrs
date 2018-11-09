@@ -288,10 +288,13 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected virtual void handleRoadCollision()
     {
+        if(currentRagdoll == null)
+        {
+            currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
+            currentRagdoll.SetActive(true);
+            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = rb.velocity * 5f;
+        }
 
-        currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
-        currentRagdoll.SetActive(true);
-        currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = rb.velocity * 5f;
         
     }
 
