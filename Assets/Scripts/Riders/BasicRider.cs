@@ -84,7 +84,11 @@ public class BasicRider : MonoBehaviour, IRider {
 
 
         updateAnimation();
-        handleRoadCollision();
+        if (roadCollider.collidersCount() > 0)
+        {
+            handleRoadCollision();
+        }
+
         handleVehicleCollision();
 
     }
@@ -280,21 +284,25 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected virtual void handleRoadCollision()
     {
-        //Debug.Log(roadCollider.collidersCount()); 
 
-        if (roadCollider.collidersCount() > 0)
-        {
-            currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
-            currentRagdoll.SetActive(true);
-            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = rb.velocity * 5f;
-        }
+        currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
+        currentRagdoll.SetActive(true);
+        currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = rb.velocity * 5f;
+        
     }
 
     protected virtual void handleVehicleCollision()
     {
         if (vehicleCollider.collidersCount() > 0 && (rb.velocity.y <= 0 || targetedVehicle!= null))
         {
-            hitVehicle = vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>();
+            if (!vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>().broken)
+            {
+                hitVehicle = vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>();
+            }
+            else
+            {
+                handleRoadCollision();
+            }
         }
     }
 

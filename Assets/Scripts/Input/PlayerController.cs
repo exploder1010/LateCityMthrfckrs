@@ -7,6 +7,8 @@ namespace Luminosity.IO
     //Handles ALL in-game input.
     public class PlayerController : MonoBehaviour
     {
+        public bool GamePad;
+
         //type of character selected for this level
         GameObject selectedCharacter_Prefab;
 
@@ -144,13 +146,25 @@ namespace Luminosity.IO
                     }
 
                     //dunkey spin move
-                    
-                    Vector3 newLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
-                    if(curVehicle.isSpinMoveHop() && (newLStickInput - prevLStickInput).magnitude > 1f)
+                    if(GamePad)
                     {
-                        curVehicle.startSpinMove((newLStickInput - prevLStickInput).normalized);
+                        Vector3 newLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
+                        if (curVehicle.isSpinMoveHop() && (newLStickInput - prevLStickInput).magnitude > 1f)
+                        {
+                            curVehicle.startSpinMove((newLStickInput - prevLStickInput).normalized);
+                        }
+                    }
+                    else
+                    {
+                        Vector3 newLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
+                        if (curVehicle.isSpinMoveHop() && newLStickInput != prevLStickInput)
+                        {
+                            curVehicle.startSpinMove(newLStickInput);
+                        }
                     }
                     
+
+
                     mainCamera.SendMessage("ChangeFocus", curVehicle.transform);
                     mainCamera.SendMessage("ChangeDistance", 10f);
                     break;
