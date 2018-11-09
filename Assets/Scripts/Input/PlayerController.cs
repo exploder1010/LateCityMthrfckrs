@@ -28,13 +28,15 @@ namespace Luminosity.IO
 
         //Brady: Attempt to fix leaping from forward or reverse.
         //Likely a better approach...
-        private float directedMovement;
+        private bool forwardMovement;
+        private bool recentDirection;
         private float previousVelocity;
 
         // Use this for initialization
         void Start()
         {
-            directedMovement = 0;
+            forwardMovement = true;
+            recentDirection = true;
             previousVelocity = 0;
         }
 
@@ -59,48 +61,59 @@ namespace Luminosity.IO
                     //Now moving backward and speeding up or slowing down = backward jump.
                     if (InputManager.GetAxis("Accelerate") == 1)
                     {
-                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude >= previousVelocity)
+                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude > previousVelocity)
                         {
-                            Debug.Log("A");
-                            directedMovement = 0;
+                            recentDirection = true;
+                            forwardMovement = true;
                         }
                         else
                         {
                             if (InputManager.GetAxis("Horizontal") == -1 || InputManager.GetAxis("Horizontal") == 1)
                             {
-                                Debug.Log("B");
-                                directedMovement = 0;
+                                if(recentDirection)
+                                {
+                                    forwardMovement = true;
+                                }
+                                else
+                                {
+                                    forwardMovement = false;
+                                }
                             }
                             else
                             {
-                                Debug.Log("C");
-                                directedMovement = 2;
+                                forwardMovement = false;
                             }
                         }
                     }
+
                     else if (InputManager.GetAxis("Accelerate") == -1)
                     {
-                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude >= previousVelocity)
+                        if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude > previousVelocity)
                         {
-                            Debug.Log("D");
-                            directedMovement = 3;
+                            recentDirection = false;
+                            forwardMovement = false;
                         }
                         else
                         { 
                             if (InputManager.GetAxis("Horizontal") == -1 || InputManager.GetAxis("Horizontal") == 1)
                             {
-                                Debug.Log("E");
-                                directedMovement = 3;
+                                if (recentDirection)
+                                {
+                                    forwardMovement = true;
+                                }
+                                else
+                                {
+                                    forwardMovement = false;
+                                }
                             }
                             else
                             {
-                                Debug.Log("F");
-                                directedMovement = 1;
+                                forwardMovement = true;
                             }
                         }
                     }
                     previousVelocity = curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude;
-                 
+
                     //input jump
                     if (InputManager.GetButtonDown("Jump"))
                     {
@@ -248,9 +261,8 @@ namespace Luminosity.IO
 
                     //spawn rider above car.
                     //Brady: Determines which way the characters jump.
-                    Vector3 relative = transform.InverseTransformVector(curVehicle.transform.GetComponent<Rigidbody>().velocity);
-                    Debug.Log(directedMovement);
-                    if (directedMovement <= 1)
+                    //Vector3 relative = transform.InverseTransformVector(curVehicle.transform.GetComponent<Rigidbody>().velocity);
+                    if (forwardMovement)
                     {
                         curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
                     }
