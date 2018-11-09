@@ -84,7 +84,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
 
         updateAnimation();
-        if (roadCollider.collidersCount() > 0)
+        if (roadCollider.collidersCount() > 0 )
         {
             handleRoadCollision();
         }
@@ -163,11 +163,6 @@ public class BasicRider : MonoBehaviour, IRider {
                 storedNewCarStartSpeed = rb.velocity.magnitude * 0.75f;
             }
         }
-    }
-
-    public static float DistanceToLine(Ray ray, Vector3 point)
-    {
-        return Vector3.Cross(ray.direction, point - ray.origin).magnitude;
     }
 
     //---------------------------update movement:

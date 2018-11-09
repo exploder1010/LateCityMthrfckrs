@@ -386,6 +386,15 @@ namespace Luminosity.IO
                 {
                     curVehicle.initializeSpeed(0, 0, InputManager.GetButton("BreakIn"));
                 }
+
+                keyboard_A_Leniency = 0;
+                keyboard_D_Leniency = 0;
+                keyboard_S_Leniency = 0;
+                keyboard_W_Leniency = 0;
+                keyboard_AS_Leniency = 0;
+                keyboard_SD_Leniency = 0;
+                keyboard_DW_Leniency = 0;
+                keyboard_WA_Leniency = 0;
             }
             else
             {
