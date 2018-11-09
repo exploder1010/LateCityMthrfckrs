@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1837,16 +1837,6 @@ Prefab:
       propertyPath: startingVehicle_Prefab
       value: 
       objectReference: {fileID: 1237227072}
-    - target: {fileID: 114591109039094468, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: pauseMenu
-      value: 
-      objectReference: {fileID: 1328658713}
-    - target: {fileID: 114591109039094468, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: uiSource
-      value: 
-      objectReference: {fileID: 1705336803}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
   m_IsPrefabAsset: 0
@@ -3411,11 +3401,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1170920308701908, guid: f42627582812e454b81864fa9ee846b2,
     type: 2}
   m_PrefabInternal: {fileID: 446789652}
---- !u!1 &1328658713 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1501782452236260, guid: b5185f3ccc7202d4dadad1bafc06b104,
-    type: 2}
-  m_PrefabInternal: {fileID: 1720496828}
 --- !u!1 &1369507756
 GameObject:
   m_ObjectHideFlags: 0
@@ -3517,11 +3502,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!82 &1705336803 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 82530315493364374, guid: b5185f3ccc7202d4dadad1bafc06b104,
-    type: 2}
-  m_PrefabInternal: {fileID: 1720496828}
 --- !u!1001 &1720496828
 Prefab:
   m_ObjectHideFlags: 0

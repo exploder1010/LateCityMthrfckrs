@@ -6,15 +6,14 @@ using UnityEngine.UI;
 public class timerScript : MonoBehaviour {
 
     public float startTime;
-    private float timeRemaining;
-    private Text timeDisplay;
+    public float timeRemaining;
+    public Text timeDisplay;
     public GameObject gameOverUI;
     public GameObject pauseUI;
 
     // Use this for initialization
     void Start()
     {
-        timeDisplay = GameObject.Find("Time").GetComponent<Text>();
         timeRemaining = startTime;
     }
 

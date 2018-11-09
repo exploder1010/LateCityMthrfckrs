@@ -22,8 +22,6 @@ GameObject:
   - component: {fileID: 114052907293927590}
   - component: {fileID: 114118286750020480}
   - component: {fileID: 114511544142092730}
-  - component: {fileID: 114591109039094468}
-  - component: {fileID: 114910863637927826}
   - component: {fileID: 114229351609942880}
   m_Layer: 0
   m_Name: InputManager
@@ -745,27 +743,3 @@ MonoBehaviour:
     type: 2}
   spawnLocation: {fileID: 4906581704318046}
   startInAir: 0
---- !u!114 &114591109039094468
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1426989004046072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726ebe3f196d54d4199f4899a6e20c67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
-  uiSource: {fileID: 0}
---- !u!114 &114910863637927826
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1426989004046072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9721ac158bfa7e45a2658f916da3cbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
