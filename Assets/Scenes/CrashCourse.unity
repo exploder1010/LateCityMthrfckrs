@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 157498506}
   - component: {fileID: 157498503}
   - component: {fileID: 157498502}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ BoxCollider:
   m_GameObject: {fileID: 157498500}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.25, y: 1.2, z: 1.02}
   m_Center: {x: 0, y: 0, z: 0}
@@ -287,7 +287,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &170076733
 GameObject:
@@ -353,55 +353,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &446789652
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4124260555700760, guid: f42627582812e454b81864fa9ee846b2, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 6.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124260555700760, guid: f42627582812e454b81864fa9ee846b2, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 17
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124260555700760, guid: f42627582812e454b81864fa9ee846b2, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 87.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124260555700760, guid: f42627582812e454b81864fa9ee846b2, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124260555700760, guid: f42627582812e454b81864fa9ee846b2, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124260555700760, guid: f42627582812e454b81864fa9ee846b2, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124260555700760, guid: f42627582812e454b81864fa9ee846b2, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124260555700760, guid: f42627582812e454b81864fa9ee846b2, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f42627582812e454b81864fa9ee846b2, type: 2}
-  m_IsPrefabAsset: 0
---- !u!1 &446789653 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1170920308701908, guid: f42627582812e454b81864fa9ee846b2,
-    type: 2}
-  m_PrefabInternal: {fileID: 446789652}
 --- !u!82 &478133648 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 82530315493364374, guid: b5185f3ccc7202d4dadad1bafc06b104,
@@ -507,7 +460,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114591109039094468, guid: 0c764a85e46e25041b17d50324dec120,
         type: 2}
@@ -523,7 +476,8 @@ Prefab:
         type: 2}
       propertyPath: startingVehicle_Prefab
       value: 
-      objectReference: {fileID: 446789653}
+      objectReference: {fileID: 1845773076672696, guid: e0c505c806bab404cb1d22e712f6d460,
+        type: 2}
     - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
         type: 2}
       propertyPath: m_playerOneDefault
@@ -678,7 +632,7 @@ Prefab:
     - target: {fileID: 224544953412412634, guid: b5185f3ccc7202d4dadad1bafc06b104,
         type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 224544953412412634, guid: b5185f3ccc7202d4dadad1bafc06b104,
         type: 2}
@@ -746,7 +700,7 @@ GameObject:
   - component: {fileID: 1172209337}
   - component: {fileID: 1172209340}
   - component: {fileID: 1172209336}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -789,7 +743,7 @@ BoxCollider:
   m_GameObject: {fileID: 1172209334}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -860,7 +814,7 @@ GameObject:
   - component: {fileID: 1293843043}
   - component: {fileID: 1293843039}
   - component: {fileID: 1293843038}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pumpkin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -949,7 +903,7 @@ Transform:
   - {fileID: 1172209335}
   - {fileID: 157498501}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 12.547001}
 --- !u!135 &1293843043
 SphereCollider:
@@ -959,7 +913,7 @@ SphereCollider:
   m_GameObject: {fileID: 1293843037}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.53
   m_Center: {x: 0, y: 0, z: 0}
@@ -1046,7 +1000,7 @@ Transform:
   m_LocalScale: {x: 500, y: 1, z: 500}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1608664352
 Prefab:
