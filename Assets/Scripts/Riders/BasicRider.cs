@@ -15,9 +15,10 @@ public class BasicRider : MonoBehaviour, IRider {
     public Rigidbody rb;
     public Animator charAnim;
     public GameObject ragdollPrefab;
+    public HitBox lockOnCollider;
     public HitBox roadCollider;
     public HitBox vehicleCollider;
-    public HitBox lockOnCollider;
+    public HitBox brokenVehicleCollider;
     protected GameObject currentRagdoll;
 
     public GameObject targetIconPrefab;
@@ -35,6 +36,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     //current variables
     protected Vector3 vectorToAdd;
+    protected Vector3 prevVectorToAdd;
     protected Vector3 horVelocityCheck;
     protected float maxSpeedThisJump;
 
@@ -84,11 +86,8 @@ public class BasicRider : MonoBehaviour, IRider {
 
 
         updateAnimation();
-        if (roadCollider.collidersCount() > 0 )
-        {
-            handleRoadCollision();
-        }
 
+        handleRoadCollision();
         handleVehicleCollision();
 
     }
@@ -169,6 +168,7 @@ public class BasicRider : MonoBehaviour, IRider {
     //update horizontal movement
     protected virtual void updateMovement()
     {
+        
         vectorToAdd = vectorToAdd.normalized * airAccel; //make sure diagonals aren't overpowered, and apply speed to normalized vector.
 
         if (rb)
@@ -186,18 +186,19 @@ public class BasicRider : MonoBehaviour, IRider {
 
         }
 
+        prevVectorToAdd = vectorToAdd.normalized; //use this for anything outside of the normal update (like starting abilities)
         vectorToAdd = Vector3.zero; //reset at the end of each update
     }
 
     //begin initial jump from vehicle
-    public virtual void beginCarJump(float carSpeed)
+    public virtual void beginCarJump(Vector3 carVelocity)
     {
-        carLaunchSpeed = carSpeed;
-        float boostModifier = Mathf.Max((carSpeed / boostThreshold), 0.25f);
-        maxSpeedThisJump = Mathf.Max(30, carSpeed * boostModifier);
-        rb.velocity = transform.forward * carSpeed * boostModifier;
+        carLaunchSpeed = carVelocity.magnitude;
+        float boostModifier = Mathf.Max((carVelocity.magnitude / boostThreshold), 0.25f);
+        maxSpeedThisJump = Mathf.Max(30, carVelocity.magnitude * boostModifier);
+        rb.velocity = carVelocity.normalized * carVelocity.magnitude * boostModifier;
 
-        Debug.Log("carspeed: " + carSpeed + " boostModifier " + boostModifier);
+        Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
         
         carJumpTimer = carJumpTimeSet;
 
@@ -210,7 +211,7 @@ public class BasicRider : MonoBehaviour, IRider {
         //add full hop to car jump while jump is held
         if (carJumpTimer > 0)
         {
-            carJumpVelocity += ((carJumpVelocityAdd * (carLaunchSpeed / boostThreshold)) / carJumpTimeSet); //add full hop normalized to 1 second
+            carJumpVelocity += ((carJumpVelocityAdd) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
 
             carJumpTimer -= Time.deltaTime;
 
@@ -258,40 +259,23 @@ public class BasicRider : MonoBehaviour, IRider {
 
     //---------------------------update collisions:
 
-    //old way
-    ////add cars to close cars list
-    //protected virtual void OnTriggerStay(Collider other)
-    //{
-    //    if (rb.velocity.y < 0)
-    //    {
-    //        if (other.transform.root.transform.GetComponent<BasicVehicle>() && !closeVehicles.Contains(other.transform.root.transform.GetComponent<BasicVehicle>()))
-    //        {
-    //            closeVehicles.Add(other.transform.root.transform.GetComponent<BasicVehicle>());
-    //        }
-    //    }
-
-    //}
-
-    ////remove cars from close cars list
-    //protected virtual void OnTriggerExit(Collider other)
-    //{
-    //    if (other.transform.root.transform.GetComponent<BasicVehicle>())
-    //    {
-    //        closeVehicles.Remove(other.transform.root.transform.GetComponent<BasicVehicle>());
-    //    }
-    //}
-
     protected virtual void handleRoadCollision()
     {
-        if(currentRagdoll == null)
+        if (roadCollider.collidersCount() > 0 || brokenVehicleCollider.collidersCount() > 0)
+        {
+            spawnRagdoll();
+        }
+
+    }
+
+    protected virtual void spawnRagdoll()
+    {
+        if (currentRagdoll == null)
         {
             currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
             currentRagdoll.SetActive(true);
-            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = new Vector3(rb.velocity.x * 5f,-rb.velocity.y * 2f, rb.velocity.z * 5f);
-            
+            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = new Vector3(rb.velocity.x * 5f, -rb.velocity.y * 2f, rb.velocity.z * 5f);
         }
-
-        
     }
 
     protected virtual void handleVehicleCollision()
@@ -301,10 +285,6 @@ public class BasicRider : MonoBehaviour, IRider {
             if (!vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>().broken)
             {
                 hitVehicle = vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>();
-            }
-            else
-            {
-                handleRoadCollision();
             }
         }
     }

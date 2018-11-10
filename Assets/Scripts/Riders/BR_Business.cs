@@ -52,19 +52,11 @@ public class BR_Business : BasicRider {
 
     protected override void updateCarJump()
     {
-        //add full hop to car jump while jump is held
-        if (carJumpTimer > 0)
+        base.updateCarJump();
+
+        if (doubleJumpTimer > 0)
         {
-            carJumpVelocity += (carJumpVelocityAdd / carJumpTimeSet); //add full hop normalized to 1 second
-
-            carJumpTimer -= Time.deltaTime;
-
-            vectorToAdd = new Vector3(vectorToAdd.x, carJumpVelocity, vectorToAdd.z);
-
-        }
-        else if (doubleJumpTimer > 0)
-        {
-            doubleJumpVelocity += (doubleJumpVelocityAdd / doubleJumpTimeSet); //add full hop normalized to 1 second
+            doubleJumpVelocity += (doubleJumpVelocityAdd / doubleJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
 
             doubleJumpTimer -= Time.deltaTime;
 
@@ -79,8 +71,8 @@ public class BR_Business : BasicRider {
         {
             curAbilityAmmo--;
             
-            rb.velocity = rb.velocity.normalized * maxSpeedThisJump * 0.2f;
-            rb.velocity = Vector3.zero;
+            rb.velocity = prevVectorToAdd * maxSpeedThisJump * 0.2f;
+            //rb.velocity = Vector3.zero;
 
             doubleJumpTimer = doubleJumpTimeSet;
 

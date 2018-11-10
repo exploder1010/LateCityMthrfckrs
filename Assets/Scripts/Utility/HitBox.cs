@@ -5,7 +5,8 @@ using UnityEngine;
 public class HitBox : MonoBehaviour {
 
     private List<Collider> colliders = new List<Collider>();
-    public string layer;
+    public enum HitBoxType { Road = 0, Vehicle, BrokenVehicle };
+    public HitBoxType Type;
 
     // Use this for initialization
     void Start () {
@@ -19,10 +20,30 @@ public class HitBox : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer(layer))
+        switch (Type)
         {
-            colliders.Add(other);
+            case HitBoxType.Road:
+                if (other.gameObject.layer == LayerMask.NameToLayer("Road"))
+                {
+                    colliders.Add(other);
+                }
+                break;
+            case HitBoxType.Vehicle:
+                if (other.gameObject.layer == LayerMask.NameToLayer("Vehicle"))
+                {
+                    colliders.Add(other);
+                }
+                break;
+            case HitBoxType.BrokenVehicle:
+                if (other.gameObject.layer == LayerMask.NameToLayer("Vehicle") && other.transform.root.transform.GetComponent<BasicVehicle>() && other.transform.root.transform.GetComponent<BasicVehicle>().broken)
+                {
+                    colliders.Add(other);
+                }
+                break;
+            default:
+                break;
         }
+        
     }
 
     void OnTriggerExit(Collider other)
