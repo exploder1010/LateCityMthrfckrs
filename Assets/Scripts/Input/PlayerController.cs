@@ -66,7 +66,8 @@ namespace Luminosity.IO
             {
                 //process input for vehicle
                 case PlayerState.Vehicle:
-                    if(curVehicle.GetComponent<AudioSource>().isPlaying == false)
+                    Speedometer.ShowSpeed(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude, 0, 100);
+                    if (curVehicle.GetComponent<AudioSource>().isPlaying == false)
                     {
                         SoundScript.PlaySound(curVehicle.GetComponent<AudioSource>(), "Engine");
                     }
