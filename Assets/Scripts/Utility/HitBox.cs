@@ -29,7 +29,7 @@ public class HitBox : MonoBehaviour {
                 }
                 break;
             case HitBoxType.Vehicle:
-                if (other.gameObject.layer == LayerMask.NameToLayer("Vehicle"))
+                if (other.gameObject.layer == LayerMask.NameToLayer("Vehicle") && other.transform.root.transform.GetComponent<BasicVehicle>() && !other.transform.root.transform.GetComponent<BasicVehicle>().broken)
                 {
                     colliders.Add(other);
                 }

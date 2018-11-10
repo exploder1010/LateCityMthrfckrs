@@ -159,8 +159,10 @@ public class BasicRider : MonoBehaviour, IRider {
             if(targetedVehicle!= null)
             {
                 float dist = (targetedVehicle.transform.position - transform.position).magnitude;
-                storedNewCarMaxSpeed = rb.velocity.magnitude * ((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius));
-                storedNewCarStartSpeed = rb.velocity.magnitude * 0.8f * ((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius));
+
+                //new max speed and new start speed as a percent of current speed based on proximity to targeted car. right next to car = 99%, farthest away (but still in range) = 1%.
+                storedNewCarMaxSpeed = rb.velocity.magnitude * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
+                storedNewCarStartSpeed = rb.velocity.magnitude * 0.8f * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
             }
         }
     }
