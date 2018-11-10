@@ -8,8 +8,7 @@ public class timerScript : MonoBehaviour {
     public float startTime;
     public float timeRemaining;
     public Text timeDisplay;
-    public GameObject gameOverUI;
-    public GameObject pauseUI;
+    public ButtonScripts buttonScripts;
 
     // Use this for initialization
     void Start()
@@ -30,10 +29,7 @@ public class timerScript : MonoBehaviour {
 
         if(timeRemaining < 0)
         {
-            pauseUI.SetActive(false);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            gameOverUI.SetActive(true);
+            buttonScripts.GameOver();
         }
     }
 }
