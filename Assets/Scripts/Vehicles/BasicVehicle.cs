@@ -98,8 +98,10 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 endSpinMoveHop();
             }
         }
-        //if(motor != 0)
-        //Debug.Log(rb.velocity.magnitude);
+        if(motor != 0)
+        {
+         //   Debug.Log("MPH: " + rb.velocity.magnitude);
+        }
         Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
     }
 
@@ -120,6 +122,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
         startSpeed = newStartSpeed;
 
+        Debug.Log("new max speed, start speed: " + actualMaxSpeed + " " + startSpeed);
         if (rb)
         {
             if (startSMH)

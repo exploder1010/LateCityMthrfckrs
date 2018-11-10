@@ -158,8 +158,9 @@ public class BasicRider : MonoBehaviour, IRider {
             }
             if(targetedVehicle!= null)
             {
-                storedNewCarMaxSpeed = rb.velocity.magnitude;
-                storedNewCarStartSpeed = rb.velocity.magnitude * 0.75f;
+                float dist = (targetedVehicle.transform.position - transform.position).magnitude;
+                storedNewCarMaxSpeed = rb.velocity.magnitude * ((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius));
+                storedNewCarStartSpeed = rb.velocity.magnitude * 0.8f * ((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius));
             }
         }
     }
@@ -362,7 +363,7 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (!targetedVehicle)
         {
-            return rb.velocity.magnitude;
+            return rb.velocity.magnitude * 1.2f;
         }
         return storedNewCarMaxSpeed;
     }
@@ -372,7 +373,7 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (!targetedVehicle)
         {
-            return rb.velocity.magnitude * 0.75f;
+            return rb.velocity.magnitude;
         }
         return storedNewCarStartSpeed;
     }
