@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class LeaderboardScript : MonoBehaviour {
 
-    public Dictionary<string, int> leaderboard;
+    public Dictionary<string, float> leaderboard = new Dictionary<string, float>();
     public Text leaderboardText;
-    public GameObject namePrompt;
+    public Text namePrompt;
     public timerScript Timer;
 
 	// Use this for initialization
@@ -22,25 +22,35 @@ public class LeaderboardScript : MonoBehaviour {
 
     public void SavetoDictionary()
     {
-        namePrompt.SetActive(true);
-        //leaderboard.Add(namePrompt.SubmitEvent(), Timer.timeRemaining);
+        print("saving");
+        if (!leaderboard.ContainsKey(namePrompt.text))
+        {
+            leaderboard.Add(namePrompt.text, Timer.timeRemaining);
+            print(leaderboard[namePrompt.text]);
+        }
+        else
+        {
+            leaderboard[namePrompt.text] = Timer.timeRemaining;
+        }
+        print(leaderboard[namePrompt.text]);
     }
 
     public void ShowLeaderboard()
     {
+        List<KeyValuePair<string, float>> sortedDict = new List<KeyValuePair<string, float>>();
         foreach (var entry in leaderboard)
+        {
+            sortedDict.Add(entry);
+        }
+        sortedDict.Sort(delegate (KeyValuePair<string, float> pair1, KeyValuePair<string, float> pair2)
+        {
+            return pair1.Value.CompareTo(pair2.Value);
+        }
+        );
+        foreach (var entry in sortedDict)
         {
             leaderboardText.text += entry;
             leaderboardText.text += "\n";
         }
-    }
-
-    public void SaveScore()
-    {
-        //using (StreamWriter file = new StreamWriter(SceneManager.GetActiveScene().name))
-        //{
-        //    //read player score and ask for name
-        //    file.WriteLine("name" + "score");
-        //}
     }
 }
