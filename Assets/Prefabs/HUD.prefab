@@ -235,7 +235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1450343536830056
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,6 +984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9721ac158bfa7e45a2658f916da3cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseUI: {fileID: 1501782452236260}
+  gameOverUI: {fileID: 1771463190947256}
 --- !u!114 &114227304238540650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2182,8 +2184,7 @@ MonoBehaviour:
   startTime: 60
   timeRemaining: 0
   timeDisplay: {fileID: 114536164359750806}
-  gameOverUI: {fileID: 1771463190947256}
-  pauseUI: {fileID: 1501782452236260}
+  buttonScripts: {fileID: 114218801828368976}
 --- !u!114 &114870376551927880
 MonoBehaviour:
   m_ObjectHideFlags: 1

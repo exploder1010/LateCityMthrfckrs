@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class ButtonScripts : MonoBehaviour {
 
+    public GameObject pauseUI;
+    public GameObject gameOverUI;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -32,5 +35,13 @@ public class ButtonScripts : MonoBehaviour {
     public void LoadScene(string name)
     {
         SceneManager.LoadScene(name);
+    }
+
+    public void GameOver()
+    {
+        pauseUI.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        gameOverUI.SetActive(true);
     }
 }

@@ -289,8 +289,8 @@ namespace Luminosity.IO
                     {
 
                         //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
-
                         SoundScript.PlaySound(playerSource, "Death");
+                        GameObject.Find("HUD").GetComponent<ButtonScripts>().GameOver();
 
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
