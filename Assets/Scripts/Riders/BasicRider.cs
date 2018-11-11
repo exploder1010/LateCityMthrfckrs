@@ -161,8 +161,8 @@ public class BasicRider : MonoBehaviour, IRider {
                 float dist = (targetedVehicle.transform.position - transform.position).magnitude;
 
                 //new max speed and new start speed as a percent of current speed based on proximity to targeted car. right next to car = 99%, farthest away (but still in range) = 1%.
-                storedNewCarMaxSpeed = rb.velocity.magnitude * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
-                storedNewCarStartSpeed = rb.velocity.magnitude * 0.8f * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
+                storedNewCarMaxSpeed = rb.velocity.magnitude + (rb.velocity.magnitude * 0.2f) * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
+                storedNewCarStartSpeed = rb.velocity.magnitude;// + (rb.velocity.magnitude * 0.2f) * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
             }
         }
     }
@@ -194,18 +194,35 @@ public class BasicRider : MonoBehaviour, IRider {
     }
 
     //begin initial jump from vehicle
-    public virtual void beginCarJump(Vector3 carVelocity)
+    public virtual void beginCarJump(Vector3 carVelocity, bool buttonLaunch)
     {
-        carLaunchSpeed = carVelocity.magnitude;
-        float boostModifier = Mathf.Max((carVelocity.magnitude / boostThreshold), 0.25f);
-        maxSpeedThisJump = Mathf.Max(30, carVelocity.magnitude * boostModifier);
-        rb.velocity = carVelocity.normalized * carVelocity.magnitude * boostModifier;
-
-        Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
         
-        carJumpTimer = carJumpTimeSet;
 
-        rb.AddForce(Vector3.up * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * boostModifier));
+        if (buttonLaunch)
+        {
+            carLaunchSpeed = carVelocity.magnitude;
+            float boostModifier = Mathf.Max((carVelocity.magnitude / boostThreshold), 0.25f);
+            maxSpeedThisJump = Mathf.Max(30, carVelocity.magnitude * boostModifier);
+            rb.velocity = carVelocity.normalized * carLaunchSpeed * boostModifier;
+            rb.AddForce(Vector3.up * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * boostModifier));
+
+            //Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
+            Debug.Log("cls " +carLaunchSpeed);
+        }
+        else
+        {
+            carLaunchSpeed = 2f;
+            //float boostModifier = Mathf.Max((carVelocity.magnitude / boostThreshold), 0.25f);
+            maxSpeedThisJump = 10f;
+            rb.velocity = carVelocity.normalized * carLaunchSpeed;
+            rb.AddForce(Vector3.up * 2f * carJumpStartImpulse);
+
+            //Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
+            Debug.Log("cls " + carLaunchSpeed);
+        }
+
+
+        carJumpTimer = carJumpTimeSet;
     }
 
     //hold initial jump from vehicle
@@ -365,7 +382,7 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (!targetedVehicle)
         {
-            return rb.velocity.magnitude * 1.2f;
+            return rb.velocity.magnitude * 30f;
         }
         return storedNewCarMaxSpeed;
     }

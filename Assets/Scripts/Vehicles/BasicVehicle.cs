@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BasicVehicle : MonoBehaviour, IVehicle {
 
-    public HitBox crashHitBox;
+    public HitBox roofRoadHitBox;
+    public HitBox vehicleHitBox;
 
     public float breakInDistance;
     public List<AxleInfo> axleInfos;
@@ -33,6 +34,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     float spinLeft;
     int spinDir;
     Vector3 spinDirection;
+
+    //collision
+    Vector3 prevVelocity;
     
 
     private void Start()
@@ -47,64 +51,64 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     private void FixedUpdate()
     {
 
-        handleCrashCollision();
-        foreach (AxleInfo axle in axleInfos)
+        if (!broken)
         {
-            if (axle.motor)
+            handleCrashCollision();
+            foreach (AxleInfo axle in axleInfos)
             {
-                axle.leftWheel.motorTorque = motor;
-                axle.rightWheel.motorTorque = motor;
-            }
-            if (axle.steering)
-            {
-                float newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
-                axle.leftWheel.steerAngle = newSteering;
-                axle.rightWheel.steerAngle = newSteering;
-            }
-        }
-
-        if (!spinMoveHop)
-        {
-
-            Stablization();
-        }
-
-        TransformWheelMeshes();
-        constrainMaxSpeed();
-
-        
-
-        if (spinMoveHop)
-        {
-            if (spinMove)
-            {
-                if (spinMove && spinLeft > 0)
+                if (axle.motor)
                 {
-                    float newSpin = spinDir * 2000f * Time.deltaTime;
-                    transform.RotateAround(transform.position, transform.up, newSpin);
-                    spinLeft -= newSpin;
+                    axle.leftWheel.motorTorque = motor;
+                    axle.rightWheel.motorTorque = motor;
+                }
+                if (axle.steering)
+                {
+                    float newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                    axle.leftWheel.steerAngle = newSteering;
+                    axle.rightWheel.steerAngle = newSteering;
                 }
             }
-            else
+
+            if (!spinMoveHop)
             {
 
-                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-
+                Stablization();
             }
 
-            rb.velocity = new Vector3(rb.velocity.x,curSpinJump,rb.velocity.z);
-            curSpinJump -= Time.deltaTime * 30f;
+            TransformWheelMeshes();
+            constrainMaxSpeed();
 
-            if (CheckWheelsOnGround() && rb.velocity.y < 0)
+            if (spinMoveHop)
             {
-                endSpinMoveHop();
+                if (spinMove)
+                {
+                    if (spinMove && spinLeft > 0)
+                    {
+                        float newSpin = spinDir * 2000f * Time.deltaTime;
+                        transform.RotateAround(transform.position, transform.up, newSpin);
+                        spinLeft -= newSpin;
+                    }
+                }
+                else
+                {
+
+                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+
+                }
+
+                rb.velocity = new Vector3(rb.velocity.x, curSpinJump, rb.velocity.z);
+                curSpinJump -= Time.deltaTime * 30f;
+
+                if (CheckWheelsOnGround() && rb.velocity.y < 0)
+                {
+                    endSpinMoveHop();
+                }
             }
+
+            Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
+            prevVelocity = rb.velocity;
         }
-        if(motor != 0)
-        {
-         //   Debug.Log("MPH: " + rb.velocity.magnitude);
-        }
-        Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
+
     }
 
     public void inputHorz(float direction)
@@ -311,22 +315,54 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     protected virtual void handleCrashCollision()
     {
-        if(crashHitBox.collidersCount() > 0)
+        if (motor != 0)
         {
-            Debug.Log("OK");
+            //roofRoadHitBox.collidersCount() > 0 || roadHitBox.collidersCount() > 0 || 
+            Debug.Log("MPH: " + rb.velocity.magnitude + " prev " + prevVelocity.magnitude);
+        }
+        if (roofRoadHitBox.collidersCount() > 0 || vehicleHitBox.collidersCount() > 0 || ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude))
+        {
+            //Debug.Log("Major Crash on Late City Highway");
+            broken = true;
 
-            Debug.Log("CHECK " + rb.velocity.magnitude);
-            if (rb.velocity.magnitude > crashSpeed)
+            if (vehicleHitBox.collidersCount() > 0)
             {
-                //Debug.Log("Major Crash on Late City Highway");
-                broken = true;
-            }
-            else
-            {
-                //Debug.Log("Minor Fender Bender");
+                Debug.Log("vehic");
+                foreach(Collider other in vehicleHitBox.returnColliders())
+                {
+                    Debug.Log("the vehic" + other.transform.root);
+                    other.transform.root.transform.GetComponent<BasicVehicle>().broken = true;
+
+                    Vector3 dir = (other.transform.root.transform.position - transform.position).normalized;
+
+                    Debug.DrawRay(transform.position, dir * 10000f + transform.up * 10000f, Color.blue, 10f);
+
+                    rb.AddForce((dir * 10000f + transform.up * 10000f), ForceMode.Impulse);
+                    other.transform.root.transform.GetComponent<Rigidbody>().AddForce((-dir * 10000f + other.transform.root.transform.up * 10000f) , ForceMode.Impulse);
+                }
             }
         }
     }
+
+    //void OnCollisionEnter(Collision other)
+    //{
+    //    if (other.transform.GetComponent<BasicVehicle>())
+    //    {
+    //        //Debug.Log("Crash Collision = " + rb.velocity.magnitude);
+    //        if (rb.velocity.magnitude > crashSpeed)
+    //        {
+    //            //High impact crash. Play crash sound and set broken to true.
+    //            //When car checks if broken is true or false, result will cause a crash from within PlayerController.
+    //            //Debug.Log("Major Crash on Late City Highway");
+    //            other.transform.root.transform.GetComponent<BasicVehicle>().broken = true;
+    //            broken = true;
+    //        }
+    //        else
+    //        {
+
+    //        }
+    //    }
+    //}
 }
 
 
