@@ -158,7 +158,7 @@ namespace Luminosity.IO
                     if(GamePad)
                     {
                         Vector3 newLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
-                        if (curVehicle.isSpinMoveHop() && (newLStickInput - prevLStickInput).magnitude > 1f)
+                        if (curVehicle.isSpinMoveHop() && (newLStickInput - prevLStickInput).magnitude > 0.9f)
                         {
                             curVehicle.startSpinMove((newLStickInput - prevLStickInput).normalized);
                         }
