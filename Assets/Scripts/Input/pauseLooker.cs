@@ -5,8 +5,6 @@ using UnityEngine;
 public class pauseLooker : MonoBehaviour {
 
     public GameObject pauseMenu;
-    public GameObject winMenu;
-    public GameObject gameOverMenu;
     public AudioSource uiSource;
 
     // Use this for initialization
@@ -19,26 +17,23 @@ public class pauseLooker : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(gameOverMenu.activeSelf == false && winMenu.activeSelf == false)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            print("hello");
+            SoundScript.PlaySound(uiSource, "UI Click");
+
+            if (pauseMenu.activeSelf == true)
             {
-                print("hello");
-                SoundScript.PlaySound(uiSource, "UI Click");
+                pauseMenu.SetActive(false);
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
 
-                if (pauseMenu.activeSelf == true)
-                {
-                    pauseMenu.SetActive(false);
-                    Cursor.visible = false;
-                    Cursor.lockState = CursorLockMode.Locked;
-                }
-
-                else if (pauseMenu.activeSelf == false)
-                {
-                    pauseMenu.SetActive(true);
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None;
-                }
+            else if (pauseMenu.activeSelf == false)
+            {
+                pauseMenu.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }
