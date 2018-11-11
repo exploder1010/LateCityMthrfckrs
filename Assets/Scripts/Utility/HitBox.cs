@@ -21,37 +21,41 @@ public class HitBox : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collide");
-        switch (Type)
+        if(other.transform.root != transform.root)
         {
-            case HitBoxType.Road:
-                if (other.gameObject.layer == LayerMask.NameToLayer("Road"))
-                {
-                    Debug.Log("Collide 2");
-                    colliders.Add(other);
-                }
-                break;
-            case HitBoxType.Vehicle:
-                if (other.gameObject.layer == LayerMask.NameToLayer("Vehicle") && other.transform.root.transform.GetComponent<BasicVehicle>() && !other.transform.root.transform.GetComponent<BasicVehicle>().broken)
-                {
-                    colliders.Add(other);
-                }
-                break;
-            case HitBoxType.BrokenVehicle:
-                if (other.gameObject.layer == LayerMask.NameToLayer("Vehicle") && other.transform.root.transform.GetComponent<BasicVehicle>() && other.transform.root.transform.GetComponent<BasicVehicle>().broken)
-                {
-                    colliders.Add(other);
-                }
-                break;
-            case HitBoxType.Wall:
-                if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
-                {
-                    colliders.Add(other);
-                }
-                break;
-            default:
-                Debug.Log("Collide 3");
-                break;
+            switch (Type)
+            {
+                case HitBoxType.Road:
+                    if (other.gameObject.layer == LayerMask.NameToLayer("Road"))
+                    {
+                        Debug.Log("Collide 2");
+                        colliders.Add(other);
+                    }
+                    break;
+                case HitBoxType.Vehicle:
+                    if (other.gameObject.layer == LayerMask.NameToLayer("Vehicle") && other.transform.root.transform.GetComponent<BasicVehicle>() && !other.transform.root.transform.GetComponent<BasicVehicle>().broken)
+                    {
+                        colliders.Add(other);
+                    }
+                    break;
+                case HitBoxType.BrokenVehicle:
+                    if (other.gameObject.layer == LayerMask.NameToLayer("Vehicle") && other.transform.root.transform.GetComponent<BasicVehicle>() && other.transform.root.transform.GetComponent<BasicVehicle>().broken)
+                    {
+                        colliders.Add(other);
+                    }
+                    break;
+                case HitBoxType.Wall:
+                    if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
+                    {
+                        colliders.Add(other);
+                    }
+                    break;
+                default:
+                    Debug.Log("Collide 3");
+                    break;
+            }
         }
+       
         
     }
 

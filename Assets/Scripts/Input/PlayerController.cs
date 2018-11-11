@@ -422,21 +422,21 @@ namespace Luminosity.IO
                     curVehicle.inputHorz(0);
                     curVehicle.inputAccel(0);
 
-                    //spawn rider above car.
-                    curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
                     
-                    curRider.externalStart(mainCamera.transform);
 
                     if (buttonLaunch)
                     {
-                        //Based on button press, so gives good potential for long distance travel.
-                        curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity);
+                        //spawn rider above car.
+                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
                     }
                     else
                     {
-                        //Based on collision, so gives poor potential for long distance travel
-                        curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity * 0.2f);
+                        //spawn rider above car.
+                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+
                     }
+                    curRider.externalStart(mainCamera.transform);
+                    curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity, buttonLaunch);
                 }
                 else
                 {
