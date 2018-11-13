@@ -20,9 +20,12 @@ public class CameraController : MonoBehaviour
     private float backDistance = 10f;
     private float upDistance = 2f;
     private Transform focus;
+    private Quaternion forward;
+    private float lerpSpeed;
 
     // Use this for initialization
     void Start () {
+        forward = new Quaternion(0, 0, 0, 0);
     }
 	
 	// Update is called once per frame
@@ -34,26 +37,38 @@ public class CameraController : MonoBehaviour
         camRotX = ClampAngle(camRotX, camMinX, camMaxX);
         camRotY = ClampAngle(camRotY, camMinY, camMaxY);
 
-        Quaternion xQuaternion = Quaternion.AngleAxis(camRotX, Vector3.up);
-        Quaternion yQuaternion = Quaternion.AngleAxis(camRotY, -Vector3.right);
-
         if (focus != null)
         {
             transform.position = focus.transform.position - (Vector3.forward * backDistance) + (Vector3.up * upDistance);//default rotation behind vehicle
-            transform.LookAt(focus.transform.position + (Vector3.up * 2f));//look slightly about vehicle
+            transform.LookAt(focus.transform.position);
             transform.RotateAround(focus.transform.position, Vector3.up, camRotX);//x rot
             transform.RotateAround(focus.transform.position, transform.right, camRotY);//y rot
         }
+        camRotX = Mathf.LerpAngle(camRotX, forward.eulerAngles.y, lerpSpeed * Time.deltaTime);
     }
 
     private void ChangeFocus(Transform newFocus)
     {
-        focus = newFocus;
+        forward = newFocus.rotation;
+        if (focus != newFocus)
+        {
+            focus = newFocus;
+        }
+
+        if (focus.GetComponent<BasicVehicle>() != null)
+        {
+            lerpSpeed = 1.5f;
+        }
+        else
+        {
+            lerpSpeed = 0;
+        }
     }
 
     private void ChangeDistance(float distanceBack)
     { 
-        backDistance = Mathf.Lerp(backDistance, distanceBack, 0.01f);
+        if (distanceBack > backDistance + .01f || distanceBack < backDistance - .01f)
+            backDistance = Mathf.Lerp(backDistance, distanceBack, 0.01f);
     }
 
     private static float ClampAngle(float angle, float min, float max)
