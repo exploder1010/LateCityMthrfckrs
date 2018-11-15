@@ -5,11 +5,11 @@ using UnityEngine;
 public class BasicRider : MonoBehaviour, IRider {
 
     //nick's todo:
-    //get carjump to be modified by maxspeed
-    //improve hitbox/detection
-    //let player select car with joystick (and visualize selected car)
-    //polish
-    //test car hop rotation move
+    //cleanup
+    //polish jump boost threshold
+    //make sure jump boost threshold is visible
+    //make sure car weight gets polished
+    //misc polishing
 
     //references to set in prefab
     public Rigidbody rb;
@@ -42,7 +42,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     //movement variables
     public float airAccel = 30; //Rate at which player accelerates in air
-    public float boostThreshold = 40; //Point that previous car speed needs to surpass for player to move faster than the previous car
+    public float boostThreshold = 0.85f; //Point that previous car speed needs to surpass for player to move faster than the previous car
 
     //car jump variables
     public float carJumpTimeSet = 0.15f;
@@ -160,9 +160,10 @@ public class BasicRider : MonoBehaviour, IRider {
             {
                 float dist = (targetedVehicle.transform.position - transform.position).magnitude;
 
+                //DONT CHANGE THIS FOR NOW -- NICK
                 //new max speed and new start speed as a percent of current speed based on proximity to targeted car. right next to car = 99%, farthest away (but still in range) = 1%.
-                storedNewCarMaxSpeed = rb.velocity.magnitude + (rb.velocity.magnitude * 0.2f) * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
-                storedNewCarStartSpeed = rb.velocity.magnitude;// + (rb.velocity.magnitude * 0.2f) * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
+                storedNewCarMaxSpeed = Mathf.Max(30f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.6f) * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
+                storedNewCarStartSpeed = Mathf.Max(30f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.2f) * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
             }
         }
     }
@@ -194,14 +195,14 @@ public class BasicRider : MonoBehaviour, IRider {
     }
 
     //begin initial jump from vehicle
-    public virtual void beginCarJump(Vector3 carVelocity, bool buttonLaunch)
+    public virtual void beginCarJump(Vector3 carVelocity, float carMaxSpeed, bool buttonLaunch)
     {
         
 
         if (buttonLaunch)
         {
             carLaunchSpeed = carVelocity.magnitude;
-            float boostModifier = Mathf.Max((carVelocity.magnitude / boostThreshold), 0.25f);
+            float boostModifier = Mathf.Max((carVelocity.magnitude / (carMaxSpeed * boostThreshold)), 0.25f);
             maxSpeedThisJump = Mathf.Max(30, carVelocity.magnitude * boostModifier);
             rb.velocity = carVelocity.normalized * carLaunchSpeed * boostModifier;
             rb.AddForce(Vector3.up * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * boostModifier));
@@ -212,7 +213,7 @@ public class BasicRider : MonoBehaviour, IRider {
         else
         {
             carLaunchSpeed = 2f;
-            //float boostModifier = Mathf.Max((carVelocity.magnitude / boostThreshold), 0.25f);
+            //float boostModifier = Mathf.Max((carVelocity.magnitude / (carMaxSpeed * boostThreshold)), 0.25f);
             maxSpeedThisJump = 10f;
             rb.velocity = carVelocity.normalized * carLaunchSpeed;
             rb.AddForce(Vector3.up * 2f * carJumpStartImpulse);
@@ -382,7 +383,7 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (!targetedVehicle)
         {
-            return rb.velocity.magnitude * 30f;
+            return Mathf.Max(30f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.7f);//dont change this yet - nick
         }
         return storedNewCarMaxSpeed;
     }
@@ -392,7 +393,7 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (!targetedVehicle)
         {
-            return rb.velocity.magnitude;
+            return Mathf.Max(30f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.3f);//dont change this yet - nick
         }
         return storedNewCarStartSpeed;
     }

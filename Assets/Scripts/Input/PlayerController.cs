@@ -436,7 +436,7 @@ namespace Luminosity.IO
 
                     }
                     curRider.externalStart(mainCamera.transform);
-                    curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity, buttonLaunch);
+                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnExitMaxSpeed(), buttonLaunch);
                 }
                 else
                 {

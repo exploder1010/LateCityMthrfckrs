@@ -344,6 +344,16 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         }
     }
 
+    public Vector3 returnExitVelocity()
+    {
+        return rb.velocity;
+    }
+
+    public float returnExitMaxSpeed()
+    {
+        return actualMaxSpeed;
+    }
+
     //void OnCollisionEnter(Collision other)
     //{
     //    if (other.transform.GetComponent<BasicVehicle>())
