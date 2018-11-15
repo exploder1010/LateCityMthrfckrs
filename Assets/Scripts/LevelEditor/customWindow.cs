@@ -11,6 +11,8 @@ public class CustomWindow : EditorWindow
     public int index = 0;
 
     private GameObject[] roadPrefabs;
+    private string localPath = "Assets/Prefabs/LevelBlocks/";
+    private string prefabName = "";
 
     [MenuItem("Tools/LevelEditor")]
     static void Init()
@@ -65,9 +67,38 @@ public class CustomWindow : EditorWindow
             if (GUILayout.Button("Create"))
                 InstantiatePrimitive(Selection.activeGameObject);
         }
+        else if (Selection.activeGameObject != null && Selection.activeGameObject.name.Contains("Blank"))
+        {
+            EditorGUILayout.LabelField("Please select an orb, then reselect this window", GUILayout.Height(60));
+            GUILayout.Label("Create New Prefab", EditorStyles.boldLabel, GUILayout.Height(30));
+            EditorGUILayout.LabelField("Prefab Name", GUILayout.Width(250));
+            prefabName = GUILayout.TextField(prefabName, GUILayout.Width(300));
+            if (GUILayout.Button("Create Prefab") && prefabName != "")
+            {
+                String fullPath = localPath + prefabName + ".prefab";
+                if (AssetDatabase.LoadAssetAtPath(fullPath, typeof(GameObject)))
+                {
+                    //Create dialog to ask if User is sure they want to overwrite existing prefab
+                    if (EditorUtility.DisplayDialog("Are you sure?",
+                            "The prefab already exists. Do you want to overwrite it?",
+                            "Yes",
+                            "No"))
+                    //If the user presses the yes button, create the Prefab
+                    {
+                        CreateNew(Selection.activeGameObject, fullPath);
+                    }
+                }
+                //If the name doesn't exist, create the new Prefab
+                else
+                {
+                    CreateNew(Selection.activeGameObject, fullPath);
+                }
+            }
+        }
         else
         {
             EditorGUILayout.LabelField("Please select an orb, then reselect this window");
+            
         }
     }
 
@@ -86,6 +117,13 @@ public class CustomWindow : EditorWindow
     {
         GameObject newRoadType = roadPrefabs[index];
         selectedOrb.SendMessage("GenerateRoad", newRoadType);
+    }
+
+    private void CreateNew(GameObject obj, string localPath)
+    {
+        //Create a new prefab at the path given
+        UnityEngine.Object prefab = PrefabUtility.CreatePrefab(localPath, obj);
+        GameObject.Find("LevelEditor").SendMessage("AddToPrefabs", prefab);
     }
 }
 #endif

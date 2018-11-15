@@ -103,5 +103,26 @@ public class LevelEditor : MonoBehaviour
         clone.transform.parent = parent.transform;
         Selection.activeGameObject = clone;
     }
+
+    private void AddToPrefabs(GameObject obj)
+    {
+
+        GameObject[] newPrefabs = new GameObject[roadPrefabs.Length + 1];
+        int i;
+        bool duplicate = false;
+        for (i = 0; i < roadPrefabs.Length; i++)
+        {
+            if (roadPrefabs[i] == null)
+            {
+                duplicate = true;
+                roadPrefabs[i] = obj;
+            }
+            newPrefabs[i] = roadPrefabs[i];
+        }
+        newPrefabs[i] = obj;
+
+        if (!duplicate)
+            roadPrefabs = newPrefabs;
+    }
 }
 #endif
