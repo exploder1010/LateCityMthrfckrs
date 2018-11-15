@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.496413, b: 0.5748175, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2136,7 +2136,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4699398456463254, guid: 57381fa3f0242f14da93e232605605eb, type: 2}
       propertyPath: m_LocalRotation.w
-      value: -0.7071068
+      value: 0.7071067
       objectReference: {fileID: 0}
     - target: {fileID: 4699398456463254, guid: 57381fa3f0242f14da93e232605605eb, type: 2}
       propertyPath: m_RootOrder
@@ -7140,7 +7140,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4654179163867336, guid: bd3643c55820d2b4b856e01ba8cca99b, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4654179163867336, guid: bd3643c55820d2b4b856e01ba8cca99b, type: 2}
       propertyPath: m_LocalRotation.z
@@ -7148,7 +7148,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4654179163867336, guid: bd3643c55820d2b4b856e01ba8cca99b, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4654179163867336, guid: bd3643c55820d2b4b856e01ba8cca99b, type: 2}
       propertyPath: m_RootOrder
@@ -7515,6 +7515,11 @@ Prefab:
       propertyPath: m_Name
       value: GeneratedBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 23574595954786314, guid: f37f101a054298b4c843c45660c853c8,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 272309456328dda43bcf0080a9cb3e4b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f37f101a054298b4c843c45660c853c8, type: 2}
   m_IsPrefabAsset: 0
