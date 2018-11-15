@@ -320,7 +320,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             //roofRoadHitBox.collidersCount() > 0 || roadHitBox.collidersCount() > 0 || 
             Debug.Log("MPH: " + rb.velocity.magnitude + " prev " + prevVelocity.magnitude);
         }
-        if (roofRoadHitBox.collidersCount() > 0 || vehicleHitBox.collidersCount() > 0 || ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude))
+        if (roofRoadHitBox != null && (roofRoadHitBox.collidersCount() > 0 || vehicleHitBox.collidersCount() > 0 || ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude)))
         {
             //Debug.Log("Major Crash on Late City Highway");
             broken = true;
