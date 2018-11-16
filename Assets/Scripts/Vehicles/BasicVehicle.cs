@@ -250,7 +250,6 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     }
 
-
     void TransformWheelMeshes()
     {
         foreach(AxleInfo axle in axleInfos)
@@ -353,6 +352,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     {
         return actualMaxSpeed;
     }
+
 
     //void OnCollisionEnter(Collision other)
     //{

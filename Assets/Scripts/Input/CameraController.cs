@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     private float camRotX;
     private float camRotY;
     private float backDistance = 10f;
-    private float upDistance = 2f;
+    private float upDistance = 5f;
     private Transform focus;
     private Quaternion forward;
     private float lerpSpeed;
