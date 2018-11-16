@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
     private Quaternion targetRotation;
     private bool hasSpinHopped;
     private bool prevRider;
+    private bool prevCarGrounded;
     private float prevFocusEulerY;
 
     // Use this for initialization
@@ -54,9 +55,9 @@ public class CameraController : MonoBehaviour
                 hasSpinHopped = true;
             }
 
-            if (focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop())
+            if (focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop() && focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround())
             {
-                if (hasSpinHopped || prevRider)
+                if (hasSpinHopped || prevRider || !prevCarGrounded)
                 {
 
                     //transform.rotation.SetLookRotation(focus.forward,focus.up);
@@ -71,7 +72,7 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                if (!prevRider && focus.transform.GetComponent<BasicRider>())
+                if (!prevRider && focus.transform.GetComponent<BasicRider>() || prevCarGrounded)
                 {
 
 
@@ -98,7 +99,7 @@ public class CameraController : MonoBehaviour
             transform.position = nahThisThePosition;
             //transform.rotation = nahThisTheRotation;
 
-            transform.position += (targetPosition - transform.position) * Time.deltaTime * 35f;
+            transform.position += (targetPosition - transform.position) * Time.deltaTime * 30f;
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 50f);
 
             //spring arm
@@ -111,6 +112,7 @@ public class CameraController : MonoBehaviour
                 transform.position = hit.point;
             }
 
+            prevCarGrounded = (focus.GetComponent<BasicVehicle>() && focus.GetComponent<BasicVehicle>().easyCheckWheelsOnGround()); 
             prevRider = focus.GetComponent<BasicRider>() != null;
             prevFocusEulerY = focus.eulerAngles.y;
         }

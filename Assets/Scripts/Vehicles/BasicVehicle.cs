@@ -284,7 +284,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     }
 
-    bool easyCheckWheelsOnGround()
+    public bool easyCheckWheelsOnGround()
     {
         bool wheelsOnGround = false;
         foreach (AxleInfo axle in axleInfos)
