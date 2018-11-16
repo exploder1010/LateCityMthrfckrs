@@ -37,7 +37,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     //collision
     Vector3 prevVelocity;
-    
+
+    //Brady
+    public bool WheelsOnGround;
 
     private void Start()
     {
@@ -46,6 +48,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         axleInfos[0].leftWheel.GetComponent<WheelCollider>().ConfigureVehicleSubsteps(5, 12, 15);
  
         rb = GetComponent<Rigidbody>();
+
+        WheelsOnGround = true;
     }
 
     private void FixedUpdate()
@@ -237,16 +241,16 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     bool CheckWheelsOnGround()
     {
-        bool wheelsOnGround = true;
         foreach (AxleInfo axle in axleInfos)
         {
             if (!(axle.leftWheel.isGrounded && axle.rightWheel.isGrounded))
             {
-                wheelsOnGround = false;
-                break;
+                WheelsOnGround = false;
+                return WheelsOnGround;
             }
         }
-        return wheelsOnGround;
+        WheelsOnGround = true;
+        return WheelsOnGround;
 
     }
 
