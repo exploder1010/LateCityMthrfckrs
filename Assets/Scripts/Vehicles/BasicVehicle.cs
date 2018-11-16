@@ -84,15 +84,19 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             {
                 if (motor > 0)
                 {
-                    Debug.Log("do");
-                    rb.AddTorque(transform.right * 2f * 1000f);
+                  //  Debug.Log("do");
+                    rb.AddTorque(transform.right *  1000f);
                 }
                 else if (motor < 0)
-                    rb.AddTorque(-transform.right * 2f * 1000f);
+                    rb.AddTorque(-transform.right * 1000f);
                 if (steeringInput > 0)
-                    rb.AddTorque(transform.up * 1.2f * 1000f);
+                    rb.AddTorque(transform.up * 1000f);
                 else if (steeringInput < 0)
-                    rb.AddTorque(-transform.up * 1.2f * 1000f);
+                    rb.AddTorque(-transform.up * 1000f);
+                //if (steeringInput > 0)
+                //    rb.AddTorque(-transform.forward * 1000f);
+                //else if (steeringInput < 0)
+                //    rb.AddTorque(transform.forward *  1000f);
             }
 
             if (spinMoveHop)
