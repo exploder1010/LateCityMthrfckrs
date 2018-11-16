@@ -158,7 +158,7 @@ namespace Luminosity.IO
                     if(GamePad)
                     {
                         Vector3 newLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
-                        if (curVehicle.isSpinMoveHop() && (newLStickInput - prevLStickInput).magnitude > 1f)
+                        if (curVehicle.isSpinMoveHop() && (newLStickInput - prevLStickInput).magnitude > 0.9f)
                         {
                             curVehicle.startSpinMove((newLStickInput - prevLStickInput).normalized);
                         }
@@ -427,7 +427,7 @@ namespace Luminosity.IO
                     if (buttonLaunch)
                     {
                         //spawn rider above car.
-                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 2.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
                     }
                     else
                     {
@@ -436,7 +436,7 @@ namespace Luminosity.IO
 
                     }
                     curRider.externalStart(mainCamera.transform);
-                    curRider.beginCarJump(curVehicle.transform.GetComponent<Rigidbody>().velocity, buttonLaunch);
+                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnExitMaxSpeed(), buttonLaunch);
                 }
                 else
                 {
