@@ -99,7 +99,13 @@ public class CameraController : MonoBehaviour
             transform.position = nahThisThePosition;
             //transform.rotation = nahThisTheRotation;
 
-            transform.position += (targetPosition - transform.position) * Time.deltaTime * 30f;
+            //transform.position += (targetPosition - transform.position) * Time.deltaTime * 30f;
+            //if((targetPosition - transform.position).magnitude > 1f)
+            //{
+                transform.position += (targetPosition - transform.position) * Time.deltaTime * 30f;
+                //transform.position = targetPosition;
+            //}
+
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 50f);
 
             //spring arm

@@ -40,9 +40,6 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     //collision
     Vector3 prevVelocity;
 
-    //Brady
-    public bool WheelsOnGround;
-
     private void Start()
     {
         // Needed to keep it from being all wobbly
@@ -50,8 +47,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         axleInfos[0].leftWheel.GetComponent<WheelCollider>().ConfigureVehicleSubsteps(5, 12, 15);
         actualMaxSpeed = normalMaxSpeed;
         rb = GetComponent<Rigidbody>();
-
-        WheelsOnGround = true;
+        
     }
 
     private void FixedUpdate()
@@ -84,6 +80,21 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             TransformWheelMeshes();
             constrainMaxSpeed();
 
+            if(!easyCheckWheelsOnGround() && !isSpinMoveHop())
+            {
+                if (motor > 0)
+                {
+                    Debug.Log("do");
+                    rb.AddTorque(transform.right * 2f * 1000f);
+                }
+                else if (motor < 0)
+                    rb.AddTorque(-transform.right * 2f * 1000f);
+                if (steeringInput > 0)
+                    rb.AddTorque(transform.up * 1.2f * 1000f);
+                else if (steeringInput < 0)
+                    rb.AddTorque(-transform.up * 1.2f * 1000f);
+            }
+
             if (spinMoveHop)
             {
                 if (spinMove)
@@ -103,13 +114,14 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
                 if (spinMoveHopGrounded)
                 {
-
-                    curSpinJump = Mathf.Max(curSpinJump, -10f);
+                    rb.angularVelocity = Vector3.zero;
+                    curSpinJump = Mathf.Max(curSpinJump, -100f);
                     transform.position += transform.up * curSpinJump * Time.deltaTime;
                 }
                 else
                 {
-                    curSpinJump = Mathf.Max(curSpinJump, -30f);
+                    rb.angularVelocity = Vector3.zero;
+                    curSpinJump = Mathf.Max(curSpinJump, -100f);
                     transform.position += transform.up * curSpinJump * Time.deltaTime;
                 }
                 
@@ -271,6 +283,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     bool CheckWheelsOnGround()
     {
+        bool WheelsOnGround = true;
         foreach (AxleInfo axle in axleInfos)
         {
             if (!(axle.leftWheel.isGrounded && axle.rightWheel.isGrounded))

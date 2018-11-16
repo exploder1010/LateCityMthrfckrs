@@ -156,17 +156,17 @@ namespace Luminosity.IO
                         break;
                     }
 
-                    if(!curVehicle.GetComponent<BasicVehicle>().WheelsOnGround)
-                    {
-                        if (InputManager.GetAxis("Accelerate") > 0)
-                            curVehicle.transform.Rotate(Vector3.right * 2f);
-                        else if (InputManager.GetAxis("Accelerate") < 0)
-                            curVehicle.transform.Rotate(-Vector3.right * 2f);
-                        if (InputManager.GetAxis("Horizontal") > 0)
-                            curVehicle.transform.Rotate(-Vector3.forward * 1.2f);
-                        else if (InputManager.GetAxis("Horizontal") < 0)
-                            curVehicle.transform.Rotate(Vector3.forward * 1.2f);
-                    }
+                    //if(!curVehicle.GetComponent<BasicVehicle>().easyCheckWheelsOnGround() && !curVehicle.GetComponent<BasicVehicle>().isSpinMoveHop())
+                    //{
+                    //    if (InputManager.GetAxis("Accelerate") > 0)
+                    //        curVehicle.transform.Rotate(Vector3.right * 2f);
+                    //    else if (InputManager.GetAxis("Accelerate") < 0)
+                    //        curVehicle.transform.Rotate(-Vector3.right * 2f);
+                    //    if (InputManager.GetAxis("Horizontal") > 0)
+                    //        curVehicle.transform.Rotate(-Vector3.forward * 1.2f);
+                    //    else if (InputManager.GetAxis("Horizontal") < 0)
+                    //        curVehicle.transform.Rotate(Vector3.forward * 1.2f);
+                    //}
                     //dunkey spin move
                     if(GamePad)
                     {
