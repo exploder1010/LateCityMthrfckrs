@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -355,11 +355,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!82 &478133648 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 82530315493364374, guid: b5185f3ccc7202d4dadad1bafc06b104,
-    type: 2}
-  m_PrefabInternal: {fileID: 1137968023}
 --- !u!1001 &485999071
 Prefab:
   m_ObjectHideFlags: 0
@@ -418,11 +413,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad8c6d7d2883c1547b0d48e45a6fedf3, type: 3}
   m_IsPrefabAsset: 0
---- !u!1 &643030703 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1501782452236260, guid: b5185f3ccc7202d4dadad1bafc06b104,
-    type: 2}
-  m_PrefabInternal: {fileID: 1137968023}
 --- !u!1001 &690555378
 Prefab:
   m_ObjectHideFlags: 0
@@ -436,55 +426,33 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 78
       objectReference: {fileID: 0}
     - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 55.9
       objectReference: {fileID: 0}
     - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.8213227
       objectReference: {fileID: 0}
     - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.5704639
       objectReference: {fileID: 0}
     - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 114591109039094468, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: pauseMenu
-      value: 
-      objectReference: {fileID: 643030703}
-    - target: {fileID: 114591109039094468, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: uiSource
-      value: 
-      objectReference: {fileID: 478133648}
-    - target: {fileID: 114511544142092730, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: startingVehicle_Prefab
-      value: 
-      objectReference: {fileID: 1845773076672696, guid: e0c505c806bab404cb1d22e712f6d460,
-        type: 2}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_playerOneDefault
-      value: 06cd669440d0422a95f3e89bd3812515
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114591109039094468, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1001 &740139949
@@ -694,10 +662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfb3bf179817b457a8f65075bffebc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Active: 1
-  defaultBlockSize: 30
-  roadPrefabs:
-  - {fileID: 1148428365258254, guid: 813ba86d268e74b48bd421d45e29fdea, type: 2}
 --- !u!4 &1044991555
 Transform:
   m_ObjectHideFlags: 0
