@@ -20,7 +20,7 @@ public class HitBox : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collide");
+        //Debug.Log("Collide");
         if(other.transform.root != transform.root)
         {
             switch (Type)
@@ -28,7 +28,7 @@ public class HitBox : MonoBehaviour {
                 case HitBoxType.Road:
                     if (other.gameObject.layer == LayerMask.NameToLayer("Road"))
                     {
-                        Debug.Log("Collide 2");
+                        //Debug.Log("Collide 2");
                         colliders.Add(other);
                     }
                     break;
@@ -51,7 +51,7 @@ public class HitBox : MonoBehaviour {
                     }
                     break;
                 default:
-                    Debug.Log("Collide 3");
+                    //Debug.Log("Collide 3");
                     break;
             }
         }

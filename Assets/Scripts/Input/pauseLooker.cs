@@ -23,7 +23,7 @@ public class pauseLooker : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                print("hello");
+                //print("hello");
                 SoundScript.PlaySound(uiSource, "UI Click");
 
                 if (pauseMenu.activeSelf == true)

@@ -18,10 +18,16 @@ public class CameraController : MonoBehaviour
     private float camRotX;
     private float camRotY;
     private float backDistance = 10f;
-    private float upDistance = 5f;
+    private float upDistance = 2f;
     private Transform focus;
     private Quaternion forward;
     private float lerpSpeed;
+    
+    private Vector3 targetPosition;
+    private Quaternion targetRotation;
+    private bool hasSpinHopped;
+    private bool prevRider;
+    private float prevFocusEulerY;
 
     // Use this for initialization
     void Start () {
@@ -29,8 +35,9 @@ public class CameraController : MonoBehaviour
     }
 	
 	// Update is called once per frame
-	void LateUpdate () {
+	void FixedUpdate () {
         //update camera input
+
         camRotX += (InputManager.GetAxis("LookHorizontal")) * camSensX;
         camRotY -= (InputManager.GetAxis("LookVertical")) * camSensY;
 
@@ -39,15 +46,78 @@ public class CameraController : MonoBehaviour
 
         if (focus != null)
         {
-            transform.position = focus.transform.position - (Vector3.forward * backDistance) + (Vector3.up * upDistance);//default rotation behind vehicle
-            transform.LookAt(focus.transform.position);
-            transform.RotateAround(focus.transform.position, Vector3.up, camRotX);//x rot
-            transform.RotateAround(focus.transform.position, transform.right, camRotY);//y rot
+
+            Vector3 nahThisThePosition = transform.position;
+            //Quaternion nahThisTheRotation = transform.rotation;
+            if (focus.transform.GetComponent<BasicVehicle>() && focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop())
+            {
+                hasSpinHopped = true;
+            }
+
+            if (focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop())
+            {
+                if (hasSpinHopped || prevRider)
+                {
+
+                    //transform.rotation.SetLookRotation(focus.forward,focus.up);
+                    camRotX = -Mathf.DeltaAngle(transform.eulerAngles.y, focus.eulerAngles.y);
+                    hasSpinHopped = false;
+                }
+                transform.position = focus.transform.position - (focus.transform.forward * backDistance) + (focus.transform.up * upDistance);//default rotation behind vehicle
+                transform.eulerAngles = new Vector3(focus.eulerAngles.x, focus.eulerAngles.y, focus.eulerAngles.z);
+                transform.RotateAround(focus.transform.position, focus.transform.right, camRotY);//vert rot
+                transform.RotateAround(focus.transform.position, focus.transform.up, camRotX);//horz rot
+                camRotX = Mathf.LerpAngle(camRotX, 0, lerpSpeed * Time.deltaTime);
+            }
+            else
+            {
+                if (!prevRider && focus.transform.GetComponent<BasicRider>())
+                {
+
+
+                    camRotX += prevFocusEulerY;
+                }
+                transform.position = focus.transform.position - (Vector3.forward * backDistance) + (Vector3.up * upDistance);//default rotation behind vehicle
+                transform.LookAt(focus.transform.position);
+                transform.RotateAround(focus.transform.position, Vector3.up, camRotX);//x rot
+                transform.RotateAround(focus.transform.position, transform.right, camRotY);//y rot
+
+                //if ((hasSpinHopped && focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop()))
+                //{
+
+                //    camRotX = Mathf.LerpAngle(camRotX, forward.eulerAngles.y, 5f * Time.deltaTime);
+                //    if(Mathf.Abs(camRotX - forward.eulerAngles.y) < 5f)
+                //    {
+                //        hasSpinHopped = false;
+                //    }
+                //}
+                //camRotX = Mathf.LerpAngle(camRotX, forward.eulerAngles.y, lerpSpeed * Time.deltaTime);
+            }
+            targetPosition = transform.position;
+            //targetRotation = transform.rotation;
+            transform.position = nahThisThePosition;
+            //transform.rotation = nahThisTheRotation;
+
+            transform.position += (targetPosition - transform.position) * Time.deltaTime * 35f;
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 50f);
+
+            //spring arm
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer("Road");
+
+            if (Physics.Raycast(focus.transform.position, (transform.position - focus.transform.position).normalized, out hit, (transform.position - focus.transform.position).magnitude, layerMask))
+            {
+                //Debug.Log("use spring arm" + hit.transform.gameObject);
+                transform.position = hit.point;
+            }
+
+            prevRider = focus.GetComponent<BasicRider>() != null;
+            prevFocusEulerY = focus.eulerAngles.y;
         }
-        camRotX = Mathf.LerpAngle(camRotX, forward.eulerAngles.y, lerpSpeed * Time.deltaTime);
+        //camRotX = Mathf.LerpAngle(camRotX, forward.eulerAngles.y, lerpSpeed * Time.deltaTime);
     }
 
-    private void ChangeFocus(Transform newFocus)
+    public void ChangeFocus(Transform newFocus)
     {
         forward = newFocus.rotation;
         if (focus != newFocus)
@@ -61,14 +131,18 @@ public class CameraController : MonoBehaviour
         }
         else
         {
+            if (focus.GetComponent<BasicRider>())
+            {
+                //camRotX = focus.transform.eulerAngles.y;
+            }
             lerpSpeed = 0;
         }
     }
 
-    private void ChangeDistance(float distanceBack)
+    public void ChangeDistance(float distanceBack, float speedMultiplier)
     { 
         if (distanceBack > backDistance + .01f || distanceBack < backDistance - .01f)
-            backDistance = Mathf.Lerp(backDistance, distanceBack, 0.01f);
+            backDistance = Mathf.Lerp(backDistance, distanceBack, speedMultiplier * Time.deltaTime);
     }
 
     private static float ClampAngle(float angle, float min, float max)
