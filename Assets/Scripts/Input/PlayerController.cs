@@ -14,11 +14,13 @@ namespace Luminosity.IO
 
         //references to current vehicle or current player
         BasicVehicle curVehicle;
+        GameObject prevVehicle;
+        float prevVehicleIntangibility;
         BasicRider curRider;
         Rigidbody curRagdoll;
 
         //reference to camera
-        GameObject mainCamera;
+        CameraController mainCamera;
 
         //references to audio sources
         public AudioSource playerSource;
@@ -270,12 +272,21 @@ namespace Luminosity.IO
                     
 
 
-                    mainCamera.SendMessage("ChangeFocus", curVehicle.transform);
-                    mainCamera.SendMessage("ChangeDistance", 10f);
+                    
                     break;
 
                 //process input for air movement
                 case PlayerState.Rider:
+
+                    if(prevVehicleIntangibility > 0)
+                    {
+                        prevVehicleIntangibility -= Time.deltaTime;
+                        if(prevVehicleIntangibility < 0)
+                        {
+                            prevVehicleIntangibility = 0;
+                        }
+                    }
+
 
                     ambientSource.volume = curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
 
@@ -294,6 +305,8 @@ namespace Luminosity.IO
 
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
+                        mainCamera.ChangeFocus(curRagdoll.transform);
+                        mainCamera.ChangeDistance(6f, 2f);
                         curRider.destroyThis();
                         break;
                     }
@@ -340,13 +353,11 @@ namespace Luminosity.IO
                         curRider.inputBreakIn(0);
                     }
 
-                    mainCamera.SendMessage("ChangeFocus", curRider.transform);
-                    mainCamera.SendMessage("ChangeDistance", 10f);
+                    
                     break;
 
                 case PlayerState.Dead:
-                    mainCamera.SendMessage("ChangeFocus", curRagdoll.transform);
-                    mainCamera.SendMessage("ChangeDistance", 5f);
+
                     break;
 
                 default:
@@ -360,7 +371,7 @@ namespace Luminosity.IO
         }
 
 
-        public void SetCamera(GameObject newCamera)
+        public void SetCamera(CameraController newCamera)
         {
             mainCamera = newCamera;
         }
@@ -372,8 +383,8 @@ namespace Luminosity.IO
         
         public void EnterVehicle(BasicVehicle newVehicle)
         {
-            Debug.Log("ENTER CAR " + Time.time);
-            if (curState != PlayerState.Dead)
+            //Debug.Log("ENTER CAR " + Time.time);
+            if (curState != PlayerState.Dead && (newVehicle.gameObject != prevVehicle || prevVehicleIntangibility <=0))
             {
                 curState = PlayerState.Vehicle;
                 curVehicle = newVehicle;
@@ -396,6 +407,9 @@ namespace Luminosity.IO
                 keyboard_SD_Leniency = 0;
                 keyboard_DW_Leniency = 0;
                 keyboard_WA_Leniency = 0;
+
+                mainCamera.ChangeFocus(curVehicle.transform);
+                mainCamera.ChangeDistance(10f, 2f);
             }
             else
             {
@@ -411,7 +425,7 @@ namespace Luminosity.IO
 
             curVehicle.GetComponent<AudioSource>().Stop();
             SoundScript.PlaySound(playerSource, "Jump");
-            Debug.Log("EXIT CAR " + buttonLaunch);
+            //Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {
                 curState = PlayerState.Rider;
@@ -427,16 +441,16 @@ namespace Luminosity.IO
                     if (buttonLaunch)
                     {
                         //spawn rider above car.
-                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + curVehicle.transform.up * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
                     }
                     else
                     {
                         //spawn rider above car.
-                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + Vector3.up * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + curVehicle.transform.up * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
 
                     }
                     curRider.externalStart(mainCamera.transform);
-                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnExitMaxSpeed(), buttonLaunch);
+                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnExitMaxSpeed(), buttonLaunch, curVehicle.transform.up);
                 }
                 else
                 {
@@ -446,6 +460,11 @@ namespace Luminosity.IO
                     curRider.externalStart(mainCamera.transform);
                 }
 
+                mainCamera.ChangeFocus(curRider.transform);
+                mainCamera.ChangeDistance(12f, 2f);
+
+                prevVehicle = curVehicle.gameObject;
+                prevVehicleIntangibility = .3f;
                 curVehicle = null;
             }
             else

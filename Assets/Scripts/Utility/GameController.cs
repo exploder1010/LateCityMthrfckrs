@@ -25,7 +25,7 @@ namespace Luminosity.IO
 	    void Start() {
 
             curPlayerController = GameObject.Instantiate(playerController_Prefab, Vector3.zero, Quaternion.identity).transform.GetComponent<PlayerController>();
-            curPlayerController.SetCamera(GameObject.Instantiate(mainCamera_Prefab, Vector3.zero, Quaternion.identity));
+            curPlayerController.SetCamera(GameObject.Instantiate(mainCamera_Prefab, Vector3.zero, Quaternion.identity).GetComponent<CameraController>());
 
             //begin level in car
             if (!startInAir)
