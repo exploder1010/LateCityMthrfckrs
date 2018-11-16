@@ -464,7 +464,7 @@ namespace Luminosity.IO
                 mainCamera.ChangeDistance(12f, 2f);
 
                 prevVehicle = curVehicle.gameObject;
-                prevVehicleIntangibility = .3f;
+                prevVehicleIntangibility = .5f;
                 curVehicle = null;
             }
             else

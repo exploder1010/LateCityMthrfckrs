@@ -46,7 +46,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         // Needed to keep it from being all wobbly
         // Doing this for one wheel collider does it for them all
         axleInfos[0].leftWheel.GetComponent<WheelCollider>().ConfigureVehicleSubsteps(5, 12, 15);
-        //actualMaxSpeed = normalMaxSpeed;
+        actualMaxSpeed = normalMaxSpeed;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -92,18 +92,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                     }
                 }
 
-                //float eulerY = transform.eulerAngles.y;
-                //Vector3 roadUp = transform.up;
-                //RaycastHit hit;
-                //int layerMask = 1 << LayerMask.NameToLayer("Road");
-                //if (Physics.Raycast(transform.position, -roadUp, out hit, layerMask))
-                //{
-                //    Debug.Log(hit.normal);
-                //    roadUp = hit.normal;
-                //}
-                //transform.up = roadUp;
-                //transform.eulerAngles = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
-                //transform.rotation.SetLookRotation(transform.forward, roadUp);
+
 
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 curSpinJump -= Time.deltaTime * 30f;
@@ -117,7 +106,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 else
                 {
                     curSpinJump = Mathf.Max(curSpinJump, -30f);
-                    transform.position += Vector3.up * curSpinJump * Time.deltaTime;
+                    transform.position += transform.up * curSpinJump * Time.deltaTime;
                 }
                 
                 //rb.AddForce(transform.up * curSpinJump, ForceMode.Force);
@@ -210,16 +199,35 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     //nick
     protected virtual void startSpinMoveHop()
     {
+
         spinMoveHopTimeLimit = 3f;
+        curSpinJump = 10f;
+        spinMoveHop = true;
+
         spinMoveHopGrounded = false;
         if (easyCheckWheelsOnGround())
         {
             spinMoveHopGrounded = true;
         }
+        else
+        {
+            float eulerY = transform.eulerAngles.y;
+            Vector3 roadUp = Vector3.up;
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer("Road");
+            if (Physics.Raycast(transform.position, -transform.up, out hit, layerMask))
+            {
+                roadUp = hit.normal;
+            }
+            transform.up = roadUp;
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
+            rb.angularVelocity = Vector3.zero;
+        }
 
-        curSpinJump = 10f;
-        spinMoveHop = true;
         
+
+       
+        //transform.rotation.SetLookRotation(transform.forward, roadUp);
     }
 
     //nick
@@ -354,10 +362,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     {
         if (motor != 0)
         {
-            //roofRoadHitBox.collidersCount() > 0 || roadHitBox.collidersCount() > 0 || 
-            //Debug.Log("MPH: " + rb.velocity.magnitude + " prev " + prevVelocity.magnitude);
+
         }
-        if ((true || !spinMoveHop || roofRoadHitBox.collidersCount() > 0) && roofRoadHitBox != null && (roofRoadHitBox.collidersCount() > 0 || vehicleHitBox.collidersCount() > 0 || ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude)))
+        if (roofRoadHitBox != null && (roofRoadHitBox.collidersCount() > 0 || vehicleHitBox.collidersCount() > 0 || ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude)))
         {
             //Debug.Log("Major Crash on Late City Highway");
             broken = true;
@@ -367,8 +374,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 //Debug.Log("vehic");
                 foreach(Collider other in vehicleHitBox.returnColliders())
                 {
-                    if (true || !other.transform.root.transform.GetComponent<BasicVehicle>().spinMoveHop)
-                    {
+
                         //Debug.Log("the vehic" + other.transform.root);
                         other.transform.root.transform.GetComponent<BasicVehicle>().broken = true;
 
@@ -379,7 +385,6 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                         rb.AddForce((dir * 10000f + transform.up * 10000f), ForceMode.Impulse);
                         other.transform.root.transform.GetComponent<Rigidbody>().AddForce((-dir * 10000f + other.transform.root.transform.up * 10000f), ForceMode.Impulse);
 
-                    }
                 }
             }
         }
