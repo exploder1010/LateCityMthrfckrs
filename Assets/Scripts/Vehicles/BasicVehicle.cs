@@ -34,7 +34,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     float spinLeft;
     int spinDir;
     Vector3 spinDirection;
-    float spinEulerY;
+    float spinMoveHopTimeLimit;
+    bool spinMoveHopGrounded;
 
     //collision
     Vector3 prevVelocity;
@@ -91,20 +92,39 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                     }
                 }
 
-                Vector3 roadUp = transform.up;
-                RaycastHit hit;
-                int layerMask = 1 << LayerMask.NameToLayer("Road");
-                if (Physics.Raycast(transform.position, Vector3.down, out hit, layerMask))
-                {
-                    roadUp = hit.normal;
-                }
-                transform.rotation.SetLookRotation(transform.forward, roadUp);
-                
+                //float eulerY = transform.eulerAngles.y;
+                //Vector3 roadUp = transform.up;
+                //RaycastHit hit;
+                //int layerMask = 1 << LayerMask.NameToLayer("Road");
+                //if (Physics.Raycast(transform.position, -roadUp, out hit, layerMask))
+                //{
+                //    Debug.Log(hit.normal);
+                //    roadUp = hit.normal;
+                //}
+                //transform.up = roadUp;
+                //transform.eulerAngles = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
+                //transform.rotation.SetLookRotation(transform.forward, roadUp);
+
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                transform.position += transform.up * curSpinJump * Time.deltaTime;
                 curSpinJump -= Time.deltaTime * 30f;
 
-                if (CheckWheelsOnGround() && curSpinJump < 0)
+                if (spinMoveHopGrounded)
+                {
+
+                    curSpinJump = Mathf.Max(curSpinJump, -10f);
+                    transform.position += transform.up * curSpinJump * Time.deltaTime;
+                }
+                else
+                {
+                    curSpinJump = Mathf.Max(curSpinJump, -30f);
+                    transform.position += Vector3.up * curSpinJump * Time.deltaTime;
+                }
+                
+                //rb.AddForce(transform.up * curSpinJump, ForceMode.Force);
+
+                spinMoveHopTimeLimit -= Time.deltaTime;
+
+                if (easyCheckWheelsOnGround() && curSpinJump < 0 || spinMoveHopTimeLimit < 0)
                 {
                     endSpinMoveHop();
                 }
@@ -190,9 +210,16 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     //nick
     protected virtual void startSpinMoveHop()
     {
+        spinMoveHopTimeLimit = 3f;
+        spinMoveHopGrounded = false;
+        if (easyCheckWheelsOnGround())
+        {
+            spinMoveHopGrounded = true;
+        }
+
         curSpinJump = 10f;
         spinMoveHop = true;
-
+        
     }
 
     //nick
@@ -200,7 +227,12 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     {
         spinMoveHop = false;
         spinMove = false;
-        rb.velocity = transform.forward * startSpeed;
+        if(spinMoveHopTimeLimit > 0)
+        {
+
+            rb.velocity = transform.forward * startSpeed;
+        }
+        spinMoveHopTimeLimit = 0;
     }
 
     //nick
@@ -239,6 +271,22 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         return wheelsOnGround;
 
     }
+
+    bool easyCheckWheelsOnGround()
+    {
+        bool wheelsOnGround = false;
+        foreach (AxleInfo axle in axleInfos)
+        {
+            if ((axle.leftWheel.isGrounded || axle.rightWheel.isGrounded))
+            {
+                wheelsOnGround = true;
+                break;
+            }
+        }
+        return wheelsOnGround;
+
+    }
+
 
     void TransformWheelMeshes()
     {
