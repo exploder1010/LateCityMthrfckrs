@@ -18,6 +18,8 @@ public class CameraController : MonoBehaviour
     private float camRotX;
     private float camRotY;
     private float backDistance = 10f;
+    private float backDistanceTarget;
+    private float backDistanceSpeed;
     private float upDistance = 2f;
     private Transform focus;
     private Quaternion forward;
@@ -26,6 +28,7 @@ public class CameraController : MonoBehaviour
     private Vector3 targetPosition;
     private Quaternion targetRotation;
     private bool hasSpinHopped;
+    private bool prevHasSpinHopped;
     private bool prevRider;
     private bool prevCarGrounded;
     private float prevFocusEulerY;
@@ -48,6 +51,9 @@ public class CameraController : MonoBehaviour
         if (focus != null)
         {
 
+            if (backDistanceTarget > backDistance + .01f || backDistanceTarget < backDistance - .01f)
+                backDistance = Mathf.Lerp(backDistance, backDistanceTarget, backDistanceSpeed * Time.deltaTime);
+
             Vector3 nahThisThePosition = transform.position;
             //Quaternion nahThisTheRotation = transform.rotation;
             if (focus.transform.GetComponent<BasicVehicle>() && focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop())
@@ -57,7 +63,7 @@ public class CameraController : MonoBehaviour
 
             if (focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop() && focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround())
             {
-                if (hasSpinHopped || prevRider || !prevCarGrounded)
+                if ((prevHasSpinHopped && !hasSpinHopped) || (prevRider || !prevCarGrounded) && !hasSpinHopped)
                 {
 
                     //transform.rotation.SetLookRotation(focus.forward,focus.up);
@@ -72,7 +78,7 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                if (!prevRider && focus.transform.GetComponent<BasicRider>() || prevCarGrounded)
+                if (!prevRider && focus.transform.GetComponent<BasicRider>() && prevCarGrounded || prevCarGrounded)
                 {
 
 
@@ -118,6 +124,7 @@ public class CameraController : MonoBehaviour
                 transform.position = hit.point;
             }
 
+            prevHasSpinHopped = hasSpinHopped;
             prevCarGrounded = (focus.GetComponent<BasicVehicle>() && focus.GetComponent<BasicVehicle>().easyCheckWheelsOnGround()); 
             prevRider = focus.GetComponent<BasicRider>() != null;
             prevFocusEulerY = focus.eulerAngles.y;
@@ -148,9 +155,10 @@ public class CameraController : MonoBehaviour
     }
 
     public void ChangeDistance(float distanceBack, float speedMultiplier)
-    { 
-        if (distanceBack > backDistance + .01f || distanceBack < backDistance - .01f)
-            backDistance = Mathf.Lerp(backDistance, distanceBack, speedMultiplier * Time.deltaTime);
+    {
+        backDistanceTarget = distanceBack;
+        backDistanceSpeed = speedMultiplier;
+
     }
 
     private static float ClampAngle(float angle, float min, float max)

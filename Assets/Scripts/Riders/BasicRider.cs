@@ -204,9 +204,9 @@ public class BasicRider : MonoBehaviour, IRider {
         if (buttonLaunch)
         {
             carLaunchSpeed = carVelocity.magnitude;
-            float boostModifier = Mathf.Max((carVelocity.magnitude / (carMaxSpeed * boostThreshold)), 0.25f);
-            maxSpeedThisJump = Mathf.Max(30, carVelocity.magnitude * boostModifier);
-            rb.velocity = carVelocity.normalized * carLaunchSpeed * boostModifier;
+            float boostModifier = Mathf.Max((carLaunchSpeed / (carMaxSpeed * boostThreshold)), 0.25f);
+            maxSpeedThisJump = Mathf.Max(5, carLaunchSpeed * boostModifier);
+            rb.velocity = carVelocity.normalized * maxSpeedThisJump;
             rb.AddForce(carJumpUpDirection * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * boostModifier));
 
             //Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);

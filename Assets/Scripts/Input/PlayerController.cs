@@ -19,6 +19,11 @@ namespace Luminosity.IO
         BasicRider curRider;
         Rigidbody curRagdoll;
 
+        public GameObject boostEffectPrefab;
+        GameObject curBoostEffect;
+        bool prevBoostEffect;
+
+
         //reference to camera
         CameraController mainCamera;
 
@@ -68,74 +73,44 @@ namespace Luminosity.IO
             {
                 //process input for vehicle
                 case PlayerState.Vehicle:
+
+                    //---------------------------------------------------------speed
                     Speedometer.ShowSpeed(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude, 0, 100);
+
+                    //speed > boost threshold
+                    if(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude > curVehicle.returnActualMaxSpeed() * selectedCharacter_Prefab.GetComponent<BasicRider>().boostThreshold )
+                    {
+                        if (!prevBoostEffect)
+                        {
+                            prevBoostEffect = true;
+                            curBoostEffect = Instantiate(boostEffectPrefab, curVehicle.transform.position, curVehicle.transform.rotation);
+                            mainCamera.ChangeDistance(12f, 2f);
+                        }
+
+                        curBoostEffect.transform.position = curVehicle.transform.position;
+                    }
+                    else
+                    {
+                        if(curBoostEffect!= null)
+                        {
+                            prevBoostEffect = false;
+                            mainCamera.ChangeDistance(10f, 2f);
+                            Destroy(curBoostEffect);
+                        }
+                    }
+
+                    //---------------------------------------------------------sound
                     if (curVehicle.GetComponent<AudioSource>().isPlaying == false)
                     {
                         SoundScript.PlaySound(curVehicle.GetComponent<AudioSource>(), "Engine");
                     }
+
+                    //-------------------------------------------------------input:
                     //input horizontal movement
                     curVehicle.inputHorz(InputManager.GetAxis("Horizontal"));
 
                     //input accelleration
                     curVehicle.inputAccel(InputManager.GetAxis("Accelerate"));
-
-                    //// Brady: Attempt to fix bug where player jumps despite direction they're moving. 
-                    ////Now moving forward and speeding up or slowing down = forward jump.
-                    ////Now moving backward and speeding up or slowing down = backward jump.
-                    //if (InputManager.GetAxis("Accelerate") == 1)
-                    //{
-                    //    if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude > previousVelocity)
-                    //    {
-                    //        recentDirection = true;
-                    //        forwardMovement = true;
-                    //    }
-                    //    else
-                    //    {
-                    //        if (InputManager.GetAxis("Horizontal") == -1 || InputManager.GetAxis("Horizontal") == 1)
-                    //        {
-                    //            if(recentDirection)
-                    //            {
-                    //                forwardMovement = true;
-                    //            }
-                    //            else
-                    //            {
-                    //                forwardMovement = false;
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            forwardMovement = false;
-                    //        }
-                    //    }
-                    //}
-
-                    //else if (InputManager.GetAxis("Accelerate") == -1)
-                    //{
-                    //    if (curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude > previousVelocity)
-                    //    {
-                    //        recentDirection = false;
-                    //        forwardMovement = false;
-                    //    }
-                    //    else
-                    //    { 
-                    //        if (InputManager.GetAxis("Horizontal") == -1 || InputManager.GetAxis("Horizontal") == 1)
-                    //        {
-                    //            if (recentDirection)
-                    //            {
-                    //                forwardMovement = true;
-                    //            }
-                    //            else
-                    //            {
-                    //                forwardMovement = false;
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            forwardMovement = true;
-                    //        }
-                    //    }
-                    //}
-                    //previousVelocity = curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude;
 
                     //input jump
                     if (InputManager.GetButtonDown("Jump"))
@@ -156,17 +131,6 @@ namespace Luminosity.IO
                         break;
                     }
 
-                    //if(!curVehicle.GetComponent<BasicVehicle>().easyCheckWheelsOnGround() && !curVehicle.GetComponent<BasicVehicle>().isSpinMoveHop())
-                    //{
-                    //    if (InputManager.GetAxis("Accelerate") > 0)
-                    //        curVehicle.transform.Rotate(Vector3.right * 2f);
-                    //    else if (InputManager.GetAxis("Accelerate") < 0)
-                    //        curVehicle.transform.Rotate(-Vector3.right * 2f);
-                    //    if (InputManager.GetAxis("Horizontal") > 0)
-                    //        curVehicle.transform.Rotate(-Vector3.forward * 1.2f);
-                    //    else if (InputManager.GetAxis("Horizontal") < 0)
-                    //        curVehicle.transform.Rotate(Vector3.forward * 1.2f);
-                    //}
                     //dunkey spin move
                     if(GamePad)
                     {
@@ -447,21 +411,25 @@ namespace Luminosity.IO
                     curVehicle.inputHorz(0);
                     curVehicle.inputAccel(0);
 
-                    
+                    Vector3 newUp = Vector3.up;
+                    if (curVehicle.easyCheckWheelsOnGround())
+                    {
+                        newUp = curVehicle.transform.up;
+                    }
 
                     if (buttonLaunch)
                     {
                         //spawn rider above car.
-                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + curVehicle.transform.up * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + newUp * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
                     }
                     else
                     {
                         //spawn rider above car.
-                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + curVehicle.transform.up * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + newUp * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
 
                     }
                     curRider.externalStart(mainCamera.transform);
-                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnExitMaxSpeed(), buttonLaunch, curVehicle.transform.up);
+                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnActualMaxSpeed(), buttonLaunch, newUp);
                 }
                 else
                 {
