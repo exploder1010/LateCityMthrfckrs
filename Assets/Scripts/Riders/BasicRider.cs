@@ -20,6 +20,7 @@ public class BasicRider : MonoBehaviour, IRider {
     public HitBox vehicleCollider;
     public HitBox brokenVehicleCollider;
     protected GameObject currentRagdoll;
+    private Vector3 ragdollUp;
 
     public GameObject targetIconPrefab;
     GameObject currentTargetIcon;
@@ -286,6 +287,16 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (roadCollider.collidersCount() > 0 || brokenVehicleCollider.collidersCount() > 0)
         {
+            ragdollUp = Vector3.up;
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer("Road");
+            Debug.DrawLine(transform.position - rb.velocity.normalized, transform.position - rb.velocity.normalized + rb.velocity.normalized * 5f, Color.red, 10f);
+            if (Physics.Raycast(transform.position - rb.velocity.normalized, rb.velocity.normalized, out hit, 5f, layerMask))
+            {
+                Debug.Log("hit");
+                ragdollUp = hit.normal;
+            }
+
             spawnRagdoll();
         }
 
@@ -297,7 +308,8 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
             currentRagdoll.SetActive(true);
-            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = new Vector3(rb.velocity.x * 7f, -rb.velocity.y * 2f, rb.velocity.z * 7f);
+            Debug.Log(ragdollUp);
+            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = (rb.velocity * 3f) + (ragdollUp * rb.velocity.magnitude * 4f);
             
         }
     }

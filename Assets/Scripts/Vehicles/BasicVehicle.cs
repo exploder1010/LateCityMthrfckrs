@@ -34,7 +34,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     float spinLeft;
     int spinDir;
     Vector3 spinDirection;
-    float spinMoveHopTimeLimit;
+    //float spinMoveHopTimeLimit;
     bool spinMoveHopGrounded;
 
     //collision
@@ -129,9 +129,11 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 
                 //rb.AddForce(transform.up * curSpinJump, ForceMode.Force);
 
-                spinMoveHopTimeLimit -= Time.deltaTime;
+                //spinMoveHopTimeLimit -= Time.deltaTime;
 
-                if (easyCheckWheelsOnGround() && curSpinJump < 0 || spinMoveHopTimeLimit < 0)
+                RaycastHit hit;
+                int layerMask = 1 << LayerMask.NameToLayer("Road");
+                if (easyCheckWheelsOnGround() && curSpinJump < 0 ||  !Physics.Raycast(transform.position, -transform.up, out hit, layerMask))
                 {
                     endSpinMoveHop();
                 }
@@ -218,7 +220,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     protected virtual void startSpinMoveHop()
     {
 
-        spinMoveHopTimeLimit = 3f;
+        //spinMoveHopTimeLimit = 3f;
         curSpinJump = 10f;
         spinMoveHop = true;
 
@@ -253,12 +255,12 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     {
         spinMoveHop = false;
         spinMove = false;
-        if(spinMoveHopTimeLimit > 0)
-        {
+        //if(//spinMoveHopTimeLimit > 0)
+        //{
 
             rb.velocity = transform.forward * startSpeed;
-        }
-        spinMoveHopTimeLimit = 0;
+        //}
+        //spinMoveHopTimeLimit = 0;
     }
 
     //nick

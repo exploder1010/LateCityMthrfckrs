@@ -63,9 +63,9 @@ public class CameraController : MonoBehaviour
 
             if (focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop() && focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround())
             {
-                if ((prevHasSpinHopped && !hasSpinHopped) || (prevRider || !prevCarGrounded) && !hasSpinHopped)
+                if (hasSpinHopped || prevRider || !prevCarGrounded)
                 {
-
+                    Debug.Log("car shifter");
                     //transform.rotation.SetLookRotation(focus.forward,focus.up);
                     camRotX = -Mathf.DeltaAngle(transform.eulerAngles.y, focus.eulerAngles.y);
                     hasSpinHopped = false;
@@ -78,9 +78,9 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                if (!prevRider && focus.transform.GetComponent<BasicRider>() && prevCarGrounded || prevCarGrounded)
+                if (!prevRider && focus.transform.GetComponent<BasicRider>() && prevCarGrounded || focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop() && prevCarGrounded)
                 {
-
+                    Debug.Log("air shifter");
 
                     camRotX += prevFocusEulerY;
                 }
