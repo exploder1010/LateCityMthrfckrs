@@ -47,7 +47,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         axleInfos[0].leftWheel.GetComponent<WheelCollider>().ConfigureVehicleSubsteps(5, 12, 15);
         actualMaxSpeed = normalMaxSpeed;
         rb = GetComponent<Rigidbody>();
-        
+
     }
 
     private void FixedUpdate()
@@ -126,7 +126,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                     curSpinJump = Mathf.Max(curSpinJump, -100f);
                     transform.position += transform.up * curSpinJump * Time.deltaTime;
                 }
-                
+
                 //rb.AddForce(transform.up * curSpinJump, ForceMode.Force);
 
                 //spinMoveHopTimeLimit -= Time.deltaTime;
@@ -155,7 +155,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         motor = MotorTorque * direction;
     }
 
-    //nick 
+    //nick
     public void initializeSpeed(float newMaxSpeed, float newStartSpeed, bool startSMH)
     {
         actualMaxSpeed = Mathf.Max(newMaxSpeed, normalMaxSpeed);
@@ -174,7 +174,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 rb.velocity = transform.forward * startSpeed;
             }
         }
-       
+
     }
 
     //nick
@@ -244,9 +244,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             rb.angularVelocity = Vector3.zero;
         }
 
-        
 
-       
+
+
         //transform.rotation.SetLookRotation(transform.forward, roadUp);
     }
 
@@ -272,7 +272,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             {
                 rb.velocity = rb.velocity.normalized * actualMaxSpeed;
             }
-            
+
         }
     }
 
@@ -323,7 +323,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         {
             Transform l_mesh = axle.leftWheel.transform.GetChild(0);
             Transform r_mesh = axle.rightWheel.transform.GetChild(0);
-            
+
             Vector3 loc = new Vector3();
             Quaternion rot = new Quaternion();
 
@@ -377,7 +377,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         return actualMaxSpeed;
     }
 
-    
+
 }
 
 
@@ -391,7 +391,3 @@ public class AxleInfo
     public bool motor;
     public bool steering;
 }
-
-
-    
-
