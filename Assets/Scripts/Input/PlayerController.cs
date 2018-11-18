@@ -444,6 +444,7 @@ namespace Luminosity.IO
 
                 prevVehicle = curVehicle.gameObject;
                 prevVehicleIntangibility = .5f;
+                curRider.setPreviousVehicle(curVehicle.gameObject);
                 curVehicle = null;
             }
             else

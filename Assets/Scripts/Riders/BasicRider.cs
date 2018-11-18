@@ -21,6 +21,7 @@ public class BasicRider : MonoBehaviour, IRider {
     public HitBox brokenVehicleCollider;
     protected GameObject currentRagdoll;
     private Vector3 ragdollUp;
+    private GameObject prevVehicle;
 
     public GameObject targetIconPrefab;
     GameObject currentTargetIcon;
@@ -137,13 +138,13 @@ public class BasicRider : MonoBehaviour, IRider {
     //attempt to start break in move
     public virtual void inputBreakIn(int input)
     {
-        if (input == 1 && rb.velocity.y < 0)
+        if (input == 1)
         {
             //BasicVehicle closestVehicle = null;
             //handleLockOnCollision();
             foreach (BasicVehicle bv in closeVehicles)
             {
-                if (!bv.broken)
+                if (!bv.broken && (rb.velocity.y < 0 || prevVehicle != bv.gameObject))
                 {
                     //vectorToAdd = vectorToAdd.normalized;
 
@@ -348,7 +349,7 @@ public class BasicRider : MonoBehaviour, IRider {
                 foreach (BasicVehicle bv in closeVehicles)
                 {
                     //vectorToAdd = vectorToAdd.normalized;
-                    if (!bv.broken)
+                    if (!bv.broken && (rb.velocity.y < 0 || prevVehicle != bv.gameObject))
                     {
                         float dist = (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
                         Debug.Log("dist" + dist);
@@ -403,6 +404,7 @@ public class BasicRider : MonoBehaviour, IRider {
         return storedNewCarMaxSpeed;
     }
 
+
     //set new current speed for car based on current air speed
     public virtual float calculateNewCarStartSpeed()
     {
@@ -417,6 +419,11 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         Destroy(currentTargetIcon);
         Destroy(transform.gameObject);
+    }
+
+    public virtual void setPreviousVehicle(GameObject newPrevVehicle)
+    {
+        prevVehicle = newPrevVehicle;
     }
 
 }

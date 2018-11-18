@@ -47,7 +47,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         // Needed to keep it from being all wobbly
         // Doing this for one wheel collider does it for them all
         axleInfos[0].leftWheel.GetComponent<WheelCollider>().ConfigureVehicleSubsteps(5, 12, 15);
-        actualMaxSpeed = normalMaxSpeed;
+        //actualMaxSpeed = normalMaxSpeed;
         rb = GetComponent<Rigidbody>();
         
     }
@@ -62,11 +62,11 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             {
                 if (axle.motor)
                 {
-                    axle.leftWheel.motorTorque = motor - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) /actualMaxSpeed));
-                    axle.rightWheel.motorTorque = motor - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                    axle.leftWheel.motorTorque = motor;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) /actualMaxSpeed));
+                    axle.rightWheel.motorTorque = motor;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
 
-                    axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
-                    axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                    //axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                    //axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
                 }
                 if (axle.steering)
                 {
@@ -193,6 +193,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             spinDirection = Vector3.zero;
             spinDirection = spinDirection + (Vector3.Cross(Vector3.up, calculateForward()) * directionToSpin.x);
             spinDirection = spinDirection + (calculateForward() * directionToSpin.z);
+            spinDirection = Vector3.ProjectOnPlane(spinDirection, transform.up);
 
             float firstAngle = Vector3.SignedAngle(transform.forward, spinDirection, transform.up);
             if (firstAngle != 0)
