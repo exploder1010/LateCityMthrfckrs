@@ -76,10 +76,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 {
                      newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
                     axle.leftWheel.steerAngle = newSteering;
-                    axle.rightWheel.steerAngle = newSteering;
-
-                    Debug.Log(newSteering);
- 
+                    axle.rightWheel.steerAngle = newSteering; 
                 }
             }
 
