@@ -15,6 +15,7 @@ public class BR_Business : BasicRider {
     public float doubleJumpTimeSet = 0.15f;
     public float doubleJumpStartImpulse = 300f;
     public float doubleJumpVelocityAdd = 200f;
+    public float doubleJumpHorizontalModifier = .2f;
 
     // Use this for initialization
     void Start () {
@@ -71,7 +72,7 @@ public class BR_Business : BasicRider {
         {
             curAbilityAmmo--;
             
-            rb.velocity = prevVectorToAdd * maxSpeedThisJump * 0.2f;
+            rb.velocity = prevVectorToAdd * maxSpeedThisJump * doubleJumpHorizontalModifier;
             //rb.velocity = Vector3.zero;
 
             doubleJumpTimer = doubleJumpTimeSet;

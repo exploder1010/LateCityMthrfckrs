@@ -42,6 +42,10 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     //collision
     Vector3 prevVelocity;
 
+    // //Brady
+    // private bool adjusting = false;
+    // public float AutoCorrect;
+    
     private void Start()
     {
         // Needed to keep it from being all wobbly
@@ -72,10 +76,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 {
                      newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
                     axle.leftWheel.steerAngle = newSteering;
-                    axle.rightWheel.steerAngle = newSteering;
-
-                    Debug.Log(newSteering);
- 
+                    axle.rightWheel.steerAngle = newSteering; 
                 }
             }
 
@@ -103,6 +104,25 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                     rb.AddTorque(transform.up * 2.5f * 1000f);
                 else if (steeringInput < 0)
                     rb.AddTorque(-transform.up * 2.5f * 1000f);
+
+                          //Brady: Possible autocorrection for the forward axis.
+                //    //Alternatively, add slow down in opposite direction, like friction... Currently this is abrupt and unrealistic, but just to see if the approach is viable.
+                //    //Might be trying to fix a non existant issue.
+                //if(rb.rotation.z > AutoCorrect)
+                //{
+                //    adjusting = true;
+                //    rb.AddTorque(transform.forward * 300f);
+                //}
+                //else if (rb.rotation.z < -AutoCorrect)
+                //{
+                //    adjusting = true;
+                //    rb.AddTorque(-transform.forward * 300f);
+                //}
+                //else if (adjusting == true && (rb.rotation.z < 0.1f || rb.rotation.z > -0.1f))
+                //{
+                //    adjusting = false;
+                //    rb.angularVelocity = new Vector3(rb.rotation.x, rb.rotation.y, 0);
+                //}
             }
 
             if (spinMoveHop)
