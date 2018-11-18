@@ -27,6 +27,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public float crashSpeed;
     public bool broken;
 
+    float newSteering;
+
     //nick: dunkey's trademark spin move
     bool spinMoveHop;
     float curSpinJump;
@@ -64,17 +66,20 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             {
                 if (axle.motor)
                 {
-                    axle.leftWheel.motorTorque = motor - (motor * 0.65f * (rb.velocity.magnitude /actualMaxSpeed));
-                    axle.rightWheel.motorTorque = motor - (motor * 0.65f * (rb.velocity.magnitude / actualMaxSpeed));
+                    axle.leftWheel.motorTorque = motor - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) /actualMaxSpeed));
+                    axle.rightWheel.motorTorque = motor - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+
+                    axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                    axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
                 }
                 if (axle.steering)
                 {
-                    float newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                     newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
                     axle.leftWheel.steerAngle = newSteering;
                     axle.rightWheel.steerAngle = newSteering;
 
-                    axle.leftWheel.motorTorque += Mathf.Abs(newSteering);
-                    axle.rightWheel.motorTorque += Mathf.Abs(newSteering);
+                    Debug.Log(newSteering);
+ 
                 }
             }
 
