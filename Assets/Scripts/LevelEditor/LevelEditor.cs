@@ -28,6 +28,8 @@ public class LevelEditor : MonoBehaviour
         westOrb = GameObject.Find("LevelEditorORB_West");
         upOrb = GameObject.Find("LevelEditorORB_Up");
         InformOrbs("SetSize", defaultBlockSize);
+        PrefabUtility.ConnectGameObjectToPrefab(gameObject, (GameObject) PrefabUtility.GetCorrespondingObjectFromSource(gameObject));
+        PrefabUtility.RevertPrefabInstance(gameObject);
         PrefabUtility.DisconnectPrefabInstance(gameObject);
     }
 
@@ -106,7 +108,6 @@ public class LevelEditor : MonoBehaviour
 
     private void AddToPrefabs(GameObject obj)
     {
-
         GameObject[] newPrefabs = new GameObject[roadPrefabs.Length + 1];
         int i;
         bool duplicate = false;
@@ -123,6 +124,9 @@ public class LevelEditor : MonoBehaviour
 
         if (!duplicate)
             roadPrefabs = newPrefabs;
+        transform.position = Vector3.zero;
+        PrefabUtility.ReplacePrefab(gameObject, PrefabUtility.GetCorrespondingObjectFromSource(gameObject), ReplacePrefabOptions.ConnectToPrefab);
+        PrefabUtility.DisconnectPrefabInstance(gameObject);
     }
 }
 #endif
