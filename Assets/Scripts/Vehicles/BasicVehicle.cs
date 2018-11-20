@@ -98,7 +98,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             rb.maxAngularVelocity = 7f;
             if (!CheckWheelsOnGround() && !isSpinMoveHop())
             {
-                rb.maxAngularVelocity = 2f;//this helps 
+                rb.maxAngularVelocity = 1f;//this helps 
 
                 //spinDirection = spinDirection + (Vector3.Cross(Vector3.up, calculateForward()) * steeringInput);
                 //spinDirection = spinDirection + (calculateForward() * motor);
@@ -115,9 +115,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                     rb.AddTorque(-new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
                 }
                 if (steeringInput > 0)
-                    rb.AddTorque(transform.up * 5.5f * 1000f);
+                    rb.AddTorque(Vector3.up * 5.5f * 1000f);
                 else if (steeringInput < 0)
-                    rb.AddTorque(-transform.up * 5.5f * 1000f);
+                    rb.AddTorque(-Vector3.up * 5.5f * 1000f);
 
 
 

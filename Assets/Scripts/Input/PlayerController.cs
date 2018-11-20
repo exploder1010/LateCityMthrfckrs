@@ -113,21 +113,10 @@ namespace Luminosity.IO
                     curVehicle.inputAccel(InputManager.GetAxis("Accelerate"));
 
                     //input jump
-                    if (InputManager.GetButtonDown("Jump"))
+                    if (InputManager.GetButtonDown("Jump") && !curVehicle.isSpinMoveHop() || curVehicle.GetComponent<BasicVehicle>().broken)
                     {
-                        if (!curVehicle.isSpinMoveHop())
-                        {
-                            ExitVehicle();
-                        }
-                        break;
-                    }
-
-                    //Brady: vehicle destroyed in crash. Should eventually destroy vehicle.
-                    if (curVehicle.GetComponent<BasicVehicle>().broken)
-                    {
-                        buttonLaunch = false;
                         ExitVehicle();
-                        // Destroy(curVehicle);
+
                         break;
                     }
 
@@ -416,6 +405,8 @@ namespace Luminosity.IO
                     {
                         newUp = curVehicle.transform.up;
                     }
+
+                    buttonLaunch = !curVehicle.broken;
 
                     if (buttonLaunch)
                     {

@@ -11,6 +11,8 @@ public class BasicRider : MonoBehaviour, IRider {
     //make sure car weight gets polished
     //misc polishing
 
+    bool cameraLockOn = false;
+
     //references to set in prefab
     public Rigidbody rb;
     public Animator charAnim;
@@ -138,7 +140,7 @@ public class BasicRider : MonoBehaviour, IRider {
     //attempt to start break in move
     public virtual void inputBreakIn(int input)
     {
-        if (input == 1)
+        if (input == 1 && prevVectorToAdd!= Vector3.zero)
         {
             //BasicVehicle closestVehicle = null;
             //handleLockOnCollision();
@@ -147,11 +149,18 @@ public class BasicRider : MonoBehaviour, IRider {
                 if (!bv.broken && (rb.velocity.y < 0 || prevVehicle != bv.gameObject))
                 {
                     //vectorToAdd = vectorToAdd.normalized;
+                    Vector3 dir = prevVectorToAdd;
+                    if (cameraLockOn)
+                    {
+                        dir = calculateForward();
+                    }
 
-                    float dist = (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
+                    
+
+                    float dist = (transform.position + (dir * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
 
                     //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
-                    if (targetedVehicle == null || dist < (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - targetedVehicle.transform.position).magnitude)
+                    if (targetedVehicle == null || dist < (transform.position + (dir * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - targetedVehicle.transform.position).magnitude)
                     {
                         targetedVehicle = bv;
 
@@ -286,7 +295,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected virtual void handleRoadCollision()
     {
-        if (roadCollider.collidersCount() > 0 || brokenVehicleCollider.collidersCount() > 0)
+        if (targetedVehicle == null && roadCollider.collidersCount() > 0 || brokenVehicleCollider.collidersCount() > 0)
         {
             ragdollUp = Vector3.up;
             RaycastHit hit;
@@ -317,7 +326,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected virtual void handleVehicleCollision()
     {
-        if (vehicleCollider.collidersCount() > 0 && ( targetedVehicle!= null))
+        if (vehicleCollider.collidersCount() > 0)//&& (rb.velocity.y < 0 || targetedVehicle!= null)
         {
             if (!vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>().broken)
             {
@@ -351,10 +360,16 @@ public class BasicRider : MonoBehaviour, IRider {
                     //vectorToAdd = vectorToAdd.normalized;
                     if (!bv.broken && (rb.velocity.y < 0 || prevVehicle != bv.gameObject))
                     {
-                        float dist = (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
+                        Vector3 dir = prevVectorToAdd;
+                        if (cameraLockOn)
+                        {
+                            dir = calculateForward();
+                        }
+
+                        float dist = (transform.position + (dir * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
 
                         //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
-                        if (potentialTargetedVehicle == null || dist < (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - potentialTargetedVehicle.transform.position).magnitude)
+                        if (potentialTargetedVehicle == null || dist < (transform.position + (dir * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - potentialTargetedVehicle.transform.position).magnitude)
                         {
                             potentialTargetedVehicle = bv;
                         }
