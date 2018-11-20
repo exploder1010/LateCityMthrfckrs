@@ -295,7 +295,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected virtual void handleRoadCollision()
     {
-        if (targetedVehicle == null && roadCollider.collidersCount() > 0 || brokenVehicleCollider.collidersCount() > 0)
+        if (targetedVehicle == null && roadCollider.collidersCount() > 0 )//|| brokenVehicleCollider.collidersCount() > 0)
         {
             ragdollUp = Vector3.up;
             RaycastHit hit;
