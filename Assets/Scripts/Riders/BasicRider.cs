@@ -21,6 +21,7 @@ public class BasicRider : MonoBehaviour, IRider {
     public HitBox roadCollider;
     public HitBox vehicleCollider;
     public HitBox brokenVehicleCollider;
+    public HitBox goalCollider;
     protected GameObject currentRagdoll;
     private Vector3 ragdollUp;
     private GameObject prevVehicle;
@@ -333,6 +334,10 @@ public class BasicRider : MonoBehaviour, IRider {
                 hitVehicle = vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>();
             }
         }
+    }
+
+    protected virtual void handleGoalCollision()
+    {
     }
 
     protected virtual void handleLockOnCollision()

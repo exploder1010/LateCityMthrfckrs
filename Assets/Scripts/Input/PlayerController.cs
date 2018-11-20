@@ -275,6 +275,12 @@ namespace Luminosity.IO
                         break;
                     }
 
+                    if(curRider.goalCollider.collidersCount() > 0)
+                    {
+                        SoundScript.PlaySound(playerSource, "Win");
+                        GameObject.Find("HUD").GetComponent<ButtonScripts>().Win();
+                    }
+
                     //input horizontal movement
                     curRider.inputHorz(InputManager.GetAxis("Horizontal"));
 

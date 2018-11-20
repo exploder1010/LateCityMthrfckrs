@@ -7,6 +7,7 @@ public class ButtonScripts : MonoBehaviour {
 
     public GameObject pauseUI;
     public GameObject gameOverUI;
+    public GameObject winUI;
 
 	// Use this for initialization
 	void Start () {
@@ -43,5 +44,14 @@ public class ButtonScripts : MonoBehaviour {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         gameOverUI.SetActive(true);
+    }
+
+    public void Win()
+    {
+        pauseUI.SetActive(false);
+        gameOverUI.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        winUI.SetActive(true);
     }
 }
