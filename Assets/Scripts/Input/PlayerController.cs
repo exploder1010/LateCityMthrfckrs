@@ -84,7 +84,7 @@ namespace Luminosity.IO
                         {
                             prevBoostEffect = true;
                             curBoostEffect = Instantiate(boostEffectPrefab, curVehicle.transform.position, curVehicle.transform.rotation);
-                            mainCamera.ChangeDistance(15f, 2f);
+                            mainCamera.ChangeDistance(15, 2f);
                         }
 
                         curBoostEffect.transform.position = curVehicle.transform.position;
@@ -363,7 +363,7 @@ namespace Luminosity.IO
                 {
 
                     //curVehicle.initializeSpeed(0, 0, InputManager.GetButton("BreakIn"));
-                    curVehicle.initializeSpeed(curRider.calculateNewCarMaxSpeed(), curRider.calculateNewCarStartSpeed(), InputManager.GetButton("BreakIn"));
+                    curVehicle.initializeSpeed(curRider.calculateNewCarMaxSpeed(), curRider.calculateNewCarStartSpeed(), false);
                     curRider.destroyThis();
                 }
                 else
