@@ -2370,7 +2370,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1273298079033436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.5, y: -2.3, z: 5.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4146721824242566}
@@ -5533,8 +5533,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.178152, y: 1.7044582, z: 5.5198345}
-  m_Center: {x: 0, y: 0.87684774, z: 0.006546974}
+  m_Size: {x: 2.1, y: 1.4600668, z: 4.911585}
+  m_Center: {x: 0, y: 0.754652, z: -0.014913559}
 --- !u!82 &82910078262734116
 AudioSource:
   m_ObjectHideFlags: 1
@@ -5655,11 +5655,12 @@ MonoBehaviour:
     steering: 0
   MotorTorque: 6000
   MaxSteeringAngle: 20
-  SteeringRate: 400
+  SteeringRate: 800
   GroundedStablizationRate: 300
   normalMaxSpeed: 45
   crashSpeed: 20
   broken: 0
+  AutoCorrect: 0
 --- !u!114 &114350415654076814
 MonoBehaviour:
   m_ObjectHideFlags: 1

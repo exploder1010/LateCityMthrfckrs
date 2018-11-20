@@ -75,6 +75,7 @@ public class CameraController : MonoBehaviour
                 transform.RotateAround(focus.transform.position, focus.transform.right, camRotY);//vert rot
                 transform.RotateAround(focus.transform.position, focus.transform.up, camRotX);//horz rot
                 camRotX = Mathf.LerpAngle(camRotX, 0, lerpSpeed * Time.deltaTime);
+                
             }
             else
             {

@@ -317,7 +317,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected virtual void handleVehicleCollision()
     {
-        if (vehicleCollider.collidersCount() > 0 && (rb.velocity.y <= 0 || targetedVehicle!= null))
+        if (vehicleCollider.collidersCount() > 0 && ( targetedVehicle!= null))
         {
             if (!vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>().broken)
             {
@@ -352,7 +352,7 @@ public class BasicRider : MonoBehaviour, IRider {
                     if (!bv.broken && (rb.velocity.y < 0 || prevVehicle != bv.gameObject))
                     {
                         float dist = (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
-                        Debug.Log("dist" + dist);
+
                         //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
                         if (potentialTargetedVehicle == null || dist < (transform.position + (vectorToAdd * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - potentialTargetedVehicle.transform.position).magnitude)
                         {

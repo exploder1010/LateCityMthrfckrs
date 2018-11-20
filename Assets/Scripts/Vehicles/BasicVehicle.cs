@@ -43,8 +43,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     Vector3 prevVelocity;
 
     // //Brady
-    // private bool adjusting = false;
-    // public float AutoCorrect;
+     private bool adjusting = false;
+     public float AutoCorrect;
     
     private void Start()
     {
@@ -74,7 +74,13 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 }
                 if (axle.steering)
                 {
-                     newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                    
+                    newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                    //if(steeringInput == 0)
+                    //{
+                    //    newSteering = 0;
+                    //}
+                    newSteering = MaxSteeringAngle * steeringInput;
                     axle.leftWheel.steerAngle = newSteering;
                     axle.rightWheel.steerAngle = newSteering; 
                 }
@@ -89,34 +95,44 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             TransformWheelMeshes();
             constrainMaxSpeed();
 
-            if(!easyCheckWheelsOnGround() && !isSpinMoveHop())
+            rb.maxAngularVelocity = 7f;
+            if (!CheckWheelsOnGround() && !isSpinMoveHop())
             {
+                rb.maxAngularVelocity = 2f;//this helps 
+
+                //spinDirection = spinDirection + (Vector3.Cross(Vector3.up, calculateForward()) * steeringInput);
+                //spinDirection = spinDirection + (calculateForward() * motor);
+
+                Vector3 currentForward = calculateForward();//used to get camera-based right 
+
                 if (motor > 0)
                 {
-                    rb.AddTorque(transform.right * 2.5f * 1000f);
+                    rb.AddTorque(new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
                 }
                 else if (motor < 0)
                 {
 
-                    rb.AddTorque(-transform.right * 2.5f * 1000f);
+                    rb.AddTorque(-new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
                 }
                 if (steeringInput > 0)
-                    rb.AddTorque(transform.up * 2.5f * 1000f);
+                    rb.AddTorque(transform.up * 5.5f * 1000f);
                 else if (steeringInput < 0)
-                    rb.AddTorque(-transform.up * 2.5f * 1000f);
+                    rb.AddTorque(-transform.up * 5.5f * 1000f);
 
-                          //Brady: Possible autocorrection for the forward axis.
-                //    //Alternatively, add slow down in opposite direction, like friction... Currently this is abrupt and unrealistic, but just to see if the approach is viable.
-                //    //Might be trying to fix a non existant issue.
-                //if(rb.rotation.z > AutoCorrect)
+
+
+                ////Brady: Possible autocorrection for the forward axis.
+                ////Alternatively, add slow down in opposite direction, like friction... Currently this is abrupt and unrealistic, but just to see if the approach is viable.
+                ////Might be trying to fix a non existant issue.
+                //if (rb.rotation.z > AutoCorrect)
                 //{
                 //    adjusting = true;
-                //    rb.AddTorque(transform.forward * 300f);
+                //    rb.AddTorque(transform.forward * 3.5f * 1000f);
                 //}
                 //else if (rb.rotation.z < -AutoCorrect)
                 //{
                 //    adjusting = true;
-                //    rb.AddTorque(-transform.forward * 300f);
+                //    rb.AddTorque(-transform.forward * 3.5f * 1000f);
                 //}
                 //else if (adjusting == true && (rb.rotation.z < 0.1f || rb.rotation.z > -0.1f))
                 //{
@@ -169,6 +185,26 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
             Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
             prevVelocity = rb.velocity;
+        }
+        else
+        {
+            foreach (AxleInfo axle in axleInfos)
+            {
+                if (axle.motor)
+                {
+                    axle.leftWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) /actualMaxSpeed));
+                    axle.rightWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+
+                    //axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                    //axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                }
+                if (axle.steering)
+                {
+                    newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                    axle.leftWheel.steerAngle = 0;
+                    axle.rightWheel.steerAngle = 0;
+                }
+            }
         }
 
     }
@@ -374,6 +410,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         {
             //Debug.Log("Major Crash on Late City Highway");
             broken = true;
+
+
 
             if (vehicleHitBox.collidersCount() > 0)
             {
