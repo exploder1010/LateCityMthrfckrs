@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 68967743}
   - component: {fileID: 68967742}
   m_Layer: 5
-  m_Name: TestStage4
+  m_Name: Skyscraper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -818,7 +818,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: TestLevel3
+  m_Text: Triple Bridge
 --- !u!222 &140401073
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1644,25 +1644,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 287984560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4509804, g: 0.3882353, b: 0.3882353, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_Texture: {fileID: 2800000, guid: 9107e8abd70477945867eede6dc11caf, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &287984563
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2112,25 +2111,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 438723342}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4509804, g: 0.3882353, b: 0.3882353, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_Texture: {fileID: 2800000, guid: 3cfa62363cf1c6f49b2c64f6b457f150, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &438723345
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2205,7 +2203,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Test1
+  m_Text: Reach the Goal!
 --- !u!222 &459161905
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2529,7 +2527,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: CrashCourse
+          m_StringArgument: Level_Skyscraper
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -2862,7 +2860,7 @@ GameObject:
   - component: {fileID: 619544150}
   - component: {fileID: 619544149}
   m_Layer: 5
-  m_Name: TestStage3
+  m_Name: TripleBridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3336,7 +3334,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: CrashCourse
+          m_StringArgument: Level_TripleBridge
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -3913,7 +3911,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: CrashCourse
+          m_StringArgument: Nick_SanFran_Whitebox
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -4767,25 +4765,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1151735875}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4509804, g: 0.3882353, b: 0.3882353, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_Texture: {fileID: 2800000, guid: 271a2051ed09e1c45b5efd359bb96f0a, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &1151735878
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4994,7 +4991,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Test1
+  m_Text: Reach the Goal!
 --- !u!222 &1236204405
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5739,7 +5736,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: TestLevel2
+  m_Text: ArtTest
 --- !u!222 &1454095400
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5831,7 +5828,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: CrashCourse
+          m_StringArgument: Art_CityBlock
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -6049,7 +6046,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: TestLevel4
+  m_Text: Skyscraper
 --- !u!222 &1547552719
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6068,7 +6065,7 @@ GameObject:
   - component: {fileID: 1591498216}
   - component: {fileID: 1591498215}
   m_Layer: 5
-  m_Name: TestStage
+  m_Name: SanFran
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6334,7 +6331,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Test1
+  m_Text: Reach the Goal!
 --- !u!222 &1648641999
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7923,6 +7920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseUI: {fileID: 0}
   gameOverUI: {fileID: 0}
+  winUI: {fileID: 0}
 --- !u!114 &1925504082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8002,7 +8000,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Test1
+  m_Text: Reach the Goal!
 --- !u!222 &1937505424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8283,7 +8281,7 @@ GameObject:
   - component: {fileID: 2022981517}
   - component: {fileID: 2022981516}
   m_Layer: 5
-  m_Name: TestStage2
+  m_Name: ArtTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8491,7 +8489,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: TestLevel
+  m_Text: 'San Fran
+
+'
 --- !u!222 &2079305408
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8654,25 +8654,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 2125321786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4509804, g: 0.3882353, b: 0.3882353, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_Texture: {fileID: 2800000, guid: f17e9b435d1321c44bfb0c557cf39195, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &2125321789
 CanvasRenderer:
   m_ObjectHideFlags: 0
