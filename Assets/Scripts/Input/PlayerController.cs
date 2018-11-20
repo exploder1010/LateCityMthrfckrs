@@ -84,7 +84,7 @@ namespace Luminosity.IO
                         {
                             prevBoostEffect = true;
                             curBoostEffect = Instantiate(boostEffectPrefab, curVehicle.transform.position, curVehicle.transform.rotation);
-                            mainCamera.ChangeDistance(12f, 2f);
+                            mainCamera.ChangeDistance(15f, 2f);
                         }
 
                         curBoostEffect.transform.position = curVehicle.transform.position;
@@ -355,12 +355,14 @@ namespace Luminosity.IO
 
                 if (curRider != null)
                 {
+
+                    //curVehicle.initializeSpeed(0, 0, InputManager.GetButton("BreakIn"));
                     curVehicle.initializeSpeed(curRider.calculateNewCarMaxSpeed(), curRider.calculateNewCarStartSpeed(), InputManager.GetButton("BreakIn"));
                     curRider.destroyThis();
                 }
                 else
                 {
-                    curVehicle.initializeSpeed(0, 0, InputManager.GetButton("BreakIn"));
+                    curVehicle.initializeSpeed(0, 0, false);
                 }
 
                 keyboard_A_Leniency = 0;

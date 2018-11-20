@@ -140,7 +140,7 @@ public class BasicRider : MonoBehaviour, IRider {
     //attempt to start break in move
     public virtual void inputBreakIn(int input)
     {
-        if (input == 1 && prevVectorToAdd!= Vector3.zero)
+        if (input == 1)// && prevVectorToAdd!= Vector3.zero)
         {
             //BasicVehicle closestVehicle = null;
             //handleLockOnCollision();

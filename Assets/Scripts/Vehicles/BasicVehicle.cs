@@ -15,12 +15,15 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public float GroundedStablizationRate = 1000;
 
     public float normalMaxSpeed = 40f;
-    float actualMaxSpeed;
+    float tempMaxSpeed;
+    float tempMaxSpeedLowerLimitPercent = 0.85f;
+    float tempMaxSpeedGainRate = 0.5f;
+    float potentialMaxSpeed;
     float startSpeed;
 
     private Rigidbody rb;
 
-    float motor;
+    float motorInput;
     float steeringInput;
 
     //Brady: New variables for crash.
@@ -59,6 +62,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     private void FixedUpdate()
     {
 
+        constrainMaxSpeed();
+
         if (!broken)
         {
             handleCrashCollision();
@@ -66,8 +71,27 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             {
                 if (axle.motor)
                 {
-                    axle.leftWheel.motorTorque = motor;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) /actualMaxSpeed));
-                    axle.rightWheel.motorTorque = motor;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+
+                    axle.leftWheel.motorTorque = (motorInput) * MotorTorque;
+                    axle.rightWheel.motorTorque = (motorInput) * MotorTorque;
+
+                    //if (actualMaxSpeed != 0)
+                    //{
+                        //float newMotorInput = motorInput - (0.6f * ((rb.velocity.magnitude / actualMaxSpeed)));
+                        //axle.leftWheel.motorTorque = newMotorInput * MotorTorque;
+                        //axle.rightWheel.motorTorque = newMotorInput * MotorTorque;
+                    //}
+
+                    if (motorInput != 0)
+                    {
+                        //Debug.Log("nmi " + newMotorInput + " nmi * mt " + newMotorInput * MotorTorque);
+                        //Debug.Log("what the fuck? " + ((motorInput - mod) * MotorTorque) + " " + (motorInput - 0f) * MotorTorque);
+                        //Debug.Log("motor " + ((motor) * MotorTorque));
+                        //Debug.Log("motor " + (motor));
+                        //Debug.Log("motor mod percent " + (rb.velocity.magnitude / actualMaxSpeed));
+                        //Debug.Log("mt:" + axle.leftWheel.motorTorque + " motor " + motor + "motor mod " + (motor * 0.3f * (rb.velocity.magnitude / actualMaxSpeed)));
+                        //Debug.Log("ms" + actualMaxSpeed + " rb.v "  +rb.velocity.magnitude);
+                    }
 
                     //axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
                     //axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
@@ -105,11 +129,11 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
                 Vector3 currentForward = calculateForward();//used to get camera-based right 
 
-                if (motor > 0)
+                if (motorInput > 0)
                 {
                     rb.AddTorque(new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
                 }
-                else if (motor < 0)
+                else if (motorInput < 0)
                 {
 
                     rb.AddTorque(-new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
@@ -209,6 +233,29 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     }
 
+    //nick
+    private void constrainMaxSpeed()
+    {
+        if (rb)
+        {
+            if (rb.velocity.magnitude > tempMaxSpeed)
+            {
+                float tempMaxSpeedGain = (potentialMaxSpeed - tempMaxSpeed) * tempMaxSpeedGainRate * Time.deltaTime;
+                tempMaxSpeed = Mathf.Min(tempMaxSpeed + tempMaxSpeedGain, potentialMaxSpeed);
+                rb.velocity = rb.velocity.normalized * tempMaxSpeed;
+                //rb.velocity = rb.velocity.normalized * potentialMaxSpeed;
+            }
+            else
+            {
+                if( rb.velocity.magnitude < tempMaxSpeed)
+                {
+                    tempMaxSpeed = Mathf.Max(rb.velocity.magnitude, potentialMaxSpeed * tempMaxSpeedLowerLimitPercent);
+                }
+            }
+
+        }
+    }
+
     public void inputHorz(float direction)
     {
         steeringInput = direction;
@@ -216,13 +263,14 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     public void inputAccel(float direction)
     {
-        motor = MotorTorque * direction;
+        motorInput = direction;
     }
 
     //nick 
     public void initializeSpeed(float newMaxSpeed, float newStartSpeed, bool startSMH)
     {
-        actualMaxSpeed = Mathf.Max(newMaxSpeed, normalMaxSpeed);
+        potentialMaxSpeed = Mathf.Max(newMaxSpeed, normalMaxSpeed);
+        tempMaxSpeed = potentialMaxSpeed * tempMaxSpeedLowerLimitPercent;
 
         startSpeed = newStartSpeed;
 
@@ -239,40 +287,6 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             }
         }
        
-    }
-
-    //nick
-    public virtual void startSpinMove(Vector3 directionToSpin)
-    {
-
-            spinMove = true;
-            spinDirection = Vector3.zero;
-            spinDirection = spinDirection + (Vector3.Cross(Vector3.up, calculateForward()) * directionToSpin.x);
-            spinDirection = spinDirection + (calculateForward() * directionToSpin.z);
-            spinDirection = Vector3.ProjectOnPlane(spinDirection, transform.up);
-
-            float firstAngle = Vector3.SignedAngle(transform.forward, spinDirection, transform.up);
-            if (firstAngle != 0)
-            {
-                spinDir = (int)(Mathf.Abs(firstAngle) / firstAngle);
-            }
-            spinLeft = Mathf.Abs(firstAngle + (spinDir * 360f * 1f));
-    }
-
-    protected Vector3 calculateForward()
-    {
-        Transform cTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        if (GameObject.FindGameObjectWithTag("MainCamera").transform)
-        {
-            cTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
-            Vector3 forward = (this.transform.position - cTransform.position);
-            forward.y = 0;
-            forward = forward.normalized;
-
-            return forward;
-        }
-        //Debug.Log("FAILURE");
-        return Vector3.zero;
     }
 
     //nick
@@ -309,9 +323,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             rb.angularVelocity = Vector3.zero;
         }
 
-        
 
-       
+
+
         //transform.rotation.SetLookRotation(transform.forward, roadUp);
     }
 
@@ -322,24 +336,48 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         spinMove = false;
         //if(//spinMoveHopTimeLimit > 0)
         //{
-
-            rb.velocity = transform.forward * startSpeed;
+        rb.velocity = transform.forward * startSpeed;
         //}
         //spinMoveHopTimeLimit = 0;
     }
 
     //nick
-    private void constrainMaxSpeed()
+    public virtual void startSpinMove(Vector3 directionToSpin)
     {
-        if (rb)
-        {
-            if(rb.velocity.magnitude > actualMaxSpeed)
+
+            spinMove = true;
+            spinDirection = Vector3.zero;
+            spinDirection = spinDirection + (Vector3.Cross(Vector3.up, calculateForward()) * directionToSpin.x);
+            spinDirection = spinDirection + (calculateForward() * directionToSpin.z);
+            spinDirection = Vector3.ProjectOnPlane(spinDirection, transform.up);
+
+            float firstAngle = Vector3.SignedAngle(transform.forward, spinDirection, transform.up);
+            if (firstAngle != 0)
             {
-                rb.velocity = rb.velocity.normalized * actualMaxSpeed;
+                spinDir = (int)(Mathf.Abs(firstAngle) / firstAngle);
             }
-            
-        }
+            spinLeft = Mathf.Abs(firstAngle + (spinDir * 360f * 1f));
     }
+
+    protected Vector3 calculateForward()
+    {
+        Transform cTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        if (GameObject.FindGameObjectWithTag("MainCamera").transform)
+        {
+            cTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
+            Vector3 forward = (this.transform.position - cTransform.position);
+            forward.y = 0;
+            forward = forward.normalized;
+
+            return forward;
+        }
+        //Debug.Log("FAILURE");
+        return Vector3.zero;
+    }
+
+
+
+
 
     void Stablization()
     {
@@ -402,10 +440,6 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     protected virtual void handleCrashCollision()
     {
-        if (motor != 0)
-        {
-
-        }
         if (roofRoadHitBox != null && (roofRoadHitBox.collidersCount() > 0 || vehicleHitBox.collidersCount() > 0 || ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude)))
         {
             //Debug.Log("Major Crash on Late City Highway");
@@ -441,7 +475,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     public float returnActualMaxSpeed()
     {
-        return actualMaxSpeed;
+        return potentialMaxSpeed;
     }
 
     
