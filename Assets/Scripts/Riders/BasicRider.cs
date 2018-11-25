@@ -141,7 +141,7 @@ public class BasicRider : MonoBehaviour, IRider {
     //attempt to start break in move
     public virtual void inputBreakIn(int input)
     {
-        if (input == 1)// && prevVectorToAdd!= Vector3.zero)
+        if (input == 1 && false)// && prevVectorToAdd!= Vector3.zero)
         {
             //BasicVehicle closestVehicle = null;
             //handleLockOnCollision();
@@ -175,7 +175,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
                 //DONT CHANGE THIS FOR NOW -- NICK
                 //new max speed and new start speed as a percent of current speed based on proximity to targeted car. right next to car = 99%, farthest away (but still in range) = 1%.
-                storedNewCarMaxSpeed = Mathf.Max(30f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.6f) * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
+                storedNewCarMaxSpeed = Mathf.Max(30f, (rb.velocity.magnitude * 0.3f)) + (rb.velocity.magnitude * 1.1f) * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
                 //storedNewCarStartSpeed = Mathf.Max(30f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.2f) * Mathf.Max(((lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius - dist) / (lockOnCollider.transform.GetComponent<SphereCollider>().radius + vehicleCollider.transform.GetComponent<SphereCollider>().radius)), 0);
                 storedNewCarStartSpeed = 0.6f * storedNewCarMaxSpeed;
             }
@@ -304,7 +304,7 @@ public class BasicRider : MonoBehaviour, IRider {
             Debug.DrawLine(transform.position - rb.velocity.normalized, transform.position - rb.velocity.normalized + rb.velocity.normalized * 5f, Color.red, 10f);
             if (Physics.Raycast(transform.position - rb.velocity.normalized, rb.velocity.normalized, out hit, 5f, layerMask))
             {
-                Debug.Log("hit");
+               // Debug.Log("hit");
                 ragdollUp = hit.normal;
             }
 
@@ -319,7 +319,7 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
             currentRagdoll.SetActive(true);
-            Debug.Log(ragdollUp);
+            //Debug.Log(ragdollUp);
             currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = (rb.velocity * 3f) + (ragdollUp * rb.velocity.magnitude * 4f);
             
         }
@@ -352,7 +352,7 @@ public class BasicRider : MonoBehaviour, IRider {
         }
         //}
 
-        if(targetIconPrefab != null)
+        if(targetIconPrefab != null && false)
         {
             BasicVehicle potentialTargetedVehicle = null;
             Destroy(currentTargetIcon);

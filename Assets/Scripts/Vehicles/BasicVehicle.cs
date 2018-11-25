@@ -7,6 +7,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public HitBox roofRoadHitBox;
     public HitBox vehicleHitBox;
 
+    public bool player;
+    public bool broken;
+
     public float breakInDistance;
     public List<AxleInfo> axleInfos;
     public float MotorTorque = 5000;
@@ -15,6 +18,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public float GroundedStablizationRate = 1000;
 
     public float normalMaxSpeed = 40f;
+    public float computerMaxSpeed = 20f;
     float tempMaxSpeed;
     float tempMaxSpeedLowerLimitPercent = 0.85f;
     float tempMaxSpeedGainRate = 0.5f;
@@ -28,7 +32,6 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     //Brady: New variables for crash.
     public float crashSpeed;
-    public bool broken;
 
     float newSteering;
 
@@ -54,7 +57,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         // Needed to keep it from being all wobbly
         // Doing this for one wheel collider does it for them all
         axleInfos[0].leftWheel.GetComponent<WheelCollider>().ConfigureVehicleSubsteps(5, 12, 15);
-        //actualMaxSpeed = normalMaxSpeed;
+        potentialMaxSpeed = normalMaxSpeed;
         rb = GetComponent<Rigidbody>();
         
     }
@@ -64,7 +67,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
         constrainMaxSpeed();
 
-        if (!broken)
+        if (!broken && (player || computerMaxSpeed > 0))
         {
             handleCrashCollision();
             foreach (AxleInfo axle in axleInfos)
@@ -98,15 +101,34 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 }
                 if (axle.steering)
                 {
-                    
-                    newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
-                    //if(steeringInput == 0)
+                    //float mod = SteeringRate;
+                    //if (!player)
                     //{
-                    //    newSteering = 0;
+                    //    mod = 1f;
                     //}
-                    newSteering = MaxSteeringAngle * steeringInput;
-                    axle.leftWheel.steerAngle = newSteering;
-                    axle.rightWheel.steerAngle = newSteering; 
+                    if (player)
+                    {
+                        //newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                        //if(steeringInput == 0)
+                        //{
+                        //    newSteering = 0;
+                        //}
+                        newSteering = MaxSteeringAngle * steeringInput;
+                        axle.leftWheel.steerAngle = newSteering;
+                        axle.rightWheel.steerAngle = newSteering;
+                    }
+                    else
+                    {
+                        //newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                        //if(steeringInput == 0)
+                        //{
+                        //    newSteering = 0;
+                        //}
+                        newSteering =   steeringInput;
+                        axle.leftWheel.steerAngle = newSteering;
+                        axle.rightWheel.steerAngle = newSteering;
+                    }
+ 
                 }
             }
 
@@ -164,6 +186,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 //    rb.angularVelocity = new Vector3(rb.rotation.x, rb.rotation.y, 0);
                 //}
             }
+
+            constrainMaxSpeed();
 
             if (spinMoveHop)
             {
@@ -224,7 +248,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 }
                 if (axle.steering)
                 {
-                    newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+
+                    //newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, mod * Time.deltaTime);
                     axle.leftWheel.steerAngle = 0;
                     axle.rightWheel.steerAngle = 0;
                 }
@@ -238,20 +263,28 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     {
         if (rb)
         {
-            if (rb.velocity.magnitude > tempMaxSpeed)
+            if (player)
             {
-                float tempMaxSpeedGain = (potentialMaxSpeed - tempMaxSpeed) * tempMaxSpeedGainRate * Time.deltaTime;
-                tempMaxSpeed = Mathf.Min(tempMaxSpeed + tempMaxSpeedGain, potentialMaxSpeed);
-                rb.velocity = rb.velocity.normalized * tempMaxSpeed;
-                //rb.velocity = rb.velocity.normalized * potentialMaxSpeed;
+                if (rb.velocity.magnitude > tempMaxSpeed)
+                {
+                    float tempMaxSpeedGain = (potentialMaxSpeed - tempMaxSpeed) * tempMaxSpeedGainRate * Time.deltaTime;
+                    tempMaxSpeed = Mathf.Min(tempMaxSpeed + tempMaxSpeedGain, potentialMaxSpeed);
+                    rb.velocity = rb.velocity.normalized * tempMaxSpeed;
+                    //rb.velocity = rb.velocity.normalized * potentialMaxSpeed;
+                }
+                else
+                {
+                    if (rb.velocity.magnitude < tempMaxSpeed)
+                    {
+                        tempMaxSpeed = Mathf.Max(rb.velocity.magnitude, potentialMaxSpeed * tempMaxSpeedLowerLimitPercent);
+                    }
+                }
             }
             else
             {
-                if( rb.velocity.magnitude < tempMaxSpeed)
-                {
-                    tempMaxSpeed = Mathf.Max(rb.velocity.magnitude, potentialMaxSpeed * tempMaxSpeedLowerLimitPercent);
-                }
+                rb.velocity = rb.velocity.normalized * Mathf.Min(rb.velocity.magnitude, computerMaxSpeed);
             }
+
 
         }
     }

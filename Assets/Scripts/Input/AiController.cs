@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class AiController : MonoBehaviour {
 
+    public int laneID;
+    private Waypoints curWaypoints;
+    private int curWaypoint;
+    private List<Transform> curWaypointsQueue;
+
+    public bool DebugThis;
+
     public GameObject pedestrianPrefab;
 
     private BasicVehicle vehicleScript;
@@ -14,46 +21,108 @@ public class AiController : MonoBehaviour {
     private bool stopCar;
     private float prevHitDistance = float.MaxValue;
     private List<AxleInfo> axleInfos;
+    
 
     // Use this for initialization
     void Start () {
 		vehicleScript = GetComponent<BasicVehicle>();
         rb = GetComponent<Rigidbody>();
-		vehicleScript.initializeSpeed(20,0,false);
+        //vehicleScript.initializeSpeed(20,0,false);
         //vehicleScript.AiControlled = true;
-        axleInfos = vehicleScript.axleInfos;
-	}
+        //axleInfos = vehicleScript.axleInfos;
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
         if (!stopUpdate)
         {
-            if (vehicleScript != null && !vehicleScript.broken)
+            if( vehicleScript != null && vehicleScript.player)
+            {
+                stopUpdate = true; //temp solution
+            }
+
+            if (vehicleScript != null && !vehicleScript.broken && !vehicleScript.player)
             {
                 //Gas and Break Logic
-                float speed = Vector3.Dot(rb.velocity, transform.forward);
-                float motor=0, breakForce=0;
+                //float speed = Vector3.Dot(rb.velocity, transform.forward);
+                float motor = 0, breakForce = 0;
 
+                float dist = 30f;
+                int layerMask = 1 << LayerMask.NameToLayer("Vehicle");
                 Vector3 pos = transform.position;
                 pos.y += 1;
                 RaycastHit hit;
-                if (Physics.Raycast(pos, transform.forward, out hit, 50f))
+
+                //if (DebugThis)
+                //    Debug.DrawRay(pos, -transform.up * 1000f, Color.red, 0.1f);
+                //update waypoint queues
+                if (Physics.Raycast(pos, -transform.up, out hit, 1000f))//, 1 << LayerMask.NameToLayer("Road")))
                 {
+                    //if (DebugThis)
+                    //{
+                        //Debug.Log(hit.transform);
+                    //}
+                    if(hit.transform.GetComponent<Waypoints>() && hit.transform.GetComponent<Waypoints>() != curWaypoints)
+                    {
+                        //Debug.Log("get waypoints");
+                        curWaypoints = hit.transform.GetComponent<Waypoints>();
+                        curWaypoint = 0;
+                        if (curWaypoints.Lanes != null)
+                            curWaypointsQueue = curWaypoints.Lanes[laneID];
+                    }
+                    else if(hit.transform.parent != null && hit.transform.parent.transform.GetComponent<Waypoints>() && hit.transform.parent.transform.GetComponent<Waypoints>() != curWaypoints)
+                    {
+                        curWaypoints = hit.transform.parent.transform.GetComponent<Waypoints>();
+                        curWaypoint = 0;
+                        //Debug.Log("get waypoints " + curWaypoints);
+                        //Debug.Log("get waypoints " + curWaypoints.Lanes);
+                        if (curWaypoints.Lanes != null)
+                            curWaypointsQueue = curWaypoints.Lanes[laneID];
+
+                        //curWaypointsQueue = curWaypoints.Lane1Waypoints;
+                    }
+                    else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.GetComponent<Waypoints>() && hit.transform.parent.transform.parent.transform.GetComponent<Waypoints>() != curWaypoints)
+                    {
+                        curWaypoints = hit.transform.parent.transform.parent.transform.GetComponent<Waypoints>();
+                        curWaypoint = 0;
+                        if (curWaypoints.Lanes != null)
+                            curWaypointsQueue = curWaypoints.Lanes[laneID];
+                    }
+                    else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<Waypoints>() && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<Waypoints>() != curWaypoints)
+                    {
+                        curWaypoints = hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<Waypoints>();
+                        curWaypoint = 0;
+                        if (curWaypoints.Lanes != null)
+                            curWaypointsQueue = curWaypoints.Lanes[laneID];
+                    }
+
+                }
+
+                
+                //if(DebugThis)
+                //    Debug.DrawRay(pos, transform.forward * dist, Color.red, 0.1f);
+                if (Physics.Raycast(pos, transform.forward, out hit, dist, layerMask))
+                {
+                    
                     float distance = hit.distance;
+
+                    //if(DebugThis)
+                    //    Debug.Log(distance);
+
                     //Debug.DrawLine(pos, hit.point);
-                    if (distance <= 5f)
+                    if (distance <= 5)
                     {
                         // Mash dat break
-
-                        //Debug.Log("STOP");
+                        //if (DebugThis)
+                        //    Debug.Log("STOP");
                         breakForce = 10000f;
-                        motor = 0f;
+                        motor = -1f;
                     }
                     else if (prevHitDistance >= distance)
                     {
                         // Getting close to something need to slow down
-
-                        //Debug.Log("Slowing");
+                        //if (DebugThis)
+                        //    Debug.Log("Slowing");
                         breakForce = 1850f;
                         motor = 0f;
                     }
@@ -63,36 +132,85 @@ public class AiController : MonoBehaviour {
 
                         //Debug.Log("Accel");
                         breakForce = 0f;
-                        motor = 1000f;
+                        motor = 1f;
                     }
 
                     prevHitDistance = distance;
                 }
                 else
                 {
+                    //if (DebugThis) 
+                    //    Debug.Log("DRIVE");
                     // Open road just drive
-
-                    motor = 2500f;
+                    motor = 1f;
                     breakForce = 0f;
                 }
 
-                foreach (AxleInfo axle in axleInfos)
+                //foreach (AxleInfo axle in axleInfos)
+                //{
+                //    axle.leftWheel.brakeTorque = breakForce;
+                //    axle.rightWheel.brakeTorque = breakForce;
+                //    if (axle.motor)
+                //    {
+                //        axle.leftWheel.motorTorque = motor;
+                //        axle.rightWheel.motorTorque = motor;
+                //    }
+                //}
+
+                //input motor movement 
+                vehicleScript.inputAccel(motor);
+
+                //lr movement based on waypoints
+                Vector3 target = Vector3.zero;
+                if (curWaypointsQueue != null && curWaypointsQueue.Count > curWaypoint)
                 {
-                    axle.leftWheel.brakeTorque = breakForce;
-                    axle.rightWheel.brakeTorque = breakForce;
-                    if (axle.motor)
-                    {
-                        axle.leftWheel.motorTorque = motor;
-                        axle.rightWheel.motorTorque = motor;
-                    }
-                }
+                    target = curWaypointsQueue[curWaypoint].position;
+                    Vector3 targetDir = (target - transform.position);
 
 
                     //input horizontal movement
-                    vehicleScript.inputHorz(0f);
+                    vehicleScript.inputHorz(AngleDir(transform.forward, targetDir, transform.up));
+
+                    if(DebugThis)
+                    Debug.Log(" left or right " + AngleDir(transform.forward, targetDir, transform.up));
+
+                    //update waypoints
+                    if ((transform.position - target).magnitude < 4f)
+                    {
+                        curWaypoint ++;
+                    }
+                }
+                else
+                {
+                    vehicleScript.inputHorz(0);
+                }
             }
         }
 	}
+
+    float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
+    {
+        Vector3 perp = Vector3.Cross(fwd, targetDir);
+        float dir = Vector3.Dot(perp, up);
+        if (DebugThis)
+        {
+            Debug.Log(dir);
+        }
+        return dir;
+
+        //if (dir > 0.0f)
+        //{
+        //    return 1f;
+        //}
+        //else if (dir < -0.0f)
+        //{
+        //    return -1f;
+        //}
+        //else
+        //{
+        //    return 0f;
+        //}
+    }
 
     void Eject()
     {

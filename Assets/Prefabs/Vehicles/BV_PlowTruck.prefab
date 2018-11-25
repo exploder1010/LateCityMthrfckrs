@@ -387,6 +387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4800504309938684}
   - component: {fileID: 54115742668033932}
+  - component: {fileID: 114862179081133730}
   - component: {fileID: 114110436164375430}
   - component: {fileID: 82910078262734116}
   m_Layer: 11
@@ -2370,7 +2371,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1273298079033436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -13, y: 3.3578243, z: 29.514927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4146721824242566}
@@ -5643,6 +5644,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roofRoadHitBox: {fileID: 114350415654076814}
   vehicleHitBox: {fileID: 114655461391291694}
+  player: 0
+  broken: 0
   breakInDistance: 0
   axleInfos:
   - leftWheel: {fileID: 146494560177755922}
@@ -5658,8 +5661,8 @@ MonoBehaviour:
   SteeringRate: 800
   GroundedStablizationRate: 300
   normalMaxSpeed: 45
+  computerMaxSpeed: 20
   crashSpeed: 20
-  broken: 0
   AutoCorrect: 0
 --- !u!114 &114350415654076814
 MonoBehaviour:
@@ -5685,6 +5688,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
+--- !u!114 &114862179081133730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1273298079033436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d44c7d311454ebfa6a55b6ddfa275f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugThis: 1
+  pedestrianPrefab: {fileID: 0}
 --- !u!146 &146494560177755922
 WheelCollider:
   m_ObjectHideFlags: 1

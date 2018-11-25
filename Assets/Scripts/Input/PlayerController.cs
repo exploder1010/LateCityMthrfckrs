@@ -358,6 +358,7 @@ namespace Luminosity.IO
             {
                 curState = PlayerState.Vehicle;
                 curVehicle = newVehicle;
+                curVehicle.player = true;
 
                 if (curRider != null)
                 {
@@ -404,6 +405,9 @@ namespace Luminosity.IO
 
                 if (curVehicle != null)
                 {
+
+                    curVehicle.player = false;
+
                     //let go of steering wheel
                     curVehicle.inputHorz(0);
                     curVehicle.inputAccel(0);
