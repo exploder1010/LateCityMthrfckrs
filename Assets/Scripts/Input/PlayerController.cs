@@ -354,7 +354,7 @@ namespace Luminosity.IO
         public void EnterVehicle(BasicVehicle newVehicle)
         {
             //Debug.Log("ENTER CAR " + Time.time);
-            if (curState != PlayerState.Dead && (newVehicle.gameObject != prevVehicle || prevVehicleIntangibility <=0))
+            if (curState != PlayerState.Dead && (newVehicle.gameObject != prevVehicle || newVehicle.easyCheckWheelsOnGround() || prevVehicleIntangibility <=0))
             {
                 curState = PlayerState.Vehicle;
                 curVehicle = newVehicle;
@@ -446,7 +446,7 @@ namespace Luminosity.IO
                 mainCamera.ChangeDistance(12f, 2f);
 
                 prevVehicle = curVehicle.gameObject;
-                prevVehicleIntangibility = .5f;
+                prevVehicleIntangibility = 3f;
                 curRider.setPreviousVehicle(curVehicle.gameObject);
                 curVehicle = null;
             }

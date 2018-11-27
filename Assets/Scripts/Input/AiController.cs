@@ -196,7 +196,7 @@ public class AiController : MonoBehaviour {
         {
             Debug.Log(dir);
         }
-        return dir;
+        return dir * 10;
 
         //if (dir > 0.0f)
         //{

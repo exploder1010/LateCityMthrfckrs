@@ -6,9 +6,11 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     public HitBox roofRoadHitBox;
     public HitBox vehicleHitBox;
+    public GameObject smokeParticleEffect;
 
     public bool player;
     public bool broken;
+    public bool disabled;
 
     public float breakInDistance;
     public List<AxleInfo> axleInfos;
@@ -23,6 +25,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     float tempMaxSpeedLowerLimitPercent = 0.85f;
     float tempMaxSpeedGainRate = 0.5f;
     float potentialMaxSpeed;
+    float prevPotentialMaxSpeed;
     float startSpeed;
 
     private Rigidbody rb;
@@ -59,202 +62,206 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         axleInfos[0].leftWheel.GetComponent<WheelCollider>().ConfigureVehicleSubsteps(5, 12, 15);
         potentialMaxSpeed = normalMaxSpeed;
         rb = GetComponent<Rigidbody>();
-        
+        smokeParticleEffect.SetActive(false);
     }
 
     private void FixedUpdate()
     {
-
-        constrainMaxSpeed();
-
-        if (!broken && (player || computerMaxSpeed > 0))
+        if (!disabled)
         {
+            constrainMaxSpeed();
             handleCrashCollision();
-            foreach (AxleInfo axle in axleInfos)
+
+            if (!broken && (player || computerMaxSpeed > 0))
             {
-                if (axle.motor)
+                
+                foreach (AxleInfo axle in axleInfos)
                 {
+                    if (axle.motor)
+                    {
 
-                    axle.leftWheel.motorTorque = (motorInput) * MotorTorque;
-                    axle.rightWheel.motorTorque = (motorInput) * MotorTorque;
+                        axle.leftWheel.motorTorque = (motorInput) * MotorTorque;
+                        axle.rightWheel.motorTorque = (motorInput) * MotorTorque;
 
-                    //if (actualMaxSpeed != 0)
-                    //{
+                        //if (actualMaxSpeed != 0)
+                        //{
                         //float newMotorInput = motorInput - (0.6f * ((rb.velocity.magnitude / actualMaxSpeed)));
                         //axle.leftWheel.motorTorque = newMotorInput * MotorTorque;
                         //axle.rightWheel.motorTorque = newMotorInput * MotorTorque;
-                    //}
+                        //}
 
-                    if (motorInput != 0)
+                        if (motorInput != 0)
+                        {
+                            //Debug.Log("nmi " + newMotorInput + " nmi * mt " + newMotorInput * MotorTorque);
+                            //Debug.Log("what the fuck? " + ((motorInput - mod) * MotorTorque) + " " + (motorInput - 0f) * MotorTorque);
+                            //Debug.Log("motor " + ((motor) * MotorTorque));
+                            //Debug.Log("motor " + (motor));
+                            //Debug.Log("motor mod percent " + (rb.velocity.magnitude / actualMaxSpeed));
+                            //Debug.Log("mt:" + axle.leftWheel.motorTorque + " motor " + motor + "motor mod " + (motor * 0.3f * (rb.velocity.magnitude / actualMaxSpeed)));
+                            //Debug.Log("ms" + actualMaxSpeed + " rb.v "  +rb.velocity.magnitude);
+                        }
+
+                        //axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                        //axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                    }
+                    if (axle.steering)
                     {
-                        //Debug.Log("nmi " + newMotorInput + " nmi * mt " + newMotorInput * MotorTorque);
-                        //Debug.Log("what the fuck? " + ((motorInput - mod) * MotorTorque) + " " + (motorInput - 0f) * MotorTorque);
-                        //Debug.Log("motor " + ((motor) * MotorTorque));
-                        //Debug.Log("motor " + (motor));
-                        //Debug.Log("motor mod percent " + (rb.velocity.magnitude / actualMaxSpeed));
-                        //Debug.Log("mt:" + axle.leftWheel.motorTorque + " motor " + motor + "motor mod " + (motor * 0.3f * (rb.velocity.magnitude / actualMaxSpeed)));
-                        //Debug.Log("ms" + actualMaxSpeed + " rb.v "  +rb.velocity.magnitude);
+                        //float mod = SteeringRate;
+                        //if (!player)
+                        //{
+                        //    mod = 1f;
+                        //}
+                        if (player)
+                        {
+                            //newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                            //if(steeringInput == 0)
+                            //{
+                            //    newSteering = 0;
+                            //}
+                            newSteering = MaxSteeringAngle * steeringInput;
+                            axle.leftWheel.steerAngle = newSteering;
+                            axle.rightWheel.steerAngle = newSteering;
+                        }
+                        else
+                        {
+                            //newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
+                            //if(steeringInput == 0)
+                            //{
+                            //    newSteering = 0;
+                            //}
+                            newSteering = steeringInput;
+                            axle.leftWheel.steerAngle = newSteering;
+                            axle.rightWheel.steerAngle = newSteering;
+                        }
+
+                    }
+                }
+
+                if (!spinMoveHop)
+                {
+
+                    Stablization();
+                }
+
+                TransformWheelMeshes();
+                constrainMaxSpeed();
+
+                rb.maxAngularVelocity = 7f;
+                if (!CheckWheelsOnGround() && !isSpinMoveHop())
+                {
+                    rb.maxAngularVelocity = 1f;//this helps 
+
+                    //spinDirection = spinDirection + (Vector3.Cross(Vector3.up, calculateForward()) * steeringInput);
+                    //spinDirection = spinDirection + (calculateForward() * motor);
+
+                    Vector3 currentForward = calculateForward();//used to get camera-based right 
+
+                    if (motorInput > 0)
+                    {
+                        rb.AddTorque(new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
+                    }
+                    else if (motorInput < 0)
+                    {
+
+                        rb.AddTorque(-new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
+                    }
+                    if (steeringInput > 0)
+                        rb.AddTorque(Vector3.up * 5.5f * 1000f);
+                    else if (steeringInput < 0)
+                        rb.AddTorque(-Vector3.up * 5.5f * 1000f);
+
+
+
+                    ////Brady: Possible autocorrection for the forward axis.
+                    ////Alternatively, add slow down in opposite direction, like friction... Currently this is abrupt and unrealistic, but just to see if the approach is viable.
+                    ////Might be trying to fix a non existant issue.
+                    //if (rb.rotation.z > AutoCorrect)
+                    //{
+                    //    adjusting = true;
+                    //    rb.AddTorque(transform.forward * 3.5f * 1000f);
+                    //}
+                    //else if (rb.rotation.z < -AutoCorrect)
+                    //{
+                    //    adjusting = true;
+                    //    rb.AddTorque(-transform.forward * 3.5f * 1000f);
+                    //}
+                    //else if (adjusting == true && (rb.rotation.z < 0.1f || rb.rotation.z > -0.1f))
+                    //{
+                    //    adjusting = false;
+                    //    rb.angularVelocity = new Vector3(rb.rotation.x, rb.rotation.y, 0);
+                    //}
+                }
+
+                constrainMaxSpeed();
+
+                if (spinMoveHop)
+                {
+                    if (spinMove)
+                    {
+                        if (spinMove && spinLeft > 0)
+                        {
+                            float newSpin = Mathf.Min(2000f * Time.deltaTime, spinLeft);
+                            spinLeft -= newSpin;
+                            transform.RotateAround(transform.position, transform.up, newSpin * spinDir);
+                        }
                     }
 
-                    //axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
-                    //axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
-                }
-                if (axle.steering)
-                {
-                    //float mod = SteeringRate;
-                    //if (!player)
-                    //{
-                    //    mod = 1f;
-                    //}
-                    if (player)
+
+
+                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                    curSpinJump -= Time.deltaTime * 30f;
+
+                    if (spinMoveHopGrounded)
                     {
-                        //newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
-                        //if(steeringInput == 0)
-                        //{
-                        //    newSteering = 0;
-                        //}
-                        newSteering = MaxSteeringAngle * steeringInput;
-                        axle.leftWheel.steerAngle = newSteering;
-                        axle.rightWheel.steerAngle = newSteering;
+                        rb.angularVelocity = Vector3.zero;
+                        curSpinJump = Mathf.Max(curSpinJump, -100f);
+                        transform.position += transform.up * curSpinJump * Time.deltaTime;
                     }
                     else
                     {
-                        //newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, SteeringRate * Time.deltaTime);
-                        //if(steeringInput == 0)
-                        //{
-                        //    newSteering = 0;
-                        //}
-                        newSteering =   steeringInput;
-                        axle.leftWheel.steerAngle = newSteering;
-                        axle.rightWheel.steerAngle = newSteering;
+                        rb.angularVelocity = Vector3.zero;
+                        curSpinJump = Mathf.Max(curSpinJump, -100f);
+                        transform.position += transform.up * curSpinJump * Time.deltaTime;
                     }
- 
-                }
-            }
 
-            if (!spinMoveHop)
-            {
+                    //rb.AddForce(transform.up * curSpinJump, ForceMode.Force);
 
-                Stablization();
-            }
+                    //spinMoveHopTimeLimit -= Time.deltaTime;
 
-            TransformWheelMeshes();
-            constrainMaxSpeed();
-
-            rb.maxAngularVelocity = 7f;
-            if (!CheckWheelsOnGround() && !isSpinMoveHop())
-            {
-                rb.maxAngularVelocity = 1f;//this helps 
-
-                //spinDirection = spinDirection + (Vector3.Cross(Vector3.up, calculateForward()) * steeringInput);
-                //spinDirection = spinDirection + (calculateForward() * motor);
-
-                Vector3 currentForward = calculateForward();//used to get camera-based right 
-
-                if (motorInput > 0)
-                {
-                    rb.AddTorque(new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
-                }
-                else if (motorInput < 0)
-                {
-
-                    rb.AddTorque(-new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
-                }
-                if (steeringInput > 0)
-                    rb.AddTorque(Vector3.up * 5.5f * 1000f);
-                else if (steeringInput < 0)
-                    rb.AddTorque(-Vector3.up * 5.5f * 1000f);
-
-
-
-                ////Brady: Possible autocorrection for the forward axis.
-                ////Alternatively, add slow down in opposite direction, like friction... Currently this is abrupt and unrealistic, but just to see if the approach is viable.
-                ////Might be trying to fix a non existant issue.
-                //if (rb.rotation.z > AutoCorrect)
-                //{
-                //    adjusting = true;
-                //    rb.AddTorque(transform.forward * 3.5f * 1000f);
-                //}
-                //else if (rb.rotation.z < -AutoCorrect)
-                //{
-                //    adjusting = true;
-                //    rb.AddTorque(-transform.forward * 3.5f * 1000f);
-                //}
-                //else if (adjusting == true && (rb.rotation.z < 0.1f || rb.rotation.z > -0.1f))
-                //{
-                //    adjusting = false;
-                //    rb.angularVelocity = new Vector3(rb.rotation.x, rb.rotation.y, 0);
-                //}
-            }
-
-            constrainMaxSpeed();
-
-            if (spinMoveHop)
-            {
-                if (spinMove)
-                {
-                    if (spinMove && spinLeft > 0)
+                    RaycastHit hit;
+                    int layerMask = 1 << LayerMask.NameToLayer("Road");
+                    if (easyCheckWheelsOnGround() && curSpinJump < 0 || !Physics.Raycast(transform.position, -transform.up, out hit, layerMask))
                     {
-                        float newSpin = Mathf.Min(2000f * Time.deltaTime, spinLeft);
-                        spinLeft -= newSpin;
-                        transform.RotateAround(transform.position, transform.up, newSpin * spinDir);
+                        endSpinMoveHop();
                     }
                 }
 
-
-
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                curSpinJump -= Time.deltaTime * 30f;
-
-                if (spinMoveHopGrounded)
-                {
-                    rb.angularVelocity = Vector3.zero;
-                    curSpinJump = Mathf.Max(curSpinJump, -100f);
-                    transform.position += transform.up * curSpinJump * Time.deltaTime;
-                }
-                else
-                {
-                    rb.angularVelocity = Vector3.zero;
-                    curSpinJump = Mathf.Max(curSpinJump, -100f);
-                    transform.position += transform.up * curSpinJump * Time.deltaTime;
-                }
-                
-                //rb.AddForce(transform.up * curSpinJump, ForceMode.Force);
-
-                //spinMoveHopTimeLimit -= Time.deltaTime;
-
-                RaycastHit hit;
-                int layerMask = 1 << LayerMask.NameToLayer("Road");
-                if (easyCheckWheelsOnGround() && curSpinJump < 0 ||  !Physics.Raycast(transform.position, -transform.up, out hit, layerMask))
-                {
-                    endSpinMoveHop();
-                }
+                Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
+                prevVelocity = rb.velocity;
             }
-
-            Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
-            prevVelocity = rb.velocity;
-        }
-        else
-        {
-            foreach (AxleInfo axle in axleInfos)
+            else
             {
-                if (axle.motor)
+                foreach (AxleInfo axle in axleInfos)
                 {
-                    axle.leftWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) /actualMaxSpeed));
-                    axle.rightWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                    if (axle.motor)
+                    {
+                        axle.leftWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) /actualMaxSpeed));
+                        axle.rightWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
 
-                    //axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
-                    //axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
-                }
-                if (axle.steering)
-                {
+                        //axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                        //axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                    }
+                    if (axle.steering)
+                    {
 
-                    //newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, mod * Time.deltaTime);
-                    axle.leftWheel.steerAngle = 0;
-                    axle.rightWheel.steerAngle = 0;
+                        //newSteering = Mathf.MoveTowards(axle.leftWheel.steerAngle, MaxSteeringAngle * steeringInput, mod * Time.deltaTime);
+                        axle.leftWheel.steerAngle = 0;
+                        axle.rightWheel.steerAngle = 0;
+                    }
                 }
             }
         }
+        
 
     }
 
@@ -316,7 +323,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             }
             else
             {
-                rb.velocity = transform.forward * startSpeed;
+                if(easyCheckWheelsOnGround())
+                    rb.velocity = transform.forward * startSpeed;
             }
         }
        
@@ -473,11 +481,11 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     protected virtual void handleCrashCollision()
     {
-        if (roofRoadHitBox != null && (roofRoadHitBox.collidersCount() > 0 || vehicleHitBox.collidersCount() > 0 || ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude)))
+        if (roofRoadHitBox != null && (roofRoadHitBox.collidersCount() > 0 || vehicleHitBox.collidersCount() > 0 || ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude && player)))
         {
             //Debug.Log("Major Crash on Late City Highway");
             broken = true;
-
+            smokeParticleEffect.SetActive(true);
 
 
             if (vehicleHitBox.collidersCount() > 0)
@@ -499,6 +507,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 }
             }
         }
+        prevPotentialMaxSpeed = potentialMaxSpeed;
     }
 
     public Vector3 returnExitVelocity()

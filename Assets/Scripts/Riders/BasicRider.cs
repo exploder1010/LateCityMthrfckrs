@@ -228,7 +228,7 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             carLaunchSpeed = 2f;
             //float boostModifier = Mathf.Max((carVelocity.magnitude / (carMaxSpeed * boostThreshold)), 0.25f);
-            maxSpeedThisJump = 10f;
+            maxSpeedThisJump = 20f;
             rb.velocity = carVelocity.normalized * carLaunchSpeed;
             rb.AddForce(carJumpUpDirection * 2f * carJumpStartImpulse);
 
@@ -419,7 +419,8 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (!targetedVehicle)
         {
-            return Mathf.Max(30f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.7f);//dont change this yet - nick
+            return Mathf.Max(20f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.6f);//dont change this yet - nick
+            //return Mathf.Max(20f, (rb.velocity.magnitude * 1.05f));//dont change this yet - nick
         }
         return storedNewCarMaxSpeed;
     }
@@ -430,7 +431,8 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (!targetedVehicle)
         {
-            return 0.6f * Mathf.Max(30f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.7f);//dont change this yet - nick
+            return 0.6f * (Mathf.Max(20f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.6f));//dont change this yet - nick
+            //return 0.6f * Mathf.Max(20f, (rb.velocity.magnitude * 1.05f));//dont change this yet - nick
         }
         return storedNewCarStartSpeed;
     }
