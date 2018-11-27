@@ -1746,7 +1746,7 @@ Rigidbody:
   m_Mass: 1000
   m_Drag: 0.1
   m_AngularDrag: 0.2
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -1952,6 +1952,7 @@ MonoBehaviour:
   roofRoadHitBox: {fileID: 114399990399103612}
   vehicleHitBox: {fileID: 114815772688829674}
   smokeParticleEffect: {fileID: 1456430411123980}
+  DebugThis: 0
   player: 0
   broken: 0
   disabled: 0
@@ -1969,6 +1970,7 @@ MonoBehaviour:
   MaxSteeringAngle: 20
   SteeringRate: 800
   GroundedStablizationRate: 300
+  gravityDirection: {x: 0, y: -1, z: 0}
   normalMaxSpeed: 50
   computerMaxSpeed: 15
   crashSpeed: 20

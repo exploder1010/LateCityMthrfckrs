@@ -49,8 +49,8 @@ public class AiController : MonoBehaviour {
 
                 float dist = 30f;
                 int layerMask = 1 << LayerMask.NameToLayer("Vehicle");
-                Vector3 pos = transform.position;
-                pos.y += 1;
+                Vector3 pos = transform.position + transform.up;
+                //pos.y += 1;
                 RaycastHit hit;
 
                 //if (DebugThis)

@@ -113,130 +113,13 @@ namespace Luminosity.IO
                     curVehicle.inputAccel(InputManager.GetAxis("Accelerate"));
 
                     //input jump
-                    if (InputManager.GetButtonDown("Jump") && !curVehicle.isSpinMoveHop() || curVehicle.GetComponent<BasicVehicle>().broken)
+                    if (InputManager.GetButtonDown("Jump") || curVehicle.GetComponent<BasicVehicle>().broken)
                     {
                         ExitVehicle();
 
                         break;
                     }
 
-                    //dunkey spin move
-                    if(GamePad)
-                    {
-                        Vector3 newLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
-                        if (curVehicle.isSpinMoveHop() && (newLStickInput - prevLStickInput).magnitude > 0.9f)
-                        {
-                            curVehicle.startSpinMove((newLStickInput - prevLStickInput).normalized);
-                        }
-                    }
-                    else
-                    {
-                        Vector3 newLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
-
-                        bool validSpinMove = false;
-
-                        if (InputManager.GetAxis("Horizontal") < 0)
-                        {
-                            keyboard_A_Leniency = 0.3f;
-
-                            if(keyboard_D_Leniency > 0)
-                            {
-                                validSpinMove = true;
-                                keyboard_D_Leniency = 0;
-                            }
-                        }
-                        if (InputManager.GetAxis("Horizontal") > 0)
-                        {
-                            keyboard_D_Leniency = 0.3f;
-
-                            if (keyboard_A_Leniency > 0)
-                            {
-                                validSpinMove = true;
-                                keyboard_A_Leniency = 0;
-                            }
-                        }
-                        if (InputManager.GetAxis("Vertical") < 0)
-                        {
-                            keyboard_S_Leniency = 0.3f;
-
-                            if (keyboard_W_Leniency > 0)
-                            {
-                                validSpinMove = true;
-                                keyboard_W_Leniency = 0;
-                            }
-                        }
-                        if (InputManager.GetAxis("Vertical") > 0)
-                        {
-                            keyboard_W_Leniency = 0.3f;
-
-                            if (keyboard_S_Leniency > 0)
-                            {
-                                validSpinMove = true;
-                                keyboard_S_Leniency = 0;
-                            }
-                        }
-                        //////////////////////
-                        if (InputManager.GetAxis("Horizontal") < 0 && InputManager.GetAxis("Vertical") < 0)
-                        {
-                            keyboard_AS_Leniency = 0.3f;
-
-                            if (keyboard_DW_Leniency > 0)
-                            {
-                                validSpinMove = true;
-                                keyboard_DW_Leniency = 0;
-                            }
-                        }
-                        if (InputManager.GetAxis("Horizontal") > 0 && InputManager.GetAxis("Vertical") < 0)
-                        {
-                            keyboard_SD_Leniency = 0.3f;
-
-                            if (keyboard_WA_Leniency > 0)
-                            {
-                                validSpinMove = true;
-                                keyboard_WA_Leniency = 0;
-                            }
-                        }
-                        if (InputManager.GetAxis("Horizontal") > 0 && InputManager.GetAxis("Vertical") > 0)
-                        {
-                            keyboard_DW_Leniency = 0.3f;
-
-                            if (keyboard_AS_Leniency > 0)
-                            {
-                                validSpinMove = true;
-                                keyboard_AS_Leniency = 0;
-                            }
-                        }
-                        if (InputManager.GetAxis("Horizontal") < 0 && InputManager.GetAxis("Vertical") > 0)
-                        {
-                            keyboard_WA_Leniency = 0.3f;
-
-                            if (keyboard_SD_Leniency > 0)
-                            {
-                                validSpinMove = true;
-                                keyboard_SD_Leniency = 0;
-                            }
-                        }
-
-
-                        if (curVehicle.isSpinMoveHop() && validSpinMove)
-                        {
-                            curVehicle.startSpinMove(newLStickInput);
-                        }
-
-
-                        keyboard_A_Leniency -= Time.deltaTime;
-                        keyboard_D_Leniency -= Time.deltaTime;
-                        keyboard_S_Leniency -= Time.deltaTime;
-                        keyboard_W_Leniency -= Time.deltaTime;
-                        keyboard_AS_Leniency -= Time.deltaTime;
-                        keyboard_SD_Leniency -= Time.deltaTime;
-                        keyboard_DW_Leniency -= Time.deltaTime;
-                        keyboard_WA_Leniency -= Time.deltaTime;
-                        }
-                    
-
-
-                    
                     break;
 
                 //process input for air movement
@@ -254,9 +137,11 @@ namespace Luminosity.IO
 
                     ambientSource.volume = curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
 
-                    if(curRider.vehicleToEnter() != null)
+                    if(curRider.vehicleToEnter() != null && curState != PlayerState.Dead && (curRider.vehicleToEnter().gameObject != prevVehicle || (curRider.vehicleToEnter().easyCheckWheelsOnGround() && curRider.vehicleToEnter().getGravity() == Vector3.down) || prevVehicleIntangibility <= 0))
                     {
                         EnterVehicle(curRider.vehicleToEnter());
+                        //if(curRider.veh)
+                        //curState != PlayerState.Dead && (newVehicle.gameObject != prevVehicle || (newVehicle.easyCheckWheelsOnGround() && newVehicle.getGravity() == Vector3.down) || prevVehicleIntangibility <= 0)
                         break;
                     }
                     
@@ -354,7 +239,7 @@ namespace Luminosity.IO
         public void EnterVehicle(BasicVehicle newVehicle)
         {
             //Debug.Log("ENTER CAR " + Time.time);
-            if (curState != PlayerState.Dead && (newVehicle.gameObject != prevVehicle || newVehicle.easyCheckWheelsOnGround() || prevVehicleIntangibility <=0))
+            if (true)
             {
                 curState = PlayerState.Vehicle;
                 curVehicle = newVehicle;
@@ -388,7 +273,8 @@ namespace Luminosity.IO
             {
                 Debug.Log("big no no error");
             }
-           
+
+            newVehicle = null;
         }
 
         //Brady: Added if statement to determine physics of launch. For the time being, the beginCarJump variable for carspeed is simply the car magnitude divided by 5.

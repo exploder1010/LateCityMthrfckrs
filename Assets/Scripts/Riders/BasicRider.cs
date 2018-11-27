@@ -57,9 +57,10 @@ public class BasicRider : MonoBehaviour, IRider {
     protected float carJumpTimer;
     protected float carJumpVelocity;
     protected float carLaunchSpeed;
-    
+
     //gravity variable
     public float gravityMagnitude = 18f;
+    public Vector3 gravityDirection = Vector3.down;
 
     // basic player doesn't use these variables but all characters will use them so storing them here
     public int charAbilityAmmo = 1;
@@ -200,7 +201,7 @@ public class BasicRider : MonoBehaviour, IRider {
             updateMaxSpeedCheck();
 
             //apply gravity
-            rb.AddForce(Vector3.down * gravityMagnitude);
+            rb.AddForce(gravityDirection * gravityMagnitude);
 
         }
 
