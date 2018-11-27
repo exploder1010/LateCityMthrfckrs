@@ -245,8 +245,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 {
                     if (axle.motor)
                     {
-                        axle.leftWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) /actualMaxSpeed));
-                        axle.rightWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
+                        //axle.leftWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) /actualMaxSpeed));
+                        //axle.rightWheel.motorTorque = 0;// - (motor * 0.65f * (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
 
                         //axle.leftWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));
                         //axle.rightWheel.motorTorque += Mathf.Abs(newSteering) / MaxSteeringAngle * (motor - (Mathf.Abs(rb.velocity.magnitude) / actualMaxSpeed));

@@ -539,7 +539,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1662206317279098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.99, y: 3.5226502, z: 36.864006}
+  m_LocalPosition: {x: -12.99, y: 3.5226502, z: 35.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4350316642082234}
@@ -704,7 +704,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456430411123980}
   m_LocalRotation: {x: -0.70710576, y: -0, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4256012948935898}
@@ -1925,6 +1925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e74abedfb13324fb03c198c09a5b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideDistance: 0
 --- !u!114 &114399990399103612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1969,7 +1970,7 @@ MonoBehaviour:
   SteeringRate: 800
   GroundedStablizationRate: 300
   normalMaxSpeed: 50
-  computerMaxSpeed: 20
+  computerMaxSpeed: 15
   crashSpeed: 20
   AutoCorrect: 0
 --- !u!114 &114815772688829674
@@ -2246,7 +2247,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 3.3027558
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -6779,7 +6780,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 8.781736
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -7271,7 +7272,7 @@ ParticleSystem:
     serializedVersion: 5
     enabled: 1
     type: 4
-    angle: 25
+    angle: 44.119087
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
