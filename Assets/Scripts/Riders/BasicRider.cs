@@ -201,7 +201,7 @@ public class BasicRider : MonoBehaviour, IRider {
                 float mag = rb.velocity.magnitude;
                 float y = rb.velocity.y;
                 rb.velocity = rb.velocity.normalized * (mag - Time.deltaTime * 50f);
-                rb.velocity = new Vector3(rb.velocity.x, y, rb.velocity.z);
+                //rb.velocity = new Vector3(rb.velocity.x, y, rb.velocity.z);
             }
 
             //constrain to max speed
