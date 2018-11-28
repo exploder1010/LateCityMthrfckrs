@@ -72,10 +72,12 @@ public class BR_Business : BasicRider {
         if(curAbilityAmmo > 0)
         {
             curAbilityAmmo--;
-            
-            rb.velocity = prevVectorToAdd * maxSpeedThisJump * doubleJumpHorizontalModifier;
+
+            //rb.velocity = prevVectorToAdd * maxSpeedThisJump * doubleJumpHorizontalModifier;
             //rb.velocity = Vector3.zero;
-            maxSpeedThisJump = maxSpeedThisJump * maxSpeedThisJumpDJModifier;
+            //maxSpeedThisJump = maxSpeedThisJump * maxSpeedThisJumpDJModifier;
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+
 
             doubleJumpTimer = doubleJumpTimeSet;
 

@@ -144,6 +144,10 @@ namespace Luminosity.IO
                         //curState != PlayerState.Dead && (newVehicle.gameObject != prevVehicle || (newVehicle.easyCheckWheelsOnGround() && newVehicle.getGravity() == Vector3.down) || prevVehicleIntangibility <= 0)
                         break;
                     }
+                    else
+                    {
+                        curRider.rejectVehicleToEnter();
+                    }
                     
                     if(curRider.checkRagdoll() != null)
                     {
@@ -257,15 +261,6 @@ namespace Luminosity.IO
                     curVehicle.initializeSpeed(0, 0, false);
                 }
 
-                keyboard_A_Leniency = 0;
-                keyboard_D_Leniency = 0;
-                keyboard_S_Leniency = 0;
-                keyboard_W_Leniency = 0;
-                keyboard_AS_Leniency = 0;
-                keyboard_SD_Leniency = 0;
-                keyboard_DW_Leniency = 0;
-                keyboard_WA_Leniency = 0;
-
                 mainCamera.ChangeFocus(curVehicle.transform);
                 mainCamera.ChangeDistance(10f, 2f);
             }
@@ -304,21 +299,12 @@ namespace Luminosity.IO
                         newUp = curVehicle.transform.up;
                     }
 
-                    buttonLaunch = !curVehicle.broken;
 
-                    if (buttonLaunch)
-                    {
-                        //spawn rider above car.
-                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + newUp * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
-                    }
-                    else
-                    {
-                        //spawn rider above car.
-                        curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + newUp * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+                    //spawn rider above car.
+                    curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + newUp * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
 
-                    }
                     curRider.externalStart(mainCamera.transform);
-                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnActualMaxSpeed(), buttonLaunch, newUp);
+                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnActualMaxSpeed(), newUp);
                 }
                 else
                 {

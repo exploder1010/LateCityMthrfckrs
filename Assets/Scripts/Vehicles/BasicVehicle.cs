@@ -45,6 +45,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     //collision
     Vector3 prevVelocity;
+    Vector3 prevVelocity_2nd;
+    Vector3 prevVelocity_3rd;
+    Vector3 crashVelocity;
 
     // //Brady
      private bool adjusting = false;
@@ -57,7 +60,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         axleInfos[0].leftWheel.GetComponent<WheelCollider>().ConfigureVehicleSubsteps(5, 12, 15);
         potentialMaxSpeed = normalMaxSpeed;
         rb = GetComponent<Rigidbody>();
-        smokeParticleEffect.SetActive(false);
+        if(smokeParticleEffect != null)
+            smokeParticleEffect.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -131,6 +135,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 constrainMaxSpeed();
 
                 Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
+
+                prevVelocity_3rd = prevVelocity_2nd;
+                prevVelocity_2nd = prevVelocity;
                 prevVelocity = rb.velocity;
             }
             else
@@ -328,11 +335,30 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     protected virtual void handleCrashCollision()
     {
-        if (roofRoadHitBox != null && (roofRoadHitBox.collidersCount() > 0 || vehicleHitBox.collidersCount() > 0 || ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude && player)))
+        bool vcheck1 = ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude);
+        bool vcheck2 = ((prevVelocity_2nd.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity_2nd.magnitude > rb.velocity.magnitude);
+        bool vcheck3 = ((prevVelocity_3rd.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity_3rd.magnitude > rb.velocity.magnitude);
+
+        if (roofRoadHitBox != null && (roofRoadHitBox.collidersCount() > 0 || vcheck1 || vcheck2 || vcheck3))
         {
             //Debug.Log("Major Crash on Late City Highway");
             broken = true;
-            smokeParticleEffect.SetActive(true);
+
+            if (smokeParticleEffect != null)
+                smokeParticleEffect.SetActive(true);
+
+            if (vcheck1)
+            {
+                crashVelocity = prevVelocity;
+            }
+            if (vcheck2)
+            {
+                crashVelocity = prevVelocity_2nd;
+            }
+            if (vcheck3)
+            {
+                crashVelocity = prevVelocity_3rd;
+            }
 
 
             if (vehicleHitBox.collidersCount() > 0)
@@ -344,12 +370,12 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                         //Debug.Log("the vehic" + other.transform.root);
                         other.transform.root.transform.GetComponent<BasicVehicle>().broken = true;
 
-                        Vector3 dir = (other.transform.root.transform.position - transform.position).normalized;
+                        //Vector3 dir = (other.transform.root.transform.position - transform.position).normalized;
 
                         //Debug.DrawRay(transform.position, dir * 10000f + transform.up * 10000f, Color.blue, 10f);
 
-                        rb.AddForce((dir * 10000f + transform.up * 10000f), ForceMode.Impulse);
-                        other.transform.root.transform.GetComponent<Rigidbody>().AddForce((-dir * 10000f + other.transform.root.transform.up * 10000f), ForceMode.Impulse);
+                        //rb.AddForce((dir * 10000f + transform.up * 10000f), ForceMode.Impulse);
+                        //other.transform.root.transform.GetComponent<Rigidbody>().AddForce((-dir * 10000f + other.transform.root.transform.up * 10000f), ForceMode.Impulse);
 
                 }
             }
@@ -359,6 +385,10 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     public Vector3 returnExitVelocity()
     {
+        if(crashVelocity.magnitude != 0)
+        {
+            return crashVelocity;
+        }
         return rb.velocity;
     }
 
