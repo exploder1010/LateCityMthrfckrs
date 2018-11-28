@@ -57,9 +57,10 @@ public class BasicRider : MonoBehaviour, IRider {
     protected float carJumpTimer;
     protected float carJumpVelocity;
     protected float carLaunchSpeed;
-    
+
     //gravity variable
-    public float gravityMagnitude = 18f;
+    public float gravityMagnitude = 4.5f;
+    public Vector3 gravityDirection = Vector3.down;
 
     // basic player doesn't use these variables but all characters will use them so storing them here
     public int charAbilityAmmo = 1;
@@ -200,7 +201,7 @@ public class BasicRider : MonoBehaviour, IRider {
             updateMaxSpeedCheck();
 
             //apply gravity
-            rb.AddForce(Vector3.down * gravityMagnitude);
+            rb.AddForce(gravityDirection * gravityMagnitude);
 
         }
 
@@ -209,32 +210,30 @@ public class BasicRider : MonoBehaviour, IRider {
     }
 
     //begin initial jump from vehicle
-    public virtual void beginCarJump(Vector3 carVelocity, float carMaxSpeed, bool buttonLaunch, Vector3 newCarJumpUpDirection)
+    public virtual void beginCarJump(Vector3 carVelocity, float carMaxSpeed, Vector3 newCarJumpUpDirection)
     {
         carJumpUpDirection = newCarJumpUpDirection;
 
-        if (buttonLaunch)
-        {
-            carLaunchSpeed = carVelocity.magnitude;
-            float boostModifier = Mathf.Max((carLaunchSpeed / (carMaxSpeed * boostThreshold)), 0.25f);
-            maxSpeedThisJump = Mathf.Max(5, carLaunchSpeed * boostModifier);
-            rb.velocity = carVelocity.normalized * maxSpeedThisJump;
-            rb.AddForce(carJumpUpDirection * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * boostModifier));
+        carLaunchSpeed = Mathf.Max(carVelocity.magnitude, 20f);
+        float boostModifier = Mathf.Max((carLaunchSpeed / (carMaxSpeed * boostThreshold)), 1);
+        maxSpeedThisJump = carLaunchSpeed * boostModifier;
+        rb.velocity = (new Vector3(carVelocity.x, Mathf.Max(0, carVelocity.y), carVelocity.z).normalized ) * maxSpeedThisJump;
+        rb.AddForce(carJumpUpDirection * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * boostModifier));
 
             //Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
             //Debug.Log("cls " +carLaunchSpeed);
-        }
-        else
-        {
-            carLaunchSpeed = 2f;
-            //float boostModifier = Mathf.Max((carVelocity.magnitude / (carMaxSpeed * boostThreshold)), 0.25f);
-            maxSpeedThisJump = 20f;
-            rb.velocity = carVelocity.normalized * carLaunchSpeed;
-            rb.AddForce(carJumpUpDirection * 2f * carJumpStartImpulse);
+        
+        //else
+        //{
+        //    carLaunchSpeed = 2f;
+        //    //float boostModifier = Mathf.Max((carVelocity.magnitude / (carMaxSpeed * boostThreshold)), 0.25f);
+        //    maxSpeedThisJump = 20f;
+        //    rb.velocity = carVelocity.normalized * carLaunchSpeed;
+        //    rb.AddForce(carJumpUpDirection * 2f * carJumpStartImpulse);
 
-            //Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
-            //Debug.Log("cls " + carLaunchSpeed);
-        }
+        //    //Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
+        //    //Debug.Log("cls " + carLaunchSpeed);
+        //}
 
 
         carJumpTimer = carJumpTimeSet;
@@ -404,6 +403,12 @@ public class BasicRider : MonoBehaviour, IRider {
     public virtual BasicVehicle vehicleToEnter()
     {
         return hitVehicle;
+    }
+
+    //let playercontroller know to enter a car
+    public virtual void rejectVehicleToEnter()
+    {
+        hitVehicle = null ;
     }
 
     //---------------------------update animation:

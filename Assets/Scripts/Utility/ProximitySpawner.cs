@@ -16,7 +16,7 @@ public class ProximitySpawner : MonoBehaviour {
         bv = transform.GetComponent<BasicVehicle>();
 
         rb.isKinematic = true;
-        rb.useGravity = false;
+        //rb.useGravity = false;
         bv.disabled = true;
 
         distance = 300;
@@ -38,7 +38,7 @@ public class ProximitySpawner : MonoBehaviour {
         if (mc != null && (transform.position - mc.position).magnitude < distance)
         {
             rb.isKinematic = false;
-            rb.useGravity = true;
+            //rb.useGravity = true;
             bv.disabled = false;
             Destroy(this);
         }

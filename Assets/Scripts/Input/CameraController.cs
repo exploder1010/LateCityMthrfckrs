@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
     private Vector3 targetPosition;
     private Quaternion targetRotation;
     private bool hasSpinHopped;
-    private bool prevHasSpinHopped;
+    //private bool prevHasSpinHopped;
     private bool prevRider;
     private bool prevCarGrounded;
     private float prevFocusEulerY;
@@ -55,13 +55,8 @@ public class CameraController : MonoBehaviour
                 backDistance = Mathf.Lerp(backDistance, backDistanceTarget, backDistanceSpeed * Time.deltaTime);
 
             Vector3 nahThisThePosition = transform.position;
-            //Quaternion nahThisTheRotation = transform.rotation;
-            if (focus.transform.GetComponent<BasicVehicle>() && focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop())
-            {
-                hasSpinHopped = true;
-            }
 
-            if (focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop() && focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround())
+            if (focus.transform.GetComponent<BasicVehicle>() && focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround())
             {
                 if (hasSpinHopped || prevRider || !prevCarGrounded)
                 {
@@ -79,7 +74,7 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                if (!prevRider && focus.transform.GetComponent<BasicRider>() && prevCarGrounded || focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop() && prevCarGrounded)
+                if (!prevRider && focus.transform.GetComponent<BasicRider>() && prevCarGrounded || focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround() && prevCarGrounded)
                 {
                     //Debug.Log("air shifter");
 
@@ -124,8 +119,7 @@ public class CameraController : MonoBehaviour
                 //Debug.Log("use spring arm" + hit.transform.gameObject);
                 transform.position = hit.point;
             }
-
-            prevHasSpinHopped = hasSpinHopped;
+            
             prevCarGrounded = (focus.GetComponent<BasicVehicle>() && focus.GetComponent<BasicVehicle>().easyCheckWheelsOnGround()); 
             prevRider = focus.GetComponent<BasicRider>() != null;
             prevFocusEulerY = focus.eulerAngles.y;
