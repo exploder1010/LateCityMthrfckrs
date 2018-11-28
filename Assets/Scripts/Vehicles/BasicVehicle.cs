@@ -370,12 +370,12 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                         //Debug.Log("the vehic" + other.transform.root);
                         other.transform.root.transform.GetComponent<BasicVehicle>().broken = true;
 
-                        //Vector3 dir = (other.transform.root.transform.position - transform.position).normalized;
+                        Vector3 dir = (other.transform.root.transform.position - transform.position).normalized;
 
                         //Debug.DrawRay(transform.position, dir * 10000f + transform.up * 10000f, Color.blue, 10f);
 
-                        //rb.AddForce((dir * 10000f + transform.up * 10000f), ForceMode.Impulse);
-                        //other.transform.root.transform.GetComponent<Rigidbody>().AddForce((-dir * 10000f + other.transform.root.transform.up * 10000f), ForceMode.Impulse);
+                        rb.AddForce((dir * 10000f + transform.up * 10000f), ForceMode.Impulse);
+                        other.transform.root.transform.GetComponent<Rigidbody>().AddForce((-dir * 10000f + other.transform.root.transform.up * 10000f), ForceMode.Impulse);
 
                 }
             }

@@ -196,6 +196,11 @@ public class BasicRider : MonoBehaviour, IRider {
 
             //apply force to rigidbody
             rb.AddForce(vectorToAdd);
+            if(vectorToAdd == Vector3.zero && rb.velocity.magnitude > maxSpeedThisJump * 0.5f)
+            {
+                float mag = rb.velocity.magnitude;
+                rb.velocity = rb.velocity.normalized * (mag - Time.deltaTime * 50f);
+            }
 
             //constrain to max speed
             updateMaxSpeedCheck();
