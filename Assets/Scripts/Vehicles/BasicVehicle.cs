@@ -11,6 +11,9 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public bool DebugThis;
 
     public bool player;
+    bool prevPlayer;
+    bool prevPlayer_2nd;
+    bool prevPlayer_3rd;
     public bool broken;
     public bool disabled;
 
@@ -30,7 +33,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     float tempMaxSpeedLowerLimitPercent = 0.85f;
     float tempMaxSpeedGainRate = 0.5f;
     float potentialMaxSpeed;
-    float prevPotentialMaxSpeed;
+    //float prevPotentialMaxSpeed;
     float startSpeed;
 
     private Rigidbody rb;
@@ -339,7 +342,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         bool vcheck2 = ((prevVelocity_2nd.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity_2nd.magnitude > rb.velocity.magnitude);
         bool vcheck3 = ((prevVelocity_3rd.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity_3rd.magnitude > rb.velocity.magnitude);
 
-        if (roofRoadHitBox != null && (roofRoadHitBox.collidersCount() > 0 || vcheck1 || vcheck2 || vcheck3))
+        if (prevPlayer == player == prevPlayer_2nd == prevPlayer_3rd && ((roofRoadHitBox != null && roofRoadHitBox.collidersCount() > 0) || vcheck1 || vcheck2 || vcheck3))
         {
             //Debug.Log("Major Crash on Late City Highway");
             broken = true;
@@ -380,7 +383,10 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 }
             }
         }
-        prevPotentialMaxSpeed = potentialMaxSpeed;
+        //prevPotentialMaxSpeed = potentialMaxSpeed;
+        prevPlayer_3rd = prevPlayer_2nd;
+        prevPlayer_2nd = prevPlayer;
+        prevPlayer = player;
     }
 
     public Vector3 returnExitVelocity()

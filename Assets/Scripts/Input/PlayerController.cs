@@ -176,6 +176,12 @@ namespace Luminosity.IO
                     //input vertical movement
                     curRider.inputVert(InputManager.GetAxis("Vertical"));
 
+                    //input fastfall
+                    if (InputManager.GetButtonDown("FastFall"))
+                    {
+                        curRider.inputFastFall(1);
+                    }
+
                     //input abilty
                     if (InputManager.GetButtonDown("Jump"))
                     {
@@ -304,7 +310,7 @@ namespace Luminosity.IO
                     curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + newUp * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
 
                     curRider.externalStart(mainCamera.transform);
-                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnActualMaxSpeed(), newUp);
+                    curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnActualMaxSpeed(), newUp, curVehicle.easyCheckWheelsOnGround());
                 }
                 else
                 {

@@ -139,6 +139,15 @@ public class BasicRider : MonoBehaviour, IRider {
         endCarJump(input);
     }
 
+    //attempt to perform fastfall --- helllllla quick and dirty
+    public virtual void inputFastFall(int input)
+    {
+        if(input == 1)
+        {
+            rb.velocity = new Vector3(rb.velocity.normalized.x, Mathf.Max( rb.velocity.normalized.y - .7f, -1f), rb.velocity.normalized.z) * maxSpeedThisJump;
+        }
+    }
+
     //attempt to start break in move
     public virtual void inputBreakIn(int input)
     {
@@ -200,8 +209,8 @@ public class BasicRider : MonoBehaviour, IRider {
             {
                 float mag = rb.velocity.magnitude;
                 float y = rb.velocity.y;
-                rb.velocity = rb.velocity.normalized * (mag - Time.deltaTime * 50f);
-                //rb.velocity = new Vector3(rb.velocity.x, y, rb.velocity.z);
+                rb.velocity = rb.velocity.normalized * (mag - Time.deltaTime * 30f);
+                rb.velocity = new Vector3(rb.velocity.x, y, rb.velocity.z);
             }
 
             //constrain to max speed
@@ -217,14 +226,19 @@ public class BasicRider : MonoBehaviour, IRider {
     }
 
     //begin initial jump from vehicle
-    public virtual void beginCarJump(Vector3 carVelocity, float carMaxSpeed, Vector3 newCarJumpUpDirection)
+    public virtual void beginCarJump(Vector3 carVelocity, float carMaxSpeed, Vector3 newCarJumpUpDirection, bool carGrounded)
     {
         carJumpUpDirection = newCarJumpUpDirection;
 
         carLaunchSpeed = Mathf.Max(carVelocity.magnitude, 20f);
         float boostModifier = Mathf.Max((carLaunchSpeed / (carMaxSpeed * boostThreshold)), 1);
         maxSpeedThisJump = carLaunchSpeed * boostModifier;
-        rb.velocity = (new Vector3(carVelocity.x, Mathf.Max(0, carVelocity.y), carVelocity.z).normalized ) * maxSpeedThisJump;
+        float yVelRetention = carVelocity.y;
+        if (!carGrounded)
+        {
+            yVelRetention = Mathf.Max(0, carVelocity.y);
+        }
+        rb.velocity = (new Vector3(carVelocity.x, yVelRetention, carVelocity.z).normalized ) * maxSpeedThisJump;
         rb.AddForce(carJumpUpDirection * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * boostModifier));
 
             //Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
