@@ -144,7 +144,7 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if(input == 1)
         {
-            rb.velocity = new Vector3(rb.velocity.normalized.x, Mathf.Max( rb.velocity.normalized.y - .7f, -1f), rb.velocity.normalized.z) * maxSpeedThisJump;
+        //    rb.velocity = new Vector3(rb.velocity.normalized.x, Mathf.Max( rb.velocity.normalized.y - .7f, -1f), rb.velocity.normalized.z) * maxSpeedThisJump;
         }
     }
 
@@ -205,7 +205,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
             //apply force to rigidbody
             rb.AddForce(vectorToAdd);
-            if(vectorToAdd == Vector3.zero && rb.velocity.magnitude > maxSpeedThisJump * 0.5f)
+            if(vectorToAdd == Vector3.zero && rb.velocity.magnitude > maxSpeedThisJump * 0.7f)
             {
                 float mag = rb.velocity.magnitude;
                 float y = rb.velocity.y;
@@ -217,7 +217,7 @@ public class BasicRider : MonoBehaviour, IRider {
             updateMaxSpeedCheck();
 
             //apply gravity
-            rb.AddForce(gravityDirection * gravityMagnitude);
+            rb.AddForce(gravityDirection * gravityMagnitude * (1 + ((Mathf.Max((rb.velocity.magnitude - (maxSpeedThisJump * 0.7f)),0.1f) / maxSpeedThisJump)) * 3f) );
 
         }
 
