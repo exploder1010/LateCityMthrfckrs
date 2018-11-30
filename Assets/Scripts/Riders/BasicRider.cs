@@ -142,9 +142,9 @@ public class BasicRider : MonoBehaviour, IRider {
     //attempt to perform fastfall --- helllllla quick and dirty
     public virtual void inputFastFall(int input)
     {
-        if(input == 1)
+        if(input == 1 && rb.velocity.y <= 0)
         {
-        //    rb.velocity = new Vector3(rb.velocity.normalized.x, Mathf.Max( rb.velocity.normalized.y - .7f, -1f), rb.velocity.normalized.z) * maxSpeedThisJump;
+            rb.velocity = new Vector3(rb.velocity.normalized.x, Mathf.Min( rb.velocity.normalized.y - 1f, -1f), rb.velocity.normalized.z) * maxSpeedThisJump;
         }
     }
 
@@ -205,7 +205,9 @@ public class BasicRider : MonoBehaviour, IRider {
 
             //apply force to rigidbody
             rb.AddForce(vectorToAdd);
-            if(vectorToAdd == Vector3.zero && rb.velocity.magnitude > maxSpeedThisJump * 0.7f)
+            
+
+            if (vectorToAdd == Vector3.zero && rb.velocity.magnitude > maxSpeedThisJump * 0.7f)
             {
                 float mag = rb.velocity.magnitude;
                 float y = rb.velocity.y;
@@ -217,7 +219,7 @@ public class BasicRider : MonoBehaviour, IRider {
             updateMaxSpeedCheck();
 
             //apply gravity
-            rb.AddForce(gravityDirection * gravityMagnitude * (1 + ((Mathf.Max((rb.velocity.magnitude - (maxSpeedThisJump * 0.7f)),0.1f) / maxSpeedThisJump)) * 3f) );
+            rb.AddForce(gravityDirection * gravityMagnitude);
 
         }
 
@@ -232,18 +234,19 @@ public class BasicRider : MonoBehaviour, IRider {
 
         carLaunchSpeed = Mathf.Max(carVelocity.magnitude, 20f);
         float boostModifier = Mathf.Max((carLaunchSpeed / (carMaxSpeed * boostThreshold)), 1);
+        //float boostModifier = 1 + (carLaunchSpeed / 100);
         maxSpeedThisJump = carLaunchSpeed * boostModifier;
         float yVelRetention = carVelocity.y;
         if (!carGrounded)
         {
             yVelRetention = Mathf.Max(0, carVelocity.y);
         }
-        rb.velocity = (new Vector3(carVelocity.x, yVelRetention, carVelocity.z).normalized ) * maxSpeedThisJump;
-        rb.AddForce(carJumpUpDirection * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * boostModifier));
+        rb.velocity = (new Vector3(carVelocity.x, yVelRetention + carJumpStartImpulse, carVelocity.z).normalized ) * maxSpeedThisJump;
+        //rb.AddForce(carJumpUpDirection * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse));
 
-            //Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
-            //Debug.Log("cls " +carLaunchSpeed);
-        
+        //Debug.Log("carspeed: " + carVelocity + " boostModifier " + boostModifier);
+        //Debug.Log("cls " +carLaunchSpeed);
+
         //else
         //{
         //    carLaunchSpeed = 2f;
@@ -256,7 +259,7 @@ public class BasicRider : MonoBehaviour, IRider {
         //    //Debug.Log("cls " + carLaunchSpeed);
         //}
 
-
+        carJumpVelocity = 0;
         carJumpTimer = carJumpTimeSet;
     }
 
@@ -266,12 +269,15 @@ public class BasicRider : MonoBehaviour, IRider {
         //add full hop to car jump while jump is held
         if (carJumpTimer > 0)
         {
-            carJumpVelocity += ((carJumpVelocityAdd) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
+            float newY = rb.velocity.y;
+            newY += (carJumpVelocityAdd / carJumpTimeSet) * Time.deltaTime;
+            rb.velocity = new Vector3(rb.velocity.x, newY, rb.velocity.z);
+            //rb.AddForce(transform.up * ((carJumpVelocityAdd) / carJumpTimeSet));
+            //carJumpVelocity += ((carJumpVelocityAdd) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
 
             carJumpTimer -= Time.deltaTime;
 
-            vectorToAdd = vectorToAdd + carJumpUpDirection * carJumpVelocity;
-
+            //vectorToAdd = vectorToAdd + carJumpUpDirection * carJumpVelocity;
         }
     }
     
