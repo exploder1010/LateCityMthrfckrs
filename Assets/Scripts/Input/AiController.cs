@@ -16,7 +16,7 @@ public class AiController : MonoBehaviour {
 
     private BasicVehicle vehicleScript;
     private Rigidbody rb;
-    private bool stopUpdate = false;
+    public bool stopUpdate = false;
     private float forwardInput = 1;
     private bool stopCar;
     private float prevHitDistance = float.MaxValue;

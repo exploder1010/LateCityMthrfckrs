@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 33274009819770366}
   - component: {fileID: 23851886642410390}
   - component: {fileID: 64572176348136968}
+  - component: {fileID: 65176021901223184}
   m_Layer: 11
   m_Name: MuscleCar
   m_TagString: Untagged
@@ -609,7 +610,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1261640690947128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.770256, y: 3.3915102, z: 29.31235}
+  m_LocalPosition: {x: -9.416547, y: 3.414444, z: 21.104614}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4312024276091332}
@@ -1351,7 +1352,7 @@ MeshCollider:
   m_GameObject: {fileID: 1140857003849020}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
@@ -1369,6 +1370,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2898483, y: 0.30089283, z: 3.7239838}
   m_Center: {x: 0, y: 1.74, z: 0}
+--- !u!65 &65176021901223184
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140857003849020}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.98, y: 1.2873524, z: 5.457459}
+  m_Center: {x: 0, y: 0.90106875, z: 0.030186415}
 --- !u!65 &65809651532434820
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1379,7 +1392,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.1, y: 1.0973318, z: 5.5969067}
+  m_Size: {x: 2.42, y: 1.0973318, z: 5.81}
   m_Center: {x: 0, y: 1.0586243, z: 0.07228756}
 --- !u!82 &82435984910501540
 AudioSource:
@@ -1551,6 +1564,7 @@ MonoBehaviour:
   laneID: 0
   DebugThis: 0
   pedestrianPrefab: {fileID: 0}
+  stopUpdate: 0
 --- !u!114 &114902161580190392
 MonoBehaviour:
   m_ObjectHideFlags: 1

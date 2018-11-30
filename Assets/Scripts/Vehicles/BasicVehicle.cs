@@ -139,9 +139,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
                 Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
 
-                prevVelocity_3rd = prevVelocity_2nd;
-                prevVelocity_2nd = prevVelocity;
-                prevVelocity = rb.velocity;
+
             }
             else
             {
@@ -172,10 +170,12 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     //nick
     private void constrainMaxSpeed()
     {
+        
         if (rb)
         {
-            if (player)
+            if (player || transform.GetComponent<AiController>() != null && transform.GetComponent<AiController>().stopUpdate)
             {
+
                 if (rb.velocity.magnitude > tempMaxSpeed)
                 {
                     float tempMaxSpeedGain = (potentialMaxSpeed - tempMaxSpeed) * tempMaxSpeedGainRate * Time.deltaTime;
@@ -342,51 +342,65 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         bool vcheck2 = ((prevVelocity_2nd.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity_2nd.magnitude > rb.velocity.magnitude);
         bool vcheck3 = ((prevVelocity_3rd.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity_3rd.magnitude > rb.velocity.magnitude);
 
-        if (prevPlayer == player == prevPlayer_2nd == prevPlayer_3rd && ((roofRoadHitBox != null && roofRoadHitBox.collidersCount() > 0) || vcheck1 || vcheck2 || vcheck3))
+        if (!broken && prevPlayer == player == prevPlayer_2nd == prevPlayer_3rd && ((roofRoadHitBox != null && roofRoadHitBox.collidersCount() > 0) || vcheck1 || vcheck2 || vcheck3 ))
         {
-            //Debug.Log("Major Crash on Late City Highway");
-            broken = true;
 
-            if (smokeParticleEffect != null)
-                smokeParticleEffect.SetActive(true);
+                //Debug.Log("Major Crash on Late City Highway");
+                broken = true;
 
-            if (vcheck1)
-            {
-                crashVelocity = prevVelocity;
-            }
-            if (vcheck2)
-            {
-                crashVelocity = prevVelocity_2nd;
-            }
-            if (vcheck3)
-            {
-                crashVelocity = prevVelocity_3rd;
-            }
+                if (smokeParticleEffect != null)
+                    smokeParticleEffect.SetActive(true);
 
-
-            if (vehicleHitBox.collidersCount() > 0)
-            {
-                //Debug.Log("vehic");
-                foreach(Collider other in vehicleHitBox.returnColliders())
+                if (vcheck1)
                 {
+                    Debug.Log("check1");
+                    crashVelocity = prevVelocity;
+                }
+                if (vcheck2)
+                {
+                    Debug.Log("check2");
+                    crashVelocity = prevVelocity_2nd;
+                }
+                if (vcheck3)
+                {
+                    Debug.Log("check3");
+                    crashVelocity = prevVelocity_3rd;
+                }
+
+
+                if (vehicleHitBox.collidersCount() > 0)
+                {
+                    //Debug.Log("vehic");
+                    foreach (Collider other in vehicleHitBox.returnColliders())
+                    {
 
                         //Debug.Log("the vehic" + other.transform.root);
                         other.transform.root.transform.GetComponent<BasicVehicle>().broken = true;
+                    if (other.transform.root.transform.GetComponent<BasicVehicle>().smokeParticleEffect != null)
+                        other.transform.root.transform.GetComponent<BasicVehicle>().smokeParticleEffect.SetActive(true);
 
-                        Vector3 dir = (other.transform.root.transform.position - transform.position).normalized;
+                    Vector3 dir = (other.transform.root.transform.position - transform.position).normalized;
 
                         //Debug.DrawRay(transform.position, dir * 10000f + transform.up * 10000f, Color.blue, 10f);
 
                         rb.AddForce((dir * 10000f + transform.up * 10000f), ForceMode.Impulse);
                         other.transform.root.transform.GetComponent<Rigidbody>().AddForce((-dir * 10000f + other.transform.root.transform.up * 10000f), ForceMode.Impulse);
 
+                    }
                 }
-            }
+            
+            
+
+          
         }
         //prevPotentialMaxSpeed = potentialMaxSpeed;
         prevPlayer_3rd = prevPlayer_2nd;
         prevPlayer_2nd = prevPlayer;
         prevPlayer = player;
+
+        prevVelocity_3rd = prevVelocity_2nd;
+        prevVelocity_2nd = prevVelocity;
+        prevVelocity = rb.velocity;
     }
 
     public Vector3 returnExitVelocity()

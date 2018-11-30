@@ -84,7 +84,7 @@ namespace Luminosity.IO
                         {
                             prevBoostEffect = true;
                             curBoostEffect = Instantiate(boostEffectPrefab, curVehicle.transform.position, curVehicle.transform.rotation);
-                            mainCamera.ChangeDistance(15, 2f);
+                            //mainCamera.ChangeDistance(15, 2f);
                         }
 
                         curBoostEffect.transform.position = curVehicle.transform.position;
@@ -94,7 +94,7 @@ namespace Luminosity.IO
                         if(curBoostEffect!= null)
                         {
                             prevBoostEffect = false;
-                            mainCamera.ChangeDistance(10f, 2f);
+                            //mainCamera.ChangeDistance(10f, 2f);
                             Destroy(curBoostEffect);
                         }
                     }
@@ -159,7 +159,7 @@ namespace Luminosity.IO
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
                         mainCamera.ChangeFocus(curRagdoll.transform);
-                        mainCamera.ChangeDistance(6f, 2f);
+                        //mainCamera.ChangeDistance(6f, 2f);
                         curRider.destroyThis();
                         break;
                     }
@@ -268,7 +268,7 @@ namespace Luminosity.IO
                 }
 
                 mainCamera.ChangeFocus(curVehicle.transform);
-                mainCamera.ChangeDistance(10f, 2f);
+                //mainCamera.ChangeDistance(10f, 2f);
             }
             else
             {
@@ -321,7 +321,7 @@ namespace Luminosity.IO
                 }
 
                 mainCamera.ChangeFocus(curRider.transform);
-                mainCamera.ChangeDistance(12f, 2f);
+                //mainCamera.ChangeDistance(12f, 2f);
 
                 prevVehicle = curVehicle.gameObject;
                 prevVehicleIntangibility = 3f;

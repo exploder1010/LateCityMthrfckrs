@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 33908379106650670}
   - component: {fileID: 23392087846583616}
   - component: {fileID: 64562391347568708}
+  - component: {fileID: 65935628405253684}
   m_Layer: 11
   m_Name: Sedan
   m_TagString: Untagged
@@ -539,7 +540,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1662206317279098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.99, y: 3.5226502, z: 35.74}
+  m_LocalPosition: {x: -12.99, y: 3.5226502, z: 59.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4350316642082234}
@@ -1789,7 +1790,7 @@ MeshCollider:
   m_GameObject: {fileID: 1426450036190280}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
@@ -1805,7 +1806,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.1, y: 1.0973318, z: 5.1058464}
+  m_Size: {x: 2.34, y: 1.0973318, z: 5.25}
   m_Center: {x: 0, y: 1.08, z: 0.15773582}
 --- !u!65 &65872765577657830
 BoxCollider:
@@ -1819,6 +1820,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2898483, y: 0.30089283, z: 3.7239838}
   m_Center: {x: 0, y: 1.74, z: 0}
+--- !u!65 &65935628405253684
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1426450036190280}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.01, y: 1.618772, z: 4.85}
+  m_Center: {x: 0, y: 1.074994, z: 0.1751324}
 --- !u!82 &82447878181780520
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1952,7 +1965,7 @@ MonoBehaviour:
   roofRoadHitBox: {fileID: 114399990399103612}
   vehicleHitBox: {fileID: 114815772688829674}
   smokeParticleEffect: {fileID: 1456430411123980}
-  DebugThis: 0
+  DebugThis: 1
   player: 0
   broken: 0
   disabled: 0
@@ -2001,6 +2014,7 @@ MonoBehaviour:
   laneID: 0
   DebugThis: 0
   pedestrianPrefab: {fileID: 0}
+  stopUpdate: 0
 --- !u!146 &146025040955091654
 WheelCollider:
   m_ObjectHideFlags: 1

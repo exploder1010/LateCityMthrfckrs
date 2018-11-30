@@ -58,11 +58,16 @@ public class BR_Business : BasicRider {
 
         if (doubleJumpTimer > 0)
         {
-            doubleJumpVelocity += (doubleJumpVelocityAdd / doubleJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
+            //doubleJumpVelocity += (doubleJumpVelocityAdd / doubleJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
 
             doubleJumpTimer -= Time.deltaTime;
 
-            vectorToAdd = new Vector3(vectorToAdd.x, doubleJumpVelocity, vectorToAdd.z);
+            float newY = rb.velocity.y;
+            newY += (doubleJumpVelocityAdd / doubleJumpTimeSet) * Time.deltaTime;
+            rb.velocity = new Vector3(rb.velocity.x, newY, rb.velocity.z);
+
+            //rb.AddForce(transform.up * ((doubleJumpVelocityAdd) / carJumpTimeSet));
+            //vectorToAdd = new Vector3(vectorToAdd.x, doubleJumpVelocity, vectorToAdd.z);
 
         }
     }
@@ -76,13 +81,14 @@ public class BR_Business : BasicRider {
             //rb.velocity = prevVectorToAdd * maxSpeedThisJump * doubleJumpHorizontalModifier;
             //rb.velocity = Vector3.zero;
             //maxSpeedThisJump = maxSpeedThisJump * maxSpeedThisJumpDJModifier;
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            carJumpVelocity = 0;
+            rb.velocity = new Vector3(rb.velocity.x, doubleJumpStartImpulse, rb.velocity.z);
 
 
             doubleJumpTimer = doubleJumpTimeSet;
 
             
-            rb.AddForce(Vector3.up * doubleJumpStartImpulse);
+            //doubleJumpStartImpulserb.AddForce(Vector3.up * doubleJumpStartImpulse);
 
             if (briefcasePrefab)
             {
