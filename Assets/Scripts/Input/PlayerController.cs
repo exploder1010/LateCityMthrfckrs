@@ -112,6 +112,9 @@ namespace Luminosity.IO
                     //input accelleration
                     curVehicle.inputAccel(InputManager.GetAxis("Accelerate"));
 
+                    //input vertical movement
+                    curVehicle.inputVert(InputManager.GetAxis("Vertical"));
+
                     //input jump
                     if (InputManager.GetButtonDown("Jump") || curVehicle.GetComponent<BasicVehicle>().broken)
                     {

@@ -18346,18 +18346,19 @@ MonoBehaviour:
   goalCollider: {fileID: 114733968528586682}
   targetIconPrefab: {fileID: 1867227732554446, guid: 106b3a51ad172a54f8ef45adac63b497,
     type: 2}
-  airAccel: 50
+  airAccel: 35
   boostThreshold: 0.85
-  carJumpTimeSet: 0.1
-  carJumpStartImpulse: 50
-  carJumpVelocityAdd: 300
+  carJumpTimeSet: 0.15
+  carJumpStartImpulse: 4
+  carJumpVelocityAdd: 6
+  maxFallSpeed: 50
   gravityMagnitude: 18
   gravityDirection: {x: 0, y: -1, z: 0}
   charAbilityAmmo: 1
   briefcasePrefab: {fileID: 0}
-  doubleJumpTimeSet: 0.1
-  doubleJumpStartImpulse: 50
-  doubleJumpVelocityAdd: 300
+  doubleJumpTimeSet: 0.15
+  doubleJumpStartImpulse: 4
+  doubleJumpVelocityAdd: 6
   doubleJumpHorizontalModifier: 0.25
   maxSpeedThisJumpDJModifier: 1.2
 --- !u!114 &114733968528586682

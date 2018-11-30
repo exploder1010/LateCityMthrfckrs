@@ -53,6 +53,7 @@ public class BasicRider : MonoBehaviour, IRider {
     public float carJumpTimeSet = 0.15f;
     public float carJumpStartImpulse = 300;
     public float carJumpVelocityAdd = 200;
+    public float maxFallSpeed = 50;
     protected Vector3 carJumpUpDirection;
     protected float carJumpTimer;
     protected float carJumpVelocity;
@@ -146,7 +147,7 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if(input == 1 )
         {
-            rb.velocity = new Vector3(rb.velocity.normalized.x, Mathf.Min( rb.velocity.normalized.y - 1f, -1f), rb.velocity.normalized.z) * maxSpeedThisJump;
+            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
         }
     }
 
@@ -207,9 +208,9 @@ public class BasicRider : MonoBehaviour, IRider {
 
             //apply force to rigidbody
             rb.AddForce(vectorToAdd);
-            
 
-            if (vectorToAdd == Vector3.zero && rb.velocity.magnitude > maxSpeedThisJump * 0.7f)
+            Vector3 horVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            if (vectorToAdd == Vector3.zero && horVel.magnitude > maxSpeedThisJump * 0.7f)
             {
                 float mag = rb.velocity.magnitude;
                 float y = rb.velocity.y;
@@ -323,6 +324,11 @@ public class BasicRider : MonoBehaviour, IRider {
             horVelocityCheck = horVelocityCheck.normalized;
             horVelocityCheck *= maxSpeedThisJump;
             rb.velocity = new Vector3(horVelocityCheck.x, saveY, horVelocityCheck.z);
+        }
+
+        if(rb.velocity.y < -Mathf.Abs(maxFallSpeed))
+        {
+            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
         }
     }
     
@@ -469,7 +475,9 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (!targetedVehicle)
         {
-            return Mathf.Max(20f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.6f);//dont change this yet - nick
+            Vector3 horVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            return 1.3f * Mathf.Max(20f, (horVel.magnitude));//dont change this yet - nick
+            //return 1.5f * Mathf.Max(20f, (horVel.magnitude * 0.5f)) + (horVel.magnitude * 0.7f);//dont change this yet - nick
             //return Mathf.Max(20f, (rb.velocity.magnitude * 1.05f));//dont change this yet - nick
         }
         return storedNewCarMaxSpeed;
@@ -481,7 +489,9 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (!targetedVehicle)
         {
-            return 0.6f * (Mathf.Max(20f, (rb.velocity.magnitude * 0.5f)) + (rb.velocity.magnitude * 0.6f));//dont change this yet - nick
+            Vector3 horVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            return Mathf.Max(20f, (horVel.magnitude));//dont change this yet - nick
+            //return (Mathf.Max(20f, (horVel.magnitude * 0.5f)) + (horVel.magnitude * 0.7f));//dont change this yet - nick
             //return 0.6f * Mathf.Max(20f, (rb.velocity.magnitude * 1.05f));//dont change this yet - nick
         }
         return storedNewCarStartSpeed;

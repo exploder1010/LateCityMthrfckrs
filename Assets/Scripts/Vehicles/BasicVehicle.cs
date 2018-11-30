@@ -40,6 +40,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     float motorInput;
     float steeringInput;
+    float vertInput;
 
     //Brady: New variables for crash.
     public float crashSpeed;
@@ -90,6 +91,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                         if (player)
                         {
                             newSteering = MaxSteeringAngle * steeringInput;
+                            newSteering = Mathf.Clamp(newSteering, MaxSteeringAngle * -1, MaxSteeringAngle);
                             axle.leftWheel.steerAngle = newSteering;
                             axle.rightWheel.steerAngle = newSteering;
                         }
@@ -119,11 +121,11 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
                     Vector3 currentForward = calculateForward();//used to get camera-based right 
 
-                    if (motorInput > 0)
+                    if (vertInput > 0)
                     {
                         rb.AddTorque(new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
                     }
-                    else if (motorInput < 0)
+                    else if (vertInput < 0)
                     {
 
                         rb.AddTorque(-new Vector3(currentForward.z, currentForward.y, -currentForward.x) * 5.5f * 1000f);
@@ -210,6 +212,11 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     public void inputAccel(float direction)
     {
         motorInput = direction;
+    }
+
+    public void inputVert(float direction)
+    {
+        vertInput = direction;
     }
 
     //nick 
