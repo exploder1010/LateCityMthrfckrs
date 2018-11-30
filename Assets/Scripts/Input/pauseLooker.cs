@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class pauseLooker : MonoBehaviour {
 
@@ -40,6 +41,12 @@ public class pauseLooker : MonoBehaviour {
                     Cursor.lockState = CursorLockMode.None;
                 }
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SoundScript.PlaySound(uiSource, "UI Click");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
