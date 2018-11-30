@@ -53,14 +53,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1426989004046072}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -100.31, y: -165.8, z: -423.5}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -12.516014, y: 0, z: 22.56328}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4906581704318046}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 110.435005, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4906581704318046
 Transform:
   m_ObjectHideFlags: 1
@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674283194807334}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 99.21814, y: 174.9, z: 425.25574}
+  m_LocalPosition: {x: 3.43, y: 5.37, z: 16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4690604245023528}
@@ -257,22 +257,6 @@ MonoBehaviour:
         m_gamepadAxis: 0
         m_gamepadIndex: 0
     - m_name: Pause
-      m_description: 
-      m_bindings:
-      - m_positive: 19
-        m_negative: 0
-        m_deadZone: 0
-        m_gravity: 0
-        m_sensitivity: 0
-        m_snap: 0
-        m_invert: 0
-        m_type: 0
-        m_axis: 0
-        m_joystick: 0
-        m_gamepadButton: 0
-        m_gamepadAxis: 0
-        m_gamepadIndex: 0
-    - m_name: PauseMenu
       m_description: 
       m_bindings:
       - m_positive: 27
@@ -569,27 +553,11 @@ MonoBehaviour:
     - m_name: Pause
       m_description: 
       m_bindings:
-      - m_positive: 0
+      - m_positive: 356
         m_negative: 0
         m_deadZone: 0
-        m_gravity: 0
-        m_sensitivity: 0
-        m_snap: 0
-        m_invert: 0
-        m_type: 0
-        m_axis: 0
-        m_joystick: 0
-        m_gamepadButton: 0
-        m_gamepadAxis: 0
-        m_gamepadIndex: 0
-    - m_name: PauseMenu
-      m_description: 
-      m_bindings:
-      - m_positive: 357
-        m_negative: 0
-        m_deadZone: 0
-        m_gravity: 0
-        m_sensitivity: 0
+        m_gravity: 1
+        m_sensitivity: 1
         m_snap: 0
         m_invert: 0
         m_type: 0
@@ -738,7 +706,7 @@ MonoBehaviour:
     type: 2}
   playerController_Prefab: {fileID: 1880477644275540, guid: 1127f6d14d85b264cb3cb900178fb920,
     type: 2}
-  startingVehicle_Prefab: {fileID: 1261640690947128, guid: c9dc1835f4cf5614e8062c42c52f5cbe,
+  startingVehicle_Prefab: {fileID: 1273298079033436, guid: 87a0b9119a568624687f70a9c0d7678b,
     type: 2}
   selectedRider_Prefab: {fileID: 1258154895977210, guid: 7362886f6fc94494a8f5a4599704dcf0,
     type: 2}

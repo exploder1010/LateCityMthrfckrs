@@ -32,4 +32,9 @@ public class timerScript : MonoBehaviour {
             buttonScripts.GameOver();
         }
     }
+
+    public void addTime(int additionalTime)
+    {
+        timeRemaining += additionalTime;
+    }
 }
