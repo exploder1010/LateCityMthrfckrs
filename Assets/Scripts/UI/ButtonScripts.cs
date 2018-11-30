@@ -49,9 +49,9 @@ public class ButtonScripts : MonoBehaviour {
     public void Win()
     {
         pauseUI.SetActive(false);
-        gameOverUI.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         winUI.SetActive(true);
+        gameOverUI.SetActive(false);
     }
 }
