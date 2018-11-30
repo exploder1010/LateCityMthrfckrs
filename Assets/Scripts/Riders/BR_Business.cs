@@ -42,6 +42,7 @@ public class BR_Business : BasicRider {
 
                 break;
             case 3: //button up
+                carJumpTimer = 0;
                 doubleJumpTimer = 0;
                 break;
 
@@ -63,7 +64,7 @@ public class BR_Business : BasicRider {
             doubleJumpTimer -= Time.deltaTime;
 
             float newY = rb.velocity.y;
-            newY += (doubleJumpVelocityAdd / doubleJumpTimeSet) * Time.deltaTime;
+            newY += (doubleJumpVelocityAdd / doubleJumpTimeSet) * carJumpModifier * Time.deltaTime;
             rb.velocity = new Vector3(rb.velocity.x, newY, rb.velocity.z);
 
             //rb.AddForce(transform.up * ((doubleJumpVelocityAdd) / carJumpTimeSet));
@@ -96,5 +97,14 @@ public class BR_Business : BasicRider {
             }
         }
         
+    }
+    protected override void updateGravity()
+    {
+        //apply gravity
+        if (carJumpTimer <= 0 && doubleJumpTimer <= 0)
+        {
+
+            rb.AddForce(gravityDirection * gravityMagnitude);
+        }
     }
 }
