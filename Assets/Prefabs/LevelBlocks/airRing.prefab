@@ -36,13 +36,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1710377299131596}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.4999993, y: -0.4999993, z: 0.5000007, w: 0.5000007}
+  m_LocalPosition: {x: -10.09, y: 11.99, z: 60.53}
+  m_LocalScale: {x: 100.723625, y: 100.723625, z: 100.723625}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 90.00001}
 --- !u!23 &23905516168573264
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -58,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 374cdd2f6b8ad0646bceb4ad1a183dad, type: 3}
+  - {fileID: 2100000, guid: c763e19923194fb43ba6ae83b001bb9a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,3 +110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textPrefab: {fileID: 114035094424349822, guid: d6343924ff75bc64caea5ff130389e77,
     type: 2}
+  particlePrefab: {fileID: 1947871717301538, guid: a990e3ac1318b834488c784d851f42a9,
+    type: 2}
+  speed: 10

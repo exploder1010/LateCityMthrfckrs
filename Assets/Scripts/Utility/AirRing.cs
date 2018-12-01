@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class AirRing : MonoBehaviour {
 
     public Text textPrefab;
+    public GameObject particlePrefab;
+    public float speed = 20f;
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +16,7 @@ public class AirRing : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        transform.Rotate(Vector3.up, speed * Time.deltaTime);
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -27,6 +30,11 @@ public class AirRing : MonoBehaviour {
             bonustext.text = "10 seconds added!";
             Destroy(this);
             //flashy effect go here
+            speed = 100f;
+            this.gameObject.transform.SetParent(GameObject.Find("BR_Business_NickTestVariables(Clone)").transform);
+            this.gameObject.transform.localScale -= new Vector3(5, 5, 5);
+            //wait a bit and put above line in a loop. Exit loop and use next 2 lines
+            GameObject ringEffect = Instantiate(particlePrefab, this.gameObject.transform);
             Destroy(this.gameObject);
         }
     }
