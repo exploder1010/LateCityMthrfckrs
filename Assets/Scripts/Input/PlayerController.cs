@@ -88,10 +88,11 @@ namespace Luminosity.IO
                         }
 
                         curBoostEffect.transform.position = curVehicle.transform.position;
+
                     }
                     else
                     {
-                        if(curBoostEffect!= null)
+                        if (curBoostEffect != null)
                         {
                             prevBoostEffect = false;
                             //mainCamera.ChangeDistance(10f, 2f);
