@@ -2,7 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Waypoints : MonoBehaviour {
+public class LevelBlockInfo : MonoBehaviour {
+
+    public Vector3 VehicleCameraOffset = new Vector3(0,8, -20);
+    public Vector3 VehicleCameraEulerAngles = new Vector3(25,0,0);
+
+    public Vector3 RiderCameraOffset = new Vector3(0, 6, -7);
+    public Vector3 RiderCameraEulerAngles = new Vector3(35, 0, 0);
+
+    public float CameraFollowSpeed = 30f; //move
+    public float CameraTrackSpeed = 30f; //rotate
 
     public List<Transform> Lane1Waypoints;
     public List<Transform> Lane2Waypoints;

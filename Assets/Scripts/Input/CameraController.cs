@@ -7,35 +7,45 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     
-    public float camSensX; //todo: set with player prefs
-    public float camSensY; //todo: set with player prefs
+    //public float camSensX; //todo: set with player prefs
+    //public float camSensY; //todo: set with player prefs
 
-    float camMaxX = 360; 
-    float camMinX = -360;
-    public float camMaxY; 
-    public float camMinY; 
+    //float camMaxX = 360; 
+    //float camMinX = -360;
+    //public float camMaxY; 
+    //public float camMinY; 
 
-    private float camRotX;
-    private float camRotY;
-    private float backDistance = 20f;
-    private float backDistanceTarget;
-    private float backDistanceSpeed;
-    private float upDistance = 8f;
+    //private float camRotX;
+    //private float camRotY;
+    //private float backDistance = 20f;
+    //private float backDistanceTarget;
+    //private float backDistanceSpeed;
+    //private float upDistance = 8f;
     private Transform focus;
-    private Quaternion forward;
-    private float lerpSpeed;
+    //private Quaternion forward;
+    //private float lerpSpeed;
     
     private Vector3 targetPosition;
-    private Quaternion targetRotation;
-    private bool hasSpinHopped;
+    private Vector3 targetEulerAngles;
+    //private bool hasSpinHopped;
     //private bool prevHasSpinHopped;
-    private bool prevRider;
-    private bool prevCarGrounded;
-    private float prevFocusEulerY;
+    //private bool prevRider;
+    //private bool prevCarGrounded;
+    //private float prevFocusEulerY;
+
+    private float followSpeed;
+    private float trackSpeed;
+
+    //nicks new stuff
+
+    private enum CameraState { Vehicle = 0, Rider, Dead,  };
+    private CameraState curState;
+
+    private LevelBlockInfo curLBI;
 
     // Use this for initialization
     void Start () {
-        forward = new Quaternion(0, 0, 0, 0);
+        //forward = new Quaternion(0, 0, 0, 0);
     }
 	
 	// Update is called once per frame
@@ -50,11 +60,82 @@ public class CameraController : MonoBehaviour
 
         if (focus != null)
         {
-            transform.eulerAngles = new Vector3(25,0,0);
-            transform.position = focus.transform.position - (Vector3.forward * backDistance) - (Vector3.right * 0) + (Vector3.up * upDistance);//default rotation behind
 
-            if (backDistanceTarget > backDistance + .01f || backDistanceTarget < backDistance - .01f)
-                backDistance = Mathf.Lerp(backDistance, backDistanceTarget, backDistanceSpeed * Time.deltaTime);
+            float dist = 100f;
+            int layerMask = 1 << LayerMask.NameToLayer("Vehicle");
+            Vector3 pos = focus.position + transform.up;
+            //pos.y += 1;
+            RaycastHit hit;
+
+            //if (DebugThis)
+            //    Debug.DrawRay(pos, -transform.up * 1000f, Color.red, 0.1f);
+            //update waypoint queues
+            if (Physics.Raycast(pos, -transform.up, out hit, 1000f))//, 1 << LayerMask.NameToLayer("Road")))
+            {
+                //if (DebugThis)
+                //{
+                //Debug.Log(hit.transform);
+                //}
+                if (hit.transform.GetComponent<LevelBlockInfo>() && hit.transform.GetComponent<LevelBlockInfo>() != curLBI)
+                {
+
+                    curLBI = hit.transform.GetComponent<LevelBlockInfo>();
+              
+                }
+                else if (hit.transform.parent != null && hit.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
+                {
+                    curLBI = hit.transform.parent.transform.GetComponent<LevelBlockInfo>();
+
+                }
+                else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
+                {
+                    curLBI = hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>();
+
+                }
+                else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
+                {
+                    curLBI = hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>();
+
+                }
+
+            }
+
+            switch (curState)
+            {
+                case CameraState.Vehicle:
+
+                    targetEulerAngles = curLBI.VehicleCameraEulerAngles;
+                    targetPosition = focus.transform.position + curLBI.VehicleCameraOffset;//default rotation behind
+
+                    break;
+
+                case CameraState.Rider:
+
+                    targetEulerAngles = curLBI.RiderCameraEulerAngles;
+                    targetPosition = focus.transform.position + curLBI.RiderCameraOffset;//default rotation behind
+
+                    break;
+
+                case CameraState.Dead:
+
+                    targetEulerAngles = new Vector3(25, 0, 0);
+                    targetPosition = focus.transform.position - (Vector3.forward * 7f) - (Vector3.right * 0) + (Vector3.up * 6f);//default rotation behind
+
+                    break;
+
+                default:
+                        
+                    break;
+            }
+
+            transform.eulerAngles = targetEulerAngles;
+            transform.position = targetPosition;//default rotation behind
+
+            ///old below
+
+            //if (backDistanceTarget > backDistance + .01f || backDistanceTarget < backDistance - .01f)
+            //    backDistance = Mathf.Lerp(backDistance, backDistanceTarget, backDistanceSpeed * Time.deltaTime);
+
 
             //Vector3 nahThisThePosition = transform.position;
 
@@ -131,7 +212,7 @@ public class CameraController : MonoBehaviour
 
     public void ChangeFocus(Transform newFocus)
     {
-        forward = newFocus.rotation;
+        //forward = newFocus.rotation;
         if (focus != newFocus)
         {
             focus = newFocus;
@@ -139,22 +220,25 @@ public class CameraController : MonoBehaviour
 
         if (focus.GetComponent<BasicVehicle>() != null)
         {
-            lerpSpeed = 1.5f;
+            curState = CameraState.Vehicle;
+            //lerpSpeed = 1.5f;
+        }
+        else if (focus.GetComponent<BasicRider>())
+        {
+            curState = CameraState.Rider;
+            //lerpSpeed = 0;
         }
         else
         {
-            if (focus.GetComponent<BasicRider>())
-            {
-                //camRotX = focus.transform.eulerAngles.y;
-            }
-            lerpSpeed = 0;
+            curState = CameraState.Dead;
+            //lerpSpeed = 0;
         }
     }
 
     public void ChangeDistance(float distanceBack, float speedMultiplier)
     {
-        backDistanceTarget = distanceBack;
-        backDistanceSpeed = speedMultiplier;
+        //backDistanceTarget = distanceBack;
+        //backDistanceSpeed = speedMultiplier;
 
     }
 
