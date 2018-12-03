@@ -7,16 +7,25 @@ public class TextFade : MonoBehaviour
 {
 
     public float fadeTime;
+    public float fadeGroupSpeed;
+    public bool CanvasGroup;
 
     // Use this for initialization
     void Start()
     {
-        FadeOut();
+        if(CanvasGroup == false)
+        {
+            FadeOut();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (CanvasGroup == true)
+        {
+            FadeOutGroup();
+        }
     }
 
     //Fade time in seconds
@@ -32,6 +41,16 @@ public class TextFade : MonoBehaviour
         {
             text.color = Color.Lerp(originalColor, Color.clear, Mathf.Min(1, t / fadeTime));
             yield return null;
+        }
+    }
+
+    public void FadeOutGroup()
+    {
+        CanvasGroup canvas = this.GetComponent<CanvasGroup>();
+        canvas.alpha -= fadeGroupSpeed * Time.deltaTime;
+        if(canvas.alpha <= 0)
+        {
+            this.gameObject.SetActive(false);
         }
     }
 }
