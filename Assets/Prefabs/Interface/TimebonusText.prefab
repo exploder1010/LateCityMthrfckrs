@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222678186486578854}
   - component: {fileID: 114035094424349822}
   - component: {fileID: 114499314646192218}
+  - component: {fileID: 114224134853159348}
   m_Layer: 5
   m_Name: TimebonusText
   m_TagString: Untagged
@@ -62,6 +63,18 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!114 &114224134853159348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1673784924193616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c46e225a13efd714f92fcfe95540120b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1
 --- !u!114 &114499314646192218
 MonoBehaviour:
   m_ObjectHideFlags: 1
