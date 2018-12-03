@@ -13,6 +13,7 @@ public class ButtonScripts : MonoBehaviour {
     public Text comboMultiText;
     public Text comboTimerText;
     public Text bonusPrefab;
+    public int scoreMultiplier;
 
 	// Use this for initialization
 	void Start () {
@@ -74,11 +75,12 @@ public class ButtonScripts : MonoBehaviour {
 
     public void comboEnd(int multiplier)
     {
-        GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().addTime(3 * multiplier);
+        print(multiplier);
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().addTime(scoreMultiplier * multiplier);
         Text bonustext = Instantiate(bonusPrefab, new Vector3(233, 55, 0), GameObject.FindGameObjectWithTag("HUD").transform.rotation) as Text;
         bonustext.transform.SetParent(this.transform, false);
         bonustext.fontSize = 15 * multiplier;
-        bonustext.text = (3 * multiplier).ToString() + " seconds added!";
+        bonustext.text = (scoreMultiplier * multiplier).ToString() + " seconds added!";
         comboUI.SetActive(false);
         //comboUI.AddComponent<TextFade>();
         //comboUI.GetComponent<TextFade>().CanvasGroup = true;

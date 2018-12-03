@@ -74,9 +74,9 @@ namespace Luminosity.IO
                 comboTimer -= Time.deltaTime;
                 if(comboTimer <= 0)
                 {
+                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboEnd(comboMultiplier);
                     comboTimer = 0;
                     comboMultiplier = 0;
-                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboEnd(comboMultiplier);
                 }
             }
 
@@ -286,9 +286,9 @@ namespace Luminosity.IO
                 //drop combo b/c too close
                 else
                 {
+                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboEnd(comboMultiplier);
                     comboMultiplier = 0;
                     comboTimer = 0;
-                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboEnd(comboMultiplier);
                 }
 
 
