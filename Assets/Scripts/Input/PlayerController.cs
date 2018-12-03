@@ -45,16 +45,12 @@ namespace Luminosity.IO
         private bool recentDirection;
         private float previousVelocity;
 
-        //nick: needed for dunkey spin move
-        private Vector3 prevLStickInput;
-        private float keyboard_A_Leniency;
-        private float keyboard_S_Leniency;
-        private float keyboard_D_Leniency;
-        private float keyboard_W_Leniency;
-        private float keyboard_AS_Leniency;
-        private float keyboard_SD_Leniency;
-        private float keyboard_DW_Leniency;
-        private float keyboard_WA_Leniency;
+        //flexing on the haters @ dell 
+        float comboTimer = 0f;
+        float comboTimeSet = 3f;
+        int comboMultiplier = 1;
+        float comboDistance = 50f;
+        Vector3 prevComboPosition;
 
         // Use this for initialization
         void Start()
@@ -68,6 +64,18 @@ namespace Luminosity.IO
         // TLDR: Use Update() for input and FixedUpdate() for motors/movement
         void Update()
         {
+            Debug.Log("cm " + comboMultiplier);
+            //combo stuff
+            if(comboTimer > 0)
+            {
+                comboTimer -= Time.deltaTime;
+                if(comboTimer <= 0)
+                {
+                    comboTimer = 0;
+                    comboMultiplier = 0;
+                }
+            }
+
             //update vehicle or rider respectively, depending on state.
             switch (curState)
             {
@@ -234,9 +242,6 @@ namespace Luminosity.IO
                     break;
             }
 
-
-            prevLStickInput = new Vector3(InputManager.GetAxis("Horizontal"), 0, InputManager.GetAxis("Vertical"));
-
         }
 
 
@@ -253,8 +258,27 @@ namespace Luminosity.IO
         public void EnterVehicle(BasicVehicle newVehicle)
         {
             //Debug.Log("ENTER CAR " + Time.time);
-            if (true)
+            if (curState != PlayerState.Dead)
             {
+                //successful combo
+                if(comboTimer > 0 && (prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance)
+                {
+                    comboMultiplier++;
+                    comboTimer = comboTimeSet;
+                }
+                //start new combo
+                else if ((prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance)
+                {
+                    comboTimer = comboTimeSet;
+                }
+                //drop combo b/c too close
+                else
+                {
+                    comboMultiplier = 0;
+                    comboTimer = 0;
+                }
+
+
                 curState = PlayerState.Vehicle;
                 curVehicle = newVehicle;
                 curVehicle.player = true;
@@ -292,6 +316,10 @@ namespace Luminosity.IO
             //Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {
+
+                //set position for combo
+                prevComboPosition = curVehicle.transform.position;
+
                 curState = PlayerState.Rider;
 
                 if (curVehicle != null)

@@ -41,6 +41,9 @@ public class BasicRider : MonoBehaviour, IRider {
 
     //current variables
     protected Vector3 vectorToAdd;
+    protected bool horzAddDone;
+    protected bool vertAddDone;
+    protected bool dontNormalize; 
     protected Vector3 prevVectorToAdd;
     protected Vector3 horVelocityCheck;
     protected float maxSpeedThisJump;
@@ -106,13 +109,32 @@ public class BasicRider : MonoBehaviour, IRider {
     //input rightwards and leftwards movement
     public virtual void inputHorz(float direction)
     {
-        vectorToAdd = vectorToAdd + (Vector3.Cross(Vector3.up, calculateForward()) * direction); //add input to a refreshed VectorToAdd each frame
+        //Debug.Log(direction);
+        if (!horzAddDone)
+        {
+            horzAddDone = true;
+            vectorToAdd = vectorToAdd + (Vector3.Cross(Vector3.up, calculateForward()) * direction); //add input to a refreshed VectorToAdd each frame
+
+            if (direction != 0 && Mathf.Abs(direction) != 1)
+            {
+                dontNormalize = true;
+            }
+        }
     }
 
     //input forwards and backwards movement
     public virtual void inputVert(float direction)
     {
-        vectorToAdd = vectorToAdd + (calculateForward() * direction); //add input to a refreshed VectorToAdd each frame
+        if (!vertAddDone)
+        {
+            vertAddDone = true;
+            vectorToAdd = vectorToAdd + (calculateForward() * direction); //add input to a refreshed VectorToAdd each frame
+
+            if(direction != 0 && Mathf.Abs(direction) != 1)
+            {
+                dontNormalize = true;
+            }
+        }
     }
 
     //get forward based on camera
@@ -199,8 +221,18 @@ public class BasicRider : MonoBehaviour, IRider {
     //update horizontal movement
     protected virtual void updateMovement()
     {
-        
-        vectorToAdd = vectorToAdd.normalized * airAccel; //make sure diagonals aren't overpowered, and apply speed to normalized vector.
+        //Debug.Log("vta nn "  + vectorToAdd);
+
+        if (!dontNormalize)
+        {
+            vectorToAdd = vectorToAdd.normalized;
+        }
+
+        vectorToAdd *= airAccel; //make sure diagonals aren't overpowered, and apply speed to normalized vector.
+        horzAddDone = false;
+        vertAddDone = false;
+        dontNormalize = false;
+
 
         if (rb)
         {
@@ -370,7 +402,7 @@ public class BasicRider : MonoBehaviour, IRider {
             currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
             currentRagdoll.SetActive(true);
             //Debug.Log(ragdollUp);
-            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = (rb.velocity * 3f) + (ragdollUp * rb.velocity.magnitude * 4f);
+            currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = Vector3.Reflect(rb.velocity, ragdollUp) * 5f;  //(rb.velocity * 3f) + (ragdollUp * rb.velocity.magnitude * 4f);
             
         }
     }

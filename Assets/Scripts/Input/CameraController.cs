@@ -7,40 +7,24 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     
-    //public float camSensX; //todo: set with player prefs
-    //public float camSensY; //todo: set with player prefs
 
-    //float camMaxX = 360; 
-    //float camMinX = -360;
-    //public float camMaxY; 
-    //public float camMinY; 
-
-    //private float camRotX;
-    //private float camRotY;
-    //private float backDistance = 20f;
-    //private float backDistanceTarget;
-    //private float backDistanceSpeed;
-    //private float upDistance = 8f;
     private Transform focus;
-    //private Quaternion forward;
-    //private float lerpSpeed;
     
     private Vector3 targetPosition;
     private Vector3 curOffset;
 
     private Vector3 targetEulerAngles;
-    //private bool hasSpinHopped;
-    //private bool prevHasSpinHopped;
-    //private bool prevRider;
-    //private bool prevCarGrounded;
-    //private float prevFocusEulerY;
 
     private float followSpeed;
     private float trackSpeed;
 
-    private Vector3 prevFocusPos;
+    private float deathZoomMax = 3f;
+    private float deathZoomMin = 12f;
+    private float deathZoomFollow = 15f;
+    private float deathZoomTrack = 0f;
+    private float deathZoom;
 
-    //nicks new stuff
+    private Vector3 prevFocusPos;
 
     private enum CameraState { Vehicle = 0, Rider, Dead,  };
     private CameraState curState;
@@ -54,13 +38,6 @@ public class CameraController : MonoBehaviour
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        //update camera input
-
-        //camRotX += (InputManager.GetAxis("LookHorizontal")) * camSensX;
-        //camRotY -= (InputManager.GetAxis("LookVertical")) * camSensY;
-
-        //camRotX = ClampAngle(camRotX, camMinX, camMaxX);
-        //camRotY = ClampAngle(camRotY, camMinY, camMaxY);
 
         if (focus != null)
         {
@@ -68,23 +45,15 @@ public class CameraController : MonoBehaviour
             float dist = 100f;
             int layerMask = 1 << LayerMask.NameToLayer("Vehicle");
             Vector3 pos = focus.position + transform.up;
-            //pos.y += 1;
             RaycastHit hit;
 
-            //if (DebugThis)
-            //    Debug.DrawRay(pos, -transform.up * 1000f, Color.red, 0.1f);
+
             //update waypoint queues
             if (Physics.Raycast(pos, -transform.up, out hit, 1000f))//, 1 << LayerMask.NameToLayer("Road")))
             {
-                //if (DebugThis)
-                //{
-                //Debug.Log(hit.transform);
-                //}
                 if (hit.transform.GetComponent<LevelBlockInfo>() && hit.transform.GetComponent<LevelBlockInfo>() != curLBI)
                 {
-
                     curLBI = hit.transform.GetComponent<LevelBlockInfo>();
-              
                 }
                 else if (hit.transform.parent != null && hit.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
                 {
@@ -94,12 +63,10 @@ public class CameraController : MonoBehaviour
                 else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
                 {
                     curLBI = hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>();
-
                 }
                 else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
                 {
                     curLBI = hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>();
-
                 }
 
             }
@@ -110,8 +77,10 @@ public class CameraController : MonoBehaviour
                     if (curLBI)
                     {
                         targetEulerAngles =  curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
-                        targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.VehicleCameraOffset;//default rotation behind
+                        targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.VehicleCameraOffset;
                         curOffset = curLBI.transform.rotation * curLBI.VehicleCameraOffset;
+
+                        updateActualMovement( curLBI.VehicleCameraFollowSpeed, curLBI.VehicleCameraTrackSpeed);
                     }
 
                     break;
@@ -120,8 +89,11 @@ public class CameraController : MonoBehaviour
                     if (curLBI)
                     {
                         targetEulerAngles =  curLBI.RiderCameraEulerAngles + new Vector3(0,curLBI.transform.eulerAngles.y,0);
-                        targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.RiderCameraOffset;//default rotation behind
+                        targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.RiderCameraOffset;
                         curOffset = curLBI.transform.rotation * curLBI.RiderCameraOffset;
+
+
+                        updateActualMovement(curLBI.RiderCameraFollowSpeed, curLBI.RiderCameraTrackSpeed);
                     }
 
                     break;
@@ -129,9 +101,18 @@ public class CameraController : MonoBehaviour
                 case CameraState.Dead:
                     if (curLBI)
                     {
-                        targetEulerAngles = new Vector3(25, 0, 0);
-                        targetPosition = focus.transform.position - (Vector3.forward * 7f) - (Vector3.right * 0) + (Vector3.up * 6f);//default rotation behind
-                        curOffset = (Vector3.forward * 7f) - (Vector3.right * 0) + (Vector3.up * 6f);
+                        //deathZoom -= Time.deltaTime;
+                        //deathZoom = Mathf.Max(deathZoom, deathZoomMin);
+
+                        deathZoom += Time.deltaTime;
+                        deathZoom = Mathf.Min(deathZoom, deathZoomMin);
+
+                        transform.LookAt(new Vector3 (targetPosition.x, focus.position.y, targetPosition.z) + curLBI.transform.forward * 0.3f);
+                        //targetEulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
+                        targetPosition = focus.transform.position + Vector3.up * deathZoom  -curLBI.transform.forward * 0.3f;
+                        curOffset = Vector3.up;
+
+                        updateActualMovement(deathZoomFollow, deathZoomTrack);
                     }
 
                     break;
@@ -141,103 +122,23 @@ public class CameraController : MonoBehaviour
                     break;
             }
 
-            Quaternion rot = transform.rotation;
-            rot.eulerAngles = targetEulerAngles;// (targetEulerAngles.x,targetEulerAngles.y,targetEulerAngles.z);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, curLBI.CameraTrackSpeed * Time.deltaTime);
-
-            //float speedMod = Mathf.Max(((focus.position - prevFocusPos).magnitude/ Time.deltaTime )/15f, 1f);
-            //Debug.Log(speedMod + " SM");
-            //if ((focus.position - transform.position).magnitude > curOffset.magnitude * 1.2f)
-            //{
-            //    //transform.position = focus.position + (curOffset * 1.2f);
-            //    dir *= (focus.position - transform.position).magnitude;
-            //}
-
-
-            Vector3 dir = (targetPosition - transform.position).normalized * Mathf.Min((targetPosition - transform.position).magnitude, 1) * (Mathf.Max((targetPosition - transform.position).magnitude, 1));
-        
-            transform.position += dir * curLBI.CameraFollowSpeed * Time.deltaTime;//default rotation behind
-
             
-
-            prevFocusPos = focus.position;
-            ///old below
-
-            //if (backDistanceTarget > backDistance + .01f || backDistanceTarget < backDistance - .01f)
-            //    backDistance = Mathf.Lerp(backDistance, backDistanceTarget, backDistanceSpeed * Time.deltaTime);
-
-
-            //Vector3 nahThisThePosition = transform.position;
-
-            //if (focus.transform.GetComponent<BasicVehicle>() && focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround())
-            //{
-            //    if (hasSpinHopped || prevRider || !prevCarGrounded)
-            //    {
-            //        //Debug.Log("car shifter");
-            //        //transform.rotation.SetLookRotation(focus.forward,focus.up);
-            //        camRotX = -Mathf.DeltaAngle(transform.eulerAngles.y, focus.eulerAngles.y);
-            //        hasSpinHopped = false;
-            //    }
-            //    transform.position = focus.transform.position - (focus.transform.forward * backDistance) + (focus.transform.up * upDistance);//default rotation behind vehicle
-            //    transform.eulerAngles = new Vector3(focus.eulerAngles.x, focus.eulerAngles.y, focus.eulerAngles.z);
-            //    transform.RotateAround(focus.transform.position, focus.transform.right, camRotY);//vert rot
-            //    transform.RotateAround(focus.transform.position, focus.transform.up, camRotX);//horz rot
-            //    camRotX = Mathf.LerpAngle(camRotX, 0, lerpSpeed * Time.deltaTime);
-
-            //}
-            //else
-            //{
-            //    if (!prevRider && focus.transform.GetComponent<BasicRider>() && prevCarGrounded || focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().easyCheckWheelsOnGround() && prevCarGrounded)
-            //    {
-            //        //Debug.Log("air shifter");
-
-            //        camRotX += prevFocusEulerY;
-            //    }
-            //    transform.position = focus.transform.position - (Vector3.forward * backDistance) + (Vector3.up * upDistance);//default rotation behind vehicle
-            //    transform.LookAt(focus.transform.position);
-            //    transform.RotateAround(focus.transform.position, Vector3.up, camRotX);//x rot
-            //    transform.RotateAround(focus.transform.position, transform.right, camRotY);//y rot
-
-            //    //if ((hasSpinHopped && focus.transform.GetComponent<BasicVehicle>() && !focus.transform.GetComponent<BasicVehicle>().isSpinMoveHop()))
-            //    //{
-
-            //    //    camRotX = Mathf.LerpAngle(camRotX, forward.eulerAngles.y, 5f * Time.deltaTime);
-            //    //    if(Mathf.Abs(camRotX - forward.eulerAngles.y) < 5f)
-            //    //    {
-            //    //        hasSpinHopped = false;
-            //    //    }
-            //    //}
-            //    //camRotX = Mathf.LerpAngle(camRotX, forward.eulerAngles.y, lerpSpeed * Time.deltaTime);
-            //}
-            //targetPosition = transform.position;
-            ////targetRotation = transform.rotation;
-            //transform.position = nahThisThePosition;
-            ////transform.rotation = nahThisTheRotation;
-
-            ////transform.position += (targetPosition - transform.position) * Time.deltaTime * 30f;
-            ////if((targetPosition - transform.position).magnitude > 1f)
-            ////{
-            //    transform.position += (targetPosition - transform.position) * Time.deltaTime * 30f;
-            //    //transform.position = targetPosition;
-            ////}
-
-            ////transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 50f);
-
-            ////spring arm
-            //RaycastHit hit;
-            //int layerMask = 1 << LayerMask.NameToLayer("Road");
-
-            //if (Physics.Raycast(focus.transform.position, (transform.position - focus.transform.position).normalized, out hit, (transform.position - focus.transform.position).magnitude, layerMask))
-            //{
-            //    //Debug.Log("use spring arm" + hit.transform.gameObject);
-            //    transform.position = hit.point;
-            //}
-
-            //prevCarGrounded = (focus.GetComponent<BasicVehicle>() && focus.GetComponent<BasicVehicle>().easyCheckWheelsOnGround()); 
-            //prevRider = focus.GetComponent<BasicRider>() != null;
-            //prevFocusEulerY = focus.eulerAngles.y;
+ 
         }
-        //camRotX = Mathf.LerpAngle(camRotX, forward.eulerAngles.y, lerpSpeed * Time.deltaTime);
+    }
+
+    public void updateActualMovement(float follow, float track)
+    {
+
+        Quaternion rot = transform.rotation;
+        rot.eulerAngles = targetEulerAngles;// (targetEulerAngles.x,targetEulerAngles.y,targetEulerAngles.z);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, track * Time.deltaTime);
+
+        Vector3 dir = (targetPosition - transform.position).normalized * Mathf.Min((targetPosition - transform.position).magnitude, 1) * (Mathf.Max((targetPosition - transform.position).magnitude, 1));
+
+        transform.position += dir * follow * Time.deltaTime;//default rotation behind
+
+        prevFocusPos = focus.position;
     }
 
     public void ChangeFocus(Transform newFocus)
@@ -247,21 +148,18 @@ public class CameraController : MonoBehaviour
         {
             focus = newFocus;
         }
-
         if (focus.GetComponent<BasicVehicle>() != null)
         {
             curState = CameraState.Vehicle;
-            //lerpSpeed = 1.5f;
         }
         else if (focus.GetComponent<BasicRider>())
         {
             curState = CameraState.Rider;
-            //lerpSpeed = 0;
         }
         else
         {
+            deathZoom = deathZoomMax;
             curState = CameraState.Dead;
-            //lerpSpeed = 0;
         }
     }
 
@@ -270,14 +168,5 @@ public class CameraController : MonoBehaviour
         //backDistanceTarget = distanceBack;
         //backDistanceSpeed = speedMultiplier;
 
-    }
-
-    private static float ClampAngle(float angle, float min, float max)
-    {
-        if (angle <= -360F)
-            angle += 360F;
-        if (angle >= 360F)
-            angle -= 360F;
-        return Mathf.Clamp(angle, min, max);
     }
 }
