@@ -55,7 +55,7 @@ public class AirRing : MonoBehaviour {
         if (timeRemaining <= 0)
         {
             Destroy(this.gameObject);
-            GameObject ringEffect = Instantiate(particlePrefab, this.gameObject.transform);
+            GameObject ringEffect = Instantiate(particlePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
         }
     }
 }
