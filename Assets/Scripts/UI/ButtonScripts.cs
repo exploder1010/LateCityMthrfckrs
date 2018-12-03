@@ -9,10 +9,14 @@ public class ButtonScripts : MonoBehaviour {
     public GameObject pauseUI;
     public GameObject gameOverUI;
     public GameObject winUI;
+    public GameObject comboUI;
+    public Text comboMultiText;
+    public Text comboTimerText;
+    public Text bonusPrefab;
 
 	// Use this for initialization
 	void Start () {
-		
+        comboUI.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -54,5 +58,29 @@ public class ButtonScripts : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
         winUI.SetActive(true);
         gameOverUI.SetActive(false);
+    }
+
+    public void comboUpdate(float time, float startTime, int multiplier)
+    {
+        comboUI.GetComponent<Image>().fillAmount =  time / startTime;
+        comboMultiText.text = multiplier.ToString();
+        comboTimerText.text = ((int)time).ToString();
+    }
+
+    public void comboStart()
+    {
+        comboUI.SetActive(true);
+    }
+
+    public void comboEnd(int multiplier)
+    {
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().addTime(3 * multiplier);
+        Text bonustext = Instantiate(bonusPrefab, new Vector3(233, 55, 0), GameObject.FindGameObjectWithTag("HUD").transform.rotation) as Text;
+        bonustext.transform.SetParent(this.transform, false);
+        bonustext.fontSize = 15 * multiplier;
+        bonustext.text = (3 * multiplier).ToString() + " seconds added!";
+        comboUI.SetActive(false);
+        //comboUI.AddComponent<TextFade>();
+        //comboUI.GetComponent<TextFade>().CanvasGroup = true;
     }
 }

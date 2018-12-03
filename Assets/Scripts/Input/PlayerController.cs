@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Luminosity.IO
 {
@@ -58,12 +59,14 @@ namespace Luminosity.IO
             //forwardMovement = true;
             //recentDirection = true;
             //previousVelocity = 0;
+
         }
 
         // IMPORTANT: This should never be fixed update. Input always needs to be in normal update, or you constantly drop inputs.
         // TLDR: Use Update() for input and FixedUpdate() for motors/movement
         void Update()
         {
+            GameObject.Find("HUD").GetComponent<ButtonScripts>().comboUpdate(comboTimer, comboTimeSet, comboMultiplier);
             Debug.Log("cm " + comboMultiplier);
             //combo stuff
             if(comboTimer > 0)
@@ -73,6 +76,7 @@ namespace Luminosity.IO
                 {
                     comboTimer = 0;
                     comboMultiplier = 0;
+                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboEnd(comboMultiplier);
                 }
             }
 
@@ -260,8 +264,9 @@ namespace Luminosity.IO
             //Debug.Log("ENTER CAR " + Time.time);
             if (curState != PlayerState.Dead)
             {
+
                 //successful combo
-                if(comboTimer > 0 && (prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance)
+                if (comboTimer > 0 && (prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance)
                 {
                     comboMultiplier++;
                     comboTimer = comboTimeSet;
@@ -269,6 +274,7 @@ namespace Luminosity.IO
                 //start new combo
                 else if ((prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance)
                 {
+                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboStart();
                     comboTimer = comboTimeSet;
                 }
                 //drop combo b/c too close
@@ -276,6 +282,7 @@ namespace Luminosity.IO
                 {
                     comboMultiplier = 0;
                     comboTimer = 0;
+                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboEnd(comboMultiplier);
                 }
 
 
