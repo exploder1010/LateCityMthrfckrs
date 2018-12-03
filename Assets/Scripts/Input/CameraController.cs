@@ -26,6 +26,8 @@ public class CameraController : MonoBehaviour
     //private float lerpSpeed;
     
     private Vector3 targetPosition;
+    private Vector3 curOffset;
+
     private Vector3 targetEulerAngles;
     //private bool hasSpinHopped;
     //private bool prevHasSpinHopped;
@@ -35,6 +37,8 @@ public class CameraController : MonoBehaviour
 
     private float followSpeed;
     private float trackSpeed;
+
+    private Vector3 prevFocusPos;
 
     //nicks new stuff
 
@@ -107,7 +111,7 @@ public class CameraController : MonoBehaviour
                     {
                         targetEulerAngles =  curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
                         targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.VehicleCameraOffset;//default rotation behind
-
+                        curOffset = curLBI.transform.rotation * curLBI.VehicleCameraOffset;
                     }
 
                     break;
@@ -117,7 +121,7 @@ public class CameraController : MonoBehaviour
                     {
                         targetEulerAngles =  curLBI.RiderCameraEulerAngles + new Vector3(0,curLBI.transform.eulerAngles.y,0);
                         targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.RiderCameraOffset;//default rotation behind
-
+                        curOffset = curLBI.transform.rotation * curLBI.RiderCameraOffset;
                     }
 
                     break;
@@ -127,7 +131,7 @@ public class CameraController : MonoBehaviour
                     {
                         targetEulerAngles = new Vector3(25, 0, 0);
                         targetPosition = focus.transform.position - (Vector3.forward * 7f) - (Vector3.right * 0) + (Vector3.up * 6f);//default rotation behind
-
+                        curOffset = (Vector3.forward * 7f) - (Vector3.right * 0) + (Vector3.up * 6f);
                     }
 
                     break;
@@ -137,9 +141,24 @@ public class CameraController : MonoBehaviour
                     break;
             }
 
-            transform.eulerAngles = targetEulerAngles;
-            transform.position = targetPosition;//default rotation behind
+            Quaternion rot = transform.rotation;
+            rot.eulerAngles = targetEulerAngles;// (targetEulerAngles.x,targetEulerAngles.y,targetEulerAngles.z);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, curLBI.CameraTrackSpeed * Time.deltaTime);
 
+            //float speedMod = Mathf.Max(((focus.position - prevFocusPos).magnitude/ Time.deltaTime )/15f, 1f);
+            //Debug.Log(speedMod + " SM");
+
+            //if ((focus.position - transform.position).magnitude > curOffset.magnitude * 1.2f)
+            //{
+            //    transform.position = focus.position + (curOffset * 1.2f);
+            //}
+
+            Vector3 dir = (targetPosition - transform.position).normalized *  Mathf.Min((targetPosition - transform.position).magnitude, 1) * (Mathf.Max((targetPosition - transform.position).magnitude, 1) * 0.5f);
+            transform.position += dir * curLBI.CameraFollowSpeed * Time.deltaTime;//default rotation behind
+
+            
+
+            prevFocusPos = focus.position;
             ///old below
 
             //if (backDistanceTarget > backDistance + .01f || backDistanceTarget < backDistance - .01f)
