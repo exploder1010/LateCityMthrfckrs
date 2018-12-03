@@ -360,17 +360,17 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
                 if (vcheck1)
                 {
-                    Debug.Log("check1");
+                    //Debug.Log("check1");
                     crashVelocity = prevVelocity;
                 }
                 if (vcheck2)
                 {
-                    Debug.Log("check2");
+                    //Debug.Log("check2");
                     crashVelocity = prevVelocity_2nd;
                 }
                 if (vcheck3)
                 {
-                    Debug.Log("check3");
+                    //Debug.Log("check3");
                     crashVelocity = prevVelocity_3rd;
                 }
 

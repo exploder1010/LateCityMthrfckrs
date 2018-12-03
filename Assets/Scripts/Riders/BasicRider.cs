@@ -248,7 +248,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
         float boostModifier = Mathf.Max((carLaunchSpeed / (carMaxSpeed * boostThreshold)), 1);
         carJumpModifier = 1f + (carLaunchSpeed / carMaxSpeed);
-        Debug.Log(carJumpModifier);
+        //Debug.Log(carJumpModifier);
 
         maxSpeedThisJump = carLaunchSpeed * boostModifier;
         float yVelRetention = carVelocity.y;

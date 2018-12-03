@@ -8857,6 +8857,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ccff73aa5a17004eaed1f46cc214af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VehicleCameraOffset: {x: 0, y: 8, z: -20}
+  VehicleCameraEulerAngles: {x: 25, y: 0, z: 0}
+  RiderCameraOffset: {x: 0, y: 6, z: -7}
+  RiderCameraEulerAngles: {x: 35, y: 0, z: 0}
+  CameraFollowSpeed: 30
+  CameraTrackSpeed: 30
   Lane1Waypoints:
   - {fileID: 4996006648479524}
   Lane2Waypoints:

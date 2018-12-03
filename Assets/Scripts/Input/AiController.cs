@@ -6,9 +6,9 @@ using UnityEngine;
 public class AiController : MonoBehaviour {
 
     public int laneID;
-    private Waypoints curWaypoints;
+    private LevelBlockInfo curLBI;
     private int curWaypoint;
-    private List<Transform> curWaypointsQueue;
+    private List<Transform> curLBIQueue;
 
     public bool DebugThis;
 
@@ -62,38 +62,38 @@ public class AiController : MonoBehaviour {
                     //{
                         //Debug.Log(hit.transform);
                     //}
-                    if(hit.transform.GetComponent<Waypoints>() && hit.transform.GetComponent<Waypoints>() != curWaypoints)
+                    if(hit.transform.GetComponent<LevelBlockInfo>() && hit.transform.GetComponent<LevelBlockInfo>() != curLBI)
                     {
                         //Debug.Log("get waypoints");
-                        curWaypoints = hit.transform.GetComponent<Waypoints>();
+                        curLBI = hit.transform.GetComponent<LevelBlockInfo>();
                         curWaypoint = 0;
-                        if (curWaypoints.Lanes != null)
-                            curWaypointsQueue = curWaypoints.Lanes[laneID];
+                        if (curLBI.Lanes != null)
+                            curLBIQueue = curLBI.Lanes[laneID];
                     }
-                    else if(hit.transform.parent != null && hit.transform.parent.transform.GetComponent<Waypoints>() && hit.transform.parent.transform.GetComponent<Waypoints>() != curWaypoints)
+                    else if(hit.transform.parent != null && hit.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
                     {
-                        curWaypoints = hit.transform.parent.transform.GetComponent<Waypoints>();
+                        curLBI = hit.transform.parent.transform.GetComponent<LevelBlockInfo>();
                         curWaypoint = 0;
-                        //Debug.Log("get waypoints " + curWaypoints);
-                        //Debug.Log("get waypoints " + curWaypoints.Lanes);
-                        if (curWaypoints.Lanes != null)
-                            curWaypointsQueue = curWaypoints.Lanes[laneID];
+                        //Debug.Log("get waypoints " + curLBI);
+                        //Debug.Log("get waypoints " + curLBI.Lanes);
+                        if (curLBI.Lanes != null)
+                            curLBIQueue = curLBI.Lanes[laneID];
 
-                        //curWaypointsQueue = curWaypoints.Lane1Waypoints;
+                        //curLBIQueue = curLBI.Lane1Waypoints;
                     }
-                    else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.GetComponent<Waypoints>() && hit.transform.parent.transform.parent.transform.GetComponent<Waypoints>() != curWaypoints)
+                    else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
                     {
-                        curWaypoints = hit.transform.parent.transform.parent.transform.GetComponent<Waypoints>();
+                        curLBI = hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>();
                         curWaypoint = 0;
-                        if (curWaypoints.Lanes != null)
-                            curWaypointsQueue = curWaypoints.Lanes[laneID];
+                        if (curLBI.Lanes != null)
+                            curLBIQueue = curLBI.Lanes[laneID];
                     }
-                    else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<Waypoints>() && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<Waypoints>() != curWaypoints)
+                    else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
                     {
-                        curWaypoints = hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<Waypoints>();
+                        curLBI = hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>();
                         curWaypoint = 0;
-                        if (curWaypoints.Lanes != null)
-                            curWaypointsQueue = curWaypoints.Lanes[laneID];
+                        if (curLBI.Lanes != null)
+                            curLBIQueue = curLBI.Lanes[laneID];
                     }
 
                 }
@@ -162,9 +162,9 @@ public class AiController : MonoBehaviour {
 
                 //lr movement based on waypoints
                 Vector3 target = Vector3.zero;
-                if (curWaypointsQueue != null && curWaypointsQueue.Count > curWaypoint)
+                if (curLBIQueue != null && curLBIQueue.Count > curWaypoint)
                 {
-                    target = curWaypointsQueue[curWaypoint].position;
+                    target = curLBIQueue[curWaypoint].position;
                     Vector3 targetDir = (target - transform.position);
 
 
