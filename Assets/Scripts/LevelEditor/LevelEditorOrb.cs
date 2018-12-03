@@ -15,6 +15,7 @@ public class LevelEditorOrb : MonoBehaviour {
     private MeshRenderer mesh;
     private float defaultSize;
     private GameObject[] roadPrefabs;
+    private bool is3d = false;
 
 	// Use this for initialization
 	void Start () {
@@ -59,6 +60,11 @@ public class LevelEditorOrb : MonoBehaviour {
     }
     public void GenerateRoad(GameObject roadType){
         GameObject parent = GameObject.Find("LevelBlocks");
+        if (parent == null)
+        {
+            parent = new GameObject();
+            parent.name = "LevelBlocks";
+        }
         GameObject clone = PrefabUtility.InstantiatePrefab(roadType) as GameObject;
         LevelBlock blockScript = clone.GetComponent<LevelBlock>();
         float size = blockScript == null ? defaultSize : blockScript.BlockSize;
@@ -84,11 +90,17 @@ public class LevelEditorOrb : MonoBehaviour {
         }
         else if (gameObject.name.Contains("Up"))
         {
-            //place at orb
+            if (is3d)
+                orbPosition.y += size;
         }
         clone.transform.position = orbPosition;
         clone.transform.parent = parent.transform;
         Selection.activeGameObject = clone;
+        clone.transform.rotation = selectedObject.transform.rotation;
+    }
+    private void Is3d()
+    {
+        is3d = true;
     }
 }
 #endif
