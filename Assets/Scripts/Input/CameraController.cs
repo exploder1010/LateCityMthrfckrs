@@ -103,23 +103,32 @@ public class CameraController : MonoBehaviour
             switch (curState)
             {
                 case CameraState.Vehicle:
+                    if (curLBI)
+                    {
+                        targetEulerAngles =  curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                        targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.VehicleCameraOffset;//default rotation behind
 
-                    targetEulerAngles = curLBI.VehicleCameraEulerAngles;
-                    targetPosition = focus.transform.position + curLBI.VehicleCameraOffset;//default rotation behind
+                    }
 
                     break;
 
                 case CameraState.Rider:
+                    if (curLBI)
+                    {
+                        targetEulerAngles =  curLBI.RiderCameraEulerAngles + new Vector3(0,curLBI.transform.eulerAngles.y,0);
+                        targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.RiderCameraOffset;//default rotation behind
 
-                    targetEulerAngles = curLBI.RiderCameraEulerAngles;
-                    targetPosition = focus.transform.position + curLBI.RiderCameraOffset;//default rotation behind
+                    }
 
                     break;
 
                 case CameraState.Dead:
+                    if (curLBI)
+                    {
+                        targetEulerAngles = new Vector3(25, 0, 0);
+                        targetPosition = focus.transform.position - (Vector3.forward * 7f) - (Vector3.right * 0) + (Vector3.up * 6f);//default rotation behind
 
-                    targetEulerAngles = new Vector3(25, 0, 0);
-                    targetPosition = focus.transform.position - (Vector3.forward * 7f) - (Vector3.right * 0) + (Vector3.up * 6f);//default rotation behind
+                    }
 
                     break;
 
