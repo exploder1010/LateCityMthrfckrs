@@ -242,7 +242,7 @@ public class BasicRider : MonoBehaviour, IRider {
             rb.AddForce(vectorToAdd);
 
             Vector3 horVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            if (vectorToAdd == Vector3.zero && horVel.magnitude > maxSpeedThisJump * 0.7f)
+            if (vectorToAdd == Vector3.zero && horVel.magnitude > maxSpeedThisJump * 0.6f)
             {
                 float mag = rb.velocity.magnitude;
                 float y = rb.velocity.y;
@@ -322,7 +322,7 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             float newY = rb.velocity.y;
             newY += (carJumpVelocityAdd * carJumpModifier / carJumpTimeSet) * Time.deltaTime;
-            rb.velocity = new Vector3(rb.velocity.x, newY, rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z) + carJumpUpDirection * newY;
             //rb.AddForce(transform.up * ((carJumpVelocityAdd) / carJumpTimeSet));
             //carJumpVelocity += ((carJumpVelocityAdd) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
 

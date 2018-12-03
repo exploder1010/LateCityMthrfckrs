@@ -2425,7 +2425,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1840317728743740}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.550892, y: 2.8215103, z: 97.11203}
+  m_LocalPosition: {x: -9.550892, y: 2.8215103, z: 457.11203}
   m_LocalScale: {x: 60, y: 1, z: 60}
   m_Children:
   - {fileID: 4090752096171466}
@@ -8859,10 +8859,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VehicleCameraOffset: {x: 0, y: 8, z: -20}
   VehicleCameraEulerAngles: {x: 25, y: 0, z: 0}
+  VehicleCameraFollowSpeed: 10
+  VehicleCameraTrackSpeed: 25
   RiderCameraOffset: {x: 0, y: 6, z: -7}
-  RiderCameraEulerAngles: {x: 35, y: 0, z: 0}
-  CameraFollowSpeed: 10
-  CameraTrackSpeed: 15
+  RiderCameraEulerAngles: {x: 30, y: 0, z: 0}
+  RiderCameraFollowSpeed: 10
+  RiderCameraTrackSpeed: 25
   Lane1Waypoints:
   - {fileID: 4090752096171466}
   Lane2Waypoints:

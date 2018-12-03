@@ -30,6 +30,7 @@ public class CameraController : MonoBehaviour
     private CameraState curState;
 
     private LevelBlockInfo curLBI;
+    private bool firstLBI = true;
 
     // Use this for initialization
     void Start () {
@@ -49,7 +50,7 @@ public class CameraController : MonoBehaviour
 
 
             //update waypoint queues
-            if (Physics.Raycast(pos, -transform.up, out hit, 1000f))//, 1 << LayerMask.NameToLayer("Road")))
+            if (Physics.Raycast(pos, -focus.up, out hit, 1000f))//, 1 << LayerMask.NameToLayer("Road")))
             {
                 if (hit.transform.GetComponent<LevelBlockInfo>() && hit.transform.GetComponent<LevelBlockInfo>() != curLBI)
                 {
@@ -77,7 +78,7 @@ public class CameraController : MonoBehaviour
                     if (curLBI)
                     {
                         targetEulerAngles =  curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
-                        targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.VehicleCameraOffset;
+                        targetPosition = focus.transform.position  + curLBI.transform.rotation * curLBI.VehicleCameraOffset;
                         curOffset = curLBI.transform.rotation * curLBI.VehicleCameraOffset;
 
                         updateActualMovement( curLBI.VehicleCameraFollowSpeed, curLBI.VehicleCameraTrackSpeed);
@@ -89,7 +90,7 @@ public class CameraController : MonoBehaviour
                     if (curLBI)
                     {
                         targetEulerAngles =  curLBI.RiderCameraEulerAngles + new Vector3(0,curLBI.transform.eulerAngles.y,0);
-                        targetPosition = focus.transform.position + curLBI.transform.rotation * curLBI.RiderCameraOffset;
+                        targetPosition = focus.transform.position  + curLBI.transform.rotation * curLBI.RiderCameraOffset;
                         curOffset = curLBI.transform.rotation * curLBI.RiderCameraOffset;
 
 
@@ -129,6 +130,13 @@ public class CameraController : MonoBehaviour
 
     public void updateActualMovement(float follow, float track)
     {
+
+        if (firstLBI)
+        {
+            transform.position = targetPosition;
+            transform.eulerAngles = targetEulerAngles;
+            firstLBI = false;
+        }
 
         Quaternion rot = transform.rotation;
         rot.eulerAngles = targetEulerAngles;// (targetEulerAngles.x,targetEulerAngles.y,targetEulerAngles.z);

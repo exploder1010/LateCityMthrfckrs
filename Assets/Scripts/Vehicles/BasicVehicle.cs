@@ -260,7 +260,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
         if(easyCheckWheelsOnGround() && Physics.Raycast(pos, -transform.up, out hit, 10f, 1 << LayerMask.NameToLayer("Road")) && hit.transform.GetComponent<GravityRoad>())
         {
-
+            gravityMagnitude = hit.transform.GetComponent<GravityRoad>().gravity;
             gravityDirection = -hit.normal;
             Vector3.RotateTowards(transform.up, hit.normal, 100f * Time.deltaTime, 100f * Time.deltaTime);
             //Quaternion.RotateTowards(transform.rotation, transform.rotation);
@@ -269,6 +269,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         }
         if (!easyCheckWheelsOnGround())
         {
+            gravityMagnitude = 20f;
             gravityDirection = Vector3.down;
         }
 
