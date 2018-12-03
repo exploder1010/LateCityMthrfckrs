@@ -147,13 +147,15 @@ public class CameraController : MonoBehaviour
 
             //float speedMod = Mathf.Max(((focus.position - prevFocusPos).magnitude/ Time.deltaTime )/15f, 1f);
             //Debug.Log(speedMod + " SM");
-
             //if ((focus.position - transform.position).magnitude > curOffset.magnitude * 1.2f)
             //{
-            //    transform.position = focus.position + (curOffset * 1.2f);
+            //    //transform.position = focus.position + (curOffset * 1.2f);
+            //    dir *= (focus.position - transform.position).magnitude;
             //}
 
-            Vector3 dir = (targetPosition - transform.position).normalized *  Mathf.Min((targetPosition - transform.position).magnitude, 1) * (Mathf.Max((targetPosition - transform.position).magnitude, 1) * 0.5f);
+
+            Vector3 dir = (targetPosition - transform.position).normalized * Mathf.Min((targetPosition - transform.position).magnitude, 1) * (Mathf.Max((targetPosition - transform.position).magnitude, 1));
+        
             transform.position += dir * curLBI.CameraFollowSpeed * Time.deltaTime;//default rotation behind
 
             
