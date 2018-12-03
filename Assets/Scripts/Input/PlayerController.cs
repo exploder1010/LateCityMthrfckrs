@@ -127,6 +127,12 @@ namespace Luminosity.IO
                     //input jump
                     if (InputManager.GetButtonDown("Jump") || curVehicle.GetComponent<BasicVehicle>().broken)
                     {
+                        if (curVehicle.GetComponent<BasicVehicle>().broken)
+                        {
+                            comboMultiplier = 0;
+                            comboTimer = 0;
+                        }
+
                         ExitVehicle();
 
                         break;
