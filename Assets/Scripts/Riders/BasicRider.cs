@@ -17,6 +17,7 @@ public class BasicRider : MonoBehaviour, IRider {
     public Rigidbody rb;
     public Animator charAnim;
     public GameObject ragdollPrefab;
+    private Vector3 rdSpawnPoint;
     public HitBox lockOnCollider;
     public HitBox roadCollider;
     public HitBox vehicleCollider;
@@ -89,7 +90,7 @@ public class BasicRider : MonoBehaviour, IRider {
     // Update is called once per frame
     protected virtual void FixedUpdate()
     {
-        handleLockOnCollision();
+        //handleLockOnCollision();
 
         if (targetedVehicle)
         {
@@ -389,6 +390,7 @@ public class BasicRider : MonoBehaviour, IRider {
         if (targetedVehicle == null && roadCollider.collidersCount() > 0 )//|| brokenVehicleCollider.collidersCount() > 0)
         {
             ragdollUp = Vector3.up;
+            rdSpawnPoint = transform.position;
             RaycastHit hit;
             int layerMask = 1 << LayerMask.NameToLayer("Road");
             //Debug.DrawLine(transform.position - rb.velocity.normalized, transform.position - rb.velocity.normalized + rb.velocity.normalized * 5f, Color.red, 10f);
@@ -396,6 +398,7 @@ public class BasicRider : MonoBehaviour, IRider {
             {
                // Debug.Log("hit");
                 ragdollUp = hit.normal;
+                rdSpawnPoint = hit.point;
             }
 
             spawnRagdoll();
@@ -407,7 +410,7 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (currentRagdoll == null)
         {
-            currentRagdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
+            currentRagdoll = Instantiate(ragdollPrefab, rdSpawnPoint, transform.rotation);
             currentRagdoll.SetActive(true);
             //Debug.Log(ragdollUp);
             currentRagdoll.GetComponent<RagdollStorage>().rb.velocity = Vector3.Reflect(rb.velocity, ragdollUp) * 5f;  //(rb.velocity * 3f) + (ragdollUp * rb.velocity.magnitude * 4f);
@@ -430,59 +433,59 @@ public class BasicRider : MonoBehaviour, IRider {
     {
     }
 
-    protected virtual void handleLockOnCollision()
-    {
+    //protected virtual void handleLockOnCollision()
+    //{
 
-        closeVehicles = new List<BasicVehicle>();
-        //if (rb.velocity.y < 0)
-        //{
-        for (int i = 0; i < lockOnCollider.collidersCount(); i++)
-        {
-            closeVehicles.Add(lockOnCollider.returnColliders()[i].transform.root.transform.GetComponent<BasicVehicle>());
-        }
-        //}
+    //    closeVehicles = new List<BasicVehicle>();
+    //    //if (rb.velocity.y < 0)
+    //    //{
+    //    for (int i = 0; i < lockOnCollider.collidersCount(); i++)
+    //    {
+    //        closeVehicles.Add(lockOnCollider.returnColliders()[i].transform.root.transform.GetComponent<BasicVehicle>());
+    //    }
+    //    //}
 
-        if(targetIconPrefab != null && false)
-        {
-            BasicVehicle potentialTargetedVehicle = null;
-            Destroy(currentTargetIcon);
-            currentTargetIcon = null;
+    //    if(targetIconPrefab != null && false)
+    //    {
+    //        BasicVehicle potentialTargetedVehicle = null;
+    //        Destroy(currentTargetIcon);
+    //        currentTargetIcon = null;
             
-            if(vectorToAdd != Vector3.zero)
-            {
-                foreach (BasicVehicle bv in closeVehicles)
-                {
-                    //vectorToAdd = vectorToAdd.normalized;
-                    if (!bv.broken && (rb.velocity.y < 0 || prevVehicle != bv.gameObject))
-                    {
-                        Vector3 dir = prevVectorToAdd;
-                        if (cameraLockOn)
-                        {
-                            dir = calculateForward();
-                        }
+    //        if(vectorToAdd != Vector3.zero)
+    //        {
+    //            foreach (BasicVehicle bv in closeVehicles)
+    //            {
+    //                //vectorToAdd = vectorToAdd.normalized;
+    //                if (!bv.broken && (rb.velocity.y < 0 || prevVehicle != bv.gameObject))
+    //                {
+    //                    Vector3 dir = prevVectorToAdd;
+    //                    if (cameraLockOn)
+    //                    {
+    //                        dir = calculateForward();
+    //                    }
 
-                        float dist = (transform.position + (dir * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
+    //                    float dist = (transform.position + (dir * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - bv.transform.position).magnitude;
 
-                        //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
-                        if (potentialTargetedVehicle == null || dist < (transform.position + (dir * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - potentialTargetedVehicle.transform.position).magnitude)
-                        {
-                            potentialTargetedVehicle = bv;
-                        }
-                    }
+    //                    //float dist = DistanceToLine(new Ray (transform.position + vectorToAdd, vectorToAdd), bv.transform.position);
+    //                    if (potentialTargetedVehicle == null || dist < (transform.position + (dir * lockOnCollider.transform.GetComponent<SphereCollider>().radius / 2) - potentialTargetedVehicle.transform.position).magnitude)
+    //                    {
+    //                        potentialTargetedVehicle = bv;
+    //                    }
+    //                }
 
                     
-                }
-                if (potentialTargetedVehicle != null)
-                {
-                    currentTargetIcon = Instantiate(targetIconPrefab, potentialTargetedVehicle.transform.position, Quaternion.identity);
-                    //currentTargetIcon.transform.parent = transform;
-                    currentTargetIcon.transform.LookAt(cTransform);
-                }
-            }
+    //            }
+    //            if (potentialTargetedVehicle != null)
+    //            {
+    //                currentTargetIcon = Instantiate(targetIconPrefab, potentialTargetedVehicle.transform.position, Quaternion.identity);
+    //                //currentTargetIcon.transform.parent = transform;
+    //                currentTargetIcon.transform.LookAt(cTransform);
+    //            }
+    //        }
 
-        }
+    //    }
         
-    }
+    //}
 
     //let playercontroller know player is dead
     public virtual GameObject checkRagdoll()

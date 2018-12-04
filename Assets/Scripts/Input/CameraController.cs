@@ -20,8 +20,8 @@ public class CameraController : MonoBehaviour
 
     private float deathZoomMax = 3f;
     private float deathZoomMin = 12f;
-    private float deathZoomFollow = 15f;
-    private float deathZoomTrack = 0f;
+    private float deathZoomFollow = 18f;
+    private float deathZoomTrack = 8f;
     private float deathZoom;
 
     private Vector3 prevFocusPos;
@@ -108,8 +108,8 @@ public class CameraController : MonoBehaviour
                         deathZoom += Time.deltaTime;
                         deathZoom = Mathf.Min(deathZoom, deathZoomMin);
 
-                        transform.LookAt(new Vector3 (targetPosition.x, focus.position.y, targetPosition.z) + curLBI.transform.forward * 0.3f);
-                        //targetEulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
+                        //transform.LookAt(new Vector3 (targetPosition.x, focus.position.y, targetPosition.z) + curLBI.transform.forward * 0.3f);
+                        targetEulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
                         targetPosition = focus.transform.position + Vector3.up * deathZoom  -curLBI.transform.forward * 0.3f;
                         curOffset = Vector3.up;
 
