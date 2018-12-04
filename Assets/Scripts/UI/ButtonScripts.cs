@@ -10,6 +10,7 @@ public class ButtonScripts : MonoBehaviour {
     public GameObject gameOverUI;
     public GameObject winUI;
     public GameObject comboUI;
+    public GameObject comboCircle;
     public Text comboMultiText;
     public Text comboTimerText;
     public Text bonusPrefab;
@@ -63,7 +64,7 @@ public class ButtonScripts : MonoBehaviour {
 
     public void comboUpdate(float time, float startTime, int multiplier)
     {
-        comboUI.GetComponent<Image>().fillAmount =  time / startTime;
+        comboCircle.GetComponent<Image>().fillAmount =  time / startTime;
         comboMultiText.text = (multiplier * scoreMultiplier).ToString() + " X COMBO!";
         comboMultiText.fontSize = (int)(45f * (1f + (multiplier * 0.3f)));
         comboTimerText.text = ((int)time).ToString() + " S";
