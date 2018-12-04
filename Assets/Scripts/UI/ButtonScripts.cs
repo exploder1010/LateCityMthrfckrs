@@ -14,7 +14,7 @@ public class ButtonScripts : MonoBehaviour {
     public Text comboMultiText;
     public Text comboTimerText;
     public Text bonusPrefab;
-    int scoreMultiplier = 1000;
+    public int scoreMultiplier = 1000;
 
 	// Use this for initialization
 	void Start () {
@@ -84,7 +84,7 @@ public class ButtonScripts : MonoBehaviour {
             Text bonustext = Instantiate(bonusPrefab, bonusPrefab.rectTransform.position, GameObject.FindGameObjectWithTag("HUD").transform.rotation) as Text;
             bonustext.transform.SetParent(this.transform, false);
             bonustext.fontSize = (int)(45f * (1f + (multiplier * 0.4f)));
-            bonustext.text = "TIME EXTENDED!!! " + (multiplier).ToString() + " S";
+            bonustext.text = "TIME EXTENDED!!! " + (multiplier).ToString() + "s";
             //comboUI.AddComponent<TextFade>();
             //comboUI.GetComponent<TextFade>().CanvasGroup = true;
         }
