@@ -50,7 +50,7 @@ namespace Luminosity.IO
             if (InputManager.GetButtonDown("Retry"))
             {
                 SoundScript.PlaySound(uiSource, "UI Click");
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                GameController.instance.resetScene();
             }
         }
     }

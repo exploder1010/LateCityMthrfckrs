@@ -27,7 +27,7 @@ public class ButtonScripts : MonoBehaviour {
 
     public void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameController.instance.resetScene();
     }
 
     public void Quit()
