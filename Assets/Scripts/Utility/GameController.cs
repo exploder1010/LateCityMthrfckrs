@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour {
 
     GameObject startVehicle;
     GameObject startVehicleInstance;
+    GameObject mainCamera;
 
     GameObject[] OriginalVehicles;
     GameObject[] SpawnedVehicles;
@@ -54,6 +55,8 @@ public class GameController : MonoBehaviour {
             v.SetActive(false);
 
         SpawnStartCar();
+
+        mainCamera = Instantiate(mainCamera_Prefab);
 
         resetScene();
     }
@@ -105,7 +108,7 @@ public class GameController : MonoBehaviour {
             Destroy(curPlayerController.gameObject);
 
         curPlayerController = GameObject.Instantiate(playerController_Prefab, Vector3.zero, Quaternion.identity).transform.GetComponent<PlayerController>();
-        curPlayerController.SetCamera(GameObject.Instantiate(mainCamera_Prefab, Vector3.zero, Quaternion.identity).GetComponent<CameraController>());
+        curPlayerController.SetCamera(mainCamera.GetComponent<CameraController>());
 
         curPlayerController.SelectRider(selectedRider_Prefab);
 
