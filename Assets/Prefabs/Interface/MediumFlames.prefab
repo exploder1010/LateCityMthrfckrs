@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4469749203399680}
   - component: {fileID: 198104970619360998}
   - component: {fileID: 199570947319072982}
+  - component: {fileID: 114679924552545022}
   m_Layer: 0
   m_Name: MediumFlames
   m_TagString: Untagged
@@ -41,6 +42,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &114679924552545022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1478314613700728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516d8adfc942dd14ca0dc4b450fbf911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Delay: 1
 --- !u!198 &198104970619360998
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -10,10 +10,11 @@ public class ButtonScripts : MonoBehaviour {
     public GameObject gameOverUI;
     public GameObject winUI;
     public GameObject comboUI;
+    public GameObject comboCircle;
     public Text comboMultiText;
     public Text comboTimerText;
     public Text bonusPrefab;
-    public int scoreMultiplier;
+    public int scoreMultiplier = 1000;
 
 	// Use this for initialization
 	void Start () {
@@ -27,7 +28,7 @@ public class ButtonScripts : MonoBehaviour {
 
     public void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameController.instance.resetScene();
     }
 
     public void Quit()
@@ -63,9 +64,10 @@ public class ButtonScripts : MonoBehaviour {
 
     public void comboUpdate(float time, float startTime, int multiplier)
     {
-        comboUI.GetComponent<Image>().fillAmount =  time / startTime;
-        comboMultiText.text = multiplier.ToString();
-        comboTimerText.text = ((int)time).ToString();
+        comboCircle.GetComponent<Image>().fillAmount =  time / startTime;
+        comboMultiText.text = (multiplier * scoreMultiplier).ToString() + " X COMBO!";
+        comboMultiText.fontSize = (int)(45f * (1f + (multiplier * 0.3f)));
+        comboTimerText.text = ((int)time).ToString() + " S";
     }
 
     public void comboStart()
@@ -75,14 +77,18 @@ public class ButtonScripts : MonoBehaviour {
 
     public void comboEnd(int multiplier)
     {
-        print(multiplier);
-        GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().addTime(scoreMultiplier * multiplier);
-        Text bonustext = Instantiate(bonusPrefab, new Vector3(233, 55, 0), GameObject.FindGameObjectWithTag("HUD").transform.rotation) as Text;
-        bonustext.transform.SetParent(this.transform, false);
-        bonustext.fontSize = 15 * multiplier;
-        bonustext.text = (scoreMultiplier * multiplier).ToString() + " seconds added!";
+        if(multiplier > 0)
+        {
+            //print(multiplier);
+            GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().addTime(multiplier);
+            Text bonustext = Instantiate(bonusPrefab, bonusPrefab.rectTransform.position, GameObject.FindGameObjectWithTag("HUD").transform.rotation) as Text;
+            bonustext.transform.SetParent(this.transform, false);
+            bonustext.fontSize = (int)(45f * (1f + (multiplier * 0.4f)));
+            bonustext.text = "TIME EXTENDED!!! " + (multiplier).ToString() + "s";
+            //comboUI.AddComponent<TextFade>();
+            //comboUI.GetComponent<TextFade>().CanvasGroup = true;
+        }
+
         comboUI.SetActive(false);
-        //comboUI.AddComponent<TextFade>();
-        //comboUI.GetComponent<TextFade>().CanvasGroup = true;
     }
 }

@@ -52,6 +52,8 @@ namespace Luminosity.IO
         int comboMultiplier = 1;
         float comboDistance = 50f;
         Vector3 prevComboPosition;
+        ButtonScripts comboBS;
+        bool prevBroken;
 
         // Use this for initialization
         void Start()
@@ -59,26 +61,22 @@ namespace Luminosity.IO
             //forwardMovement = true;
             //recentDirection = true;
             //previousVelocity = 0;
-
         }
 
         // IMPORTANT: This should never be fixed update. Input always needs to be in normal update, or you constantly drop inputs.
         // TLDR: Use Update() for input and FixedUpdate() for motors/movement
         void Update()
         {
-            GameObject.Find("HUD").GetComponent<ButtonScripts>().comboUpdate(comboTimer, comboTimeSet, comboMultiplier);
+            if(comboBS == null && GameObject.Find("HUD") && GameObject.Find("HUD").GetComponent<ButtonScripts>())
+            {
+                comboBS = GameObject.Find("HUD").GetComponent<ButtonScripts>(); //.comboUpdate(comboTimer, comboTimeSet, comboMultiplier);
+            }
             //Debug.Log("cm " + comboMultiplier);
             //combo stuff
-            if(comboTimer > 0)
-            {
-                comboTimer -= Time.deltaTime;
-                if(comboTimer <= 0)
-                {
-                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboEnd(comboMultiplier);
-                    comboTimer = 0;
-                    comboMultiplier = 0;
-                }
-            }
+            if(comboBS)
+                comboBS.comboUpdate(comboTimer, comboTimeSet, comboMultiplier);
+
+
 
             //update vehicle or rider respectively, depending on state.
             switch (curState)
@@ -133,8 +131,15 @@ namespace Luminosity.IO
                     {
                         if (curVehicle.GetComponent<BasicVehicle>().broken)
                         {
+                            prevBroken = true;
+                            if (comboBS)
+                                comboBS.comboEnd(comboMultiplier);
                             comboMultiplier = 0;
                             comboTimer = 0;
+                        }
+                        else
+                        {
+                            prevBroken = false;
                         }
 
                         ExitVehicle();
@@ -147,7 +152,20 @@ namespace Luminosity.IO
                 //process input for air movement
                 case PlayerState.Rider:
 
-                    if(prevVehicleIntangibility > 0)
+                    //only countdown in air
+                    if (comboTimer > 0)
+                    {
+                        comboTimer -= Time.deltaTime;
+                        if (comboTimer <= 0)
+                        {
+                            if (comboBS)
+                                comboBS.comboEnd(comboMultiplier);
+                            comboTimer = 0;
+                            comboMultiplier = 0;
+                        }
+                    }
+
+                    if (prevVehicleIntangibility > 0)
                     {
                         prevVehicleIntangibility -= Time.deltaTime;
                         if(prevVehicleIntangibility < 0)
@@ -176,7 +194,15 @@ namespace Luminosity.IO
 
                         //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
                         SoundScript.PlaySound(playerSource, "Death");
-                        GameObject.Find("HUD").GetComponent<ButtonScripts>().GameOver();
+                        if (comboBS)
+                            comboBS.GameOver();
+
+                        //drop combo before cashing in for death
+                        comboMultiplier = 0;
+                        comboTimer = 0;
+                        if (comboBS)
+                            comboBS.comboEnd(comboMultiplier);
+            
 
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
@@ -189,7 +215,7 @@ namespace Luminosity.IO
                     if(curRider.goalCollider.collidersCount() > 0)
                     {
                         SoundScript.PlaySound(playerSource, "Win");
-                        GameObject.Find("HUD").GetComponent<ButtonScripts>().Win();
+                        comboBS.Win();
                     }
 
                     //input horizontal movement
@@ -278,15 +304,18 @@ namespace Luminosity.IO
                     comboTimer = comboTimeSet;
                 }
                 //start new combo
-                else if ((prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance)
+                else if ((prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance && !prevBroken)
                 {
-                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboStart();
+                    if (comboBS)
+                        comboBS.comboStart();
+                    comboMultiplier = 1;
                     comboTimer = comboTimeSet;
                 }
                 //drop combo b/c too close
                 else
                 {
-                    GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboEnd(comboMultiplier);
+                    if (comboBS)
+                        comboBS.comboEnd(comboMultiplier);
                     comboMultiplier = 0;
                     comboTimer = 0;
                 }
