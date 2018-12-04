@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour {
 
     public void resetScene()
     {
-
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().timeRemaining = GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().startTime;
         print("Resetting Scene");
         ResetCars();
         SpawnPlayer();

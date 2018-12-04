@@ -1563,7 +1563,7 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraEulerAngles.x
-      value: 55
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
@@ -1578,7 +1578,7 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraTrackSpeed
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
@@ -2347,6 +2347,11 @@ Prefab:
       propertyPath: VehicleCameraOffset.z
       value: -22
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -2626,6 +2631,11 @@ Prefab:
     - target: {fileID: 1840317728743740, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
       propertyPath: m_Name
       value: GeneratedBlock
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
@@ -2940,7 +2950,17 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraEulerAngles.x
-      value: 55
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraFollowSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraTrackSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
@@ -4483,6 +4503,11 @@ Prefab:
       propertyPath: VehicleCameraOffset.z
       value: -22
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -5479,6 +5504,11 @@ Prefab:
         type: 2}
       propertyPath: VehicleCameraOffset.z
       value: -22
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
@@ -7492,7 +7522,7 @@ Prefab:
     - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
         type: 2}
       propertyPath: m_playerOneDefault
-      value: 410c68e0bb7d4b4a9ce7068e7e283889
+      value: 06cd669440d0422a95f3e89bd3812515
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
@@ -8440,6 +8470,11 @@ Prefab:
         type: 2}
       propertyPath: VehicleCameraOffset.z
       value: -22
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
@@ -10536,6 +10571,16 @@ Prefab:
       propertyPath: VehicleCameraOffset.z
       value: -22
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraFollowSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraTrackSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -12223,6 +12268,11 @@ Prefab:
       propertyPath: m_Name
       value: GeneratedBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -12579,6 +12629,11 @@ Prefab:
       propertyPath: m_Name
       value: GeneratedBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -12689,7 +12744,7 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraEulerAngles.x
-      value: 55
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
@@ -12704,7 +12759,7 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraTrackSpeed
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
@@ -17673,6 +17728,21 @@ Prefab:
       propertyPath: VehicleCameraOffset.z
       value: -22
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraFollowSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraTrackSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -18474,12 +18544,12 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraTrackSpeed
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraFollowSpeed
-      value: 5
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
@@ -18948,6 +19018,11 @@ Prefab:
       propertyPath: m_Name
       value: GeneratedBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -19270,7 +19345,7 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraEulerAngles.x
-      value: 55
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
@@ -19285,7 +19360,7 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraTrackSpeed
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
@@ -20826,6 +20901,11 @@ Prefab:
       propertyPath: m_Name
       value: GeneratedBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraEulerAngles.x
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -21375,7 +21455,17 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: RiderCameraEulerAngles.x
-      value: 55
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraFollowSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: RiderCameraTrackSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}

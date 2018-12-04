@@ -47,26 +47,26 @@ public class ButtonScripts : MonoBehaviour {
 
     public void GameOver()
     {
-        pauseUI.SetActive(false);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        gameOverUI.SetActive(true);
+        //pauseUI.SetActive(false);
+        //Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.None;
+        //gameOverUI.SetActive(true);
     }
 
     public void Win()
     {
-        pauseUI.SetActive(false);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        winUI.SetActive(true);
-        gameOverUI.SetActive(false);
+        //pauseUI.SetActive(false);
+        //Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.None;
+        //winUI.SetActive(true);
+        //gameOverUI.SetActive(false);
     }
 
     public void comboUpdate(float time, float startTime, int multiplier)
     {
         comboCircle.GetComponent<Image>().fillAmount =  time / startTime;
         comboMultiText.text = (multiplier * scoreMultiplier).ToString() + " X COMBO!";
-        comboMultiText.fontSize = (int)(45f * (1f + (multiplier * 0.3f)));
+        comboMultiText.fontSize = (int)(45f * (1f + (multiplier * 0.2f)));
         comboTimerText.text = ((int)time).ToString() + " S";
     }
 
@@ -83,7 +83,7 @@ public class ButtonScripts : MonoBehaviour {
             GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().addTime(multiplier);
             Text bonustext = Instantiate(bonusPrefab, bonusPrefab.rectTransform.position, GameObject.FindGameObjectWithTag("HUD").transform.rotation) as Text;
             bonustext.transform.SetParent(this.transform, false);
-            bonustext.fontSize = (int)(45f * (1f + (multiplier * 0.4f)));
+            bonustext.fontSize = (int)(45f * (1f + (multiplier * 0.3f)));
             bonustext.text = "TIME EXTENDED!!! " + (multiplier).ToString() + "s";
             //comboUI.AddComponent<TextFade>();
             //comboUI.GetComponent<TextFade>().CanvasGroup = true;

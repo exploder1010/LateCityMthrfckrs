@@ -58,6 +58,7 @@ namespace Luminosity.IO
         // Use this for initialization
         void Start()
         {
+            Time.timeScale = 1f;
             //forwardMovement = true;
             //recentDirection = true;
             //previousVelocity = 0;
@@ -193,30 +194,40 @@ namespace Luminosity.IO
                     {
 
                         //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
-                        SoundScript.PlaySound(playerSource, "Death");
-                        if (comboBS)
-                            comboBS.GameOver();
+                        if (Time.timeScale == 1)
+                        {
+                            SoundScript.PlaySound(playerSource, "Death");
 
+                            if (comboBS)
+                                comboBS.GameOver();
+
+                            curState = PlayerState.Dead;
+
+                            curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
+
+                            mainCamera.ChangeFocus(curRagdoll.transform);
+                            //mainCamera.ChangeDistance(6f, 2f);
+                            curRider.destroyThis();
+                        }
+ 
                         //drop combo before cashing in for death
                         comboMultiplier = 0;
                         comboTimer = 0;
                         if (comboBS)
                             comboBS.comboEnd(comboMultiplier);
             
-
-                        curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
-                        curState = PlayerState.Dead;
-                        mainCamera.ChangeFocus(curRagdoll.transform);
-                        //mainCamera.ChangeDistance(6f, 2f);
-                        curRider.destroyThis();
                         break;
                     }
 
                     if(curRider.goalCollider.collidersCount() > 0)
                     {
+                        curRider.goalCollider.returnColliders()[0].transform.parent.Find("shatter1").gameObject.SetActive(true);
+                        curRider.goalCollider.returnColliders()[0].gameObject.SetActive(false);
+                        Time.timeScale = 0.1f;
                         SoundScript.PlaySound(playerSource, "Win");
                         comboBS.Win();
                     }
+
 
                     //input horizontal movement
                     curRider.inputHorz(InputManager.GetAxis("Horizontal"));
