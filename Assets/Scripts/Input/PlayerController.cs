@@ -67,7 +67,7 @@ namespace Luminosity.IO
         void Update()
         {
             GameObject.Find("HUD").GetComponent<ButtonScripts>().comboUpdate(comboTimer, comboTimeSet, comboMultiplier);
-            Debug.Log("cm " + comboMultiplier);
+            //Debug.Log("cm " + comboMultiplier);
             //combo stuff
             if(comboTimer > 0)
             {

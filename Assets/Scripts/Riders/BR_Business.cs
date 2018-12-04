@@ -25,6 +25,7 @@ public class BR_Business : BasicRider {
 	
 	// Update is called once per frame
 	void Update () {
+
 		
 	}
 
@@ -77,6 +78,7 @@ public class BR_Business : BasicRider {
     {
         if(curAbilityAmmo > 0)
         {
+            charAnim.SetBool("Special_Buisness", true);
             curAbilityAmmo--;
 
             //rb.velocity = prevVectorToAdd * maxSpeedThisJump * doubleJumpHorizontalModifier;

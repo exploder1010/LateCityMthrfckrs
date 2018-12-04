@@ -47,6 +47,9 @@ public class BasicRider : MonoBehaviour, IRider {
     protected Vector3 prevVectorToAdd;
     protected Vector3 horVelocityCheck;
     protected float maxSpeedThisJump;
+    protected float speed;
+    protected float InputDirection;
+    protected float turn;
 
     //movement variables
     public float airAccel = 30; //Rate at which player accelerates in air
@@ -97,7 +100,6 @@ public class BasicRider : MonoBehaviour, IRider {
             updateMovement();
         }
 
-
         updateAnimation();
 
         handleRoadCollision();
@@ -109,7 +111,6 @@ public class BasicRider : MonoBehaviour, IRider {
     //input rightwards and leftwards movement
     public virtual void inputHorz(float direction)
     {
-        //Debug.Log(direction);
         if (!horzAddDone)
         {
             horzAddDone = true;
@@ -119,6 +120,7 @@ public class BasicRider : MonoBehaviour, IRider {
             {
                 dontNormalize = true;
             }
+            InputDirection = direction;
         }
     }
 
@@ -169,6 +171,8 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if(input == 1 )
         {
+            Debug.Log("kick");
+            charAnim.SetBool("Special_Karate", true);
             rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
         }
     }
@@ -362,6 +366,10 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
         }
+
+        //Debug.Log(horVelocityCheck +"HorzVelcocity");
+        //get the speed for animation stuff
+        speed = horVelocityCheck.magnitude / 50f;
     }
     
     //move towards selected car
@@ -383,7 +391,7 @@ public class BasicRider : MonoBehaviour, IRider {
             ragdollUp = Vector3.up;
             RaycastHit hit;
             int layerMask = 1 << LayerMask.NameToLayer("Road");
-            Debug.DrawLine(transform.position - rb.velocity.normalized, transform.position - rb.velocity.normalized + rb.velocity.normalized * 5f, Color.red, 10f);
+            //Debug.DrawLine(transform.position - rb.velocity.normalized, transform.position - rb.velocity.normalized + rb.velocity.normalized * 5f, Color.red, 10f);
             if (Physics.Raycast(transform.position - rb.velocity.normalized, rb.velocity.normalized, out hit, 5f, layerMask))
             {
                // Debug.Log("hit");
@@ -497,6 +505,22 @@ public class BasicRider : MonoBehaviour, IRider {
     //---------------------------update animation:
     protected virtual void updateAnimation()
     {
+        //Debug.Log("Direction" + InputDirection);
+        if(InputDirection>0)
+        { turn = turn + .1f; }
+        if (InputDirection < 0)
+        { turn = turn - .1f; }
+        if((InputDirection == 0) && turn>0)
+        { turn = turn - .1f; }
+        if ((InputDirection == 0) && turn < 0)
+        { turn = turn + .1f; }
+        if(turn>2)
+        { turn = 2; }
+        if(turn<-2)
+        { turn = -2; }
+        //Debug.Log(turn);
+        charAnim.SetFloat("Turn", turn);
+        charAnim.SetFloat("Speed", speed);
         transform.LookAt(transform.position + rb.velocity);
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
     }
