@@ -13,7 +13,7 @@ public class ButtonScripts : MonoBehaviour {
     public Text comboMultiText;
     public Text comboTimerText;
     public Text bonusPrefab;
-    public int scoreMultiplier;
+    int scoreMultiplier = 1000;
 
 	// Use this for initialization
 	void Start () {
@@ -64,8 +64,8 @@ public class ButtonScripts : MonoBehaviour {
     public void comboUpdate(float time, float startTime, int multiplier)
     {
         comboUI.GetComponent<Image>().fillAmount =  time / startTime;
-        comboMultiText.text = multiplier.ToString();
-        comboTimerText.text = ((int)time).ToString();
+        comboMultiText.text = (multiplier * scoreMultiplier).ToString() + " X COMBO!";
+        comboTimerText.text = ((int)time).ToString() + " S";
     }
 
     public void comboStart()
@@ -75,12 +75,12 @@ public class ButtonScripts : MonoBehaviour {
 
     public void comboEnd(int multiplier)
     {
-        print(multiplier);
-        GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().addTime(scoreMultiplier * multiplier);
+        //print(multiplier);
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().addTime(multiplier);
         Text bonustext = Instantiate(bonusPrefab, new Vector3(233, 55, 0), GameObject.FindGameObjectWithTag("HUD").transform.rotation) as Text;
         bonustext.transform.SetParent(this.transform, false);
         bonustext.fontSize = 15 * multiplier;
-        bonustext.text = (scoreMultiplier * multiplier).ToString() + " seconds added!";
+        bonustext.text = "TIME EXTENDED!!! " + (multiplier).ToString() + " S";
         comboUI.SetActive(false);
         //comboUI.AddComponent<TextFade>();
         //comboUI.GetComponent<TextFade>().CanvasGroup = true;
