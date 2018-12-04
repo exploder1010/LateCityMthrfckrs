@@ -52,7 +52,8 @@ namespace Luminosity.IO
         int comboMultiplier = 1;
         float comboDistance = 50f;
         Vector3 prevComboPosition;
-        ButtonScripts comboBS; 
+        ButtonScripts comboBS;
+        bool prevBroken;
 
         // Use this for initialization
         void Start()
@@ -75,17 +76,7 @@ namespace Luminosity.IO
             if(comboBS)
                 comboBS.comboUpdate(comboTimer, comboTimeSet, comboMultiplier);
 
-            if(comboTimer > 0)
-            {
-                comboTimer -= Time.deltaTime;
-                if(comboTimer <= 0)
-                {
-                    if (comboBS)
-                        comboBS.comboEnd(comboMultiplier);
-                    comboTimer = 0;
-                    comboMultiplier = 0;
-                }
-            }
+
 
             //update vehicle or rider respectively, depending on state.
             switch (curState)
@@ -140,10 +131,15 @@ namespace Luminosity.IO
                     {
                         if (curVehicle.GetComponent<BasicVehicle>().broken)
                         {
+                            prevBroken = true;
                             if (comboBS)
                                 comboBS.comboEnd(comboMultiplier);
                             comboMultiplier = 0;
                             comboTimer = 0;
+                        }
+                        else
+                        {
+                            prevBroken = false;
                         }
 
                         ExitVehicle();
@@ -156,7 +152,20 @@ namespace Luminosity.IO
                 //process input for air movement
                 case PlayerState.Rider:
 
-                    if(prevVehicleIntangibility > 0)
+                    //only countdown in air
+                    if (comboTimer > 0)
+                    {
+                        comboTimer -= Time.deltaTime;
+                        if (comboTimer <= 0)
+                        {
+                            if (comboBS)
+                                comboBS.comboEnd(comboMultiplier);
+                            comboTimer = 0;
+                            comboMultiplier = 0;
+                        }
+                    }
+
+                    if (prevVehicleIntangibility > 0)
                     {
                         prevVehicleIntangibility -= Time.deltaTime;
                         if(prevVehicleIntangibility < 0)
@@ -187,6 +196,13 @@ namespace Luminosity.IO
                         SoundScript.PlaySound(playerSource, "Death");
                         if (comboBS)
                             comboBS.GameOver();
+
+                        //drop combo before cashing in for death
+                        comboMultiplier = 0;
+                        comboTimer = 0;
+                        if (comboBS)
+                            comboBS.comboEnd(comboMultiplier);
+            
 
                         curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
                         curState = PlayerState.Dead;
@@ -288,10 +304,11 @@ namespace Luminosity.IO
                     comboTimer = comboTimeSet;
                 }
                 //start new combo
-                else if ((prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance)
+                else if ((prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance && !prevBroken)
                 {
                     if (comboBS)
                         comboBS.comboStart();
+                    comboMultiplier = 1;
                     comboTimer = comboTimeSet;
                 }
                 //drop combo b/c too close
