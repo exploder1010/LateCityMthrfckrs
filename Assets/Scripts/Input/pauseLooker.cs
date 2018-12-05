@@ -28,22 +28,7 @@ namespace Luminosity.IO
             {
                 if (InputManager.GetButtonDown("Pause"))
                 {
-                    //print("hello");
-                    SoundScript.PlaySound(uiSource, "UI Click");
-
-                    if (pauseMenu.activeSelf == true)
-                    {
-                        pauseMenu.SetActive(false);
-                        Cursor.visible = false;
-                        Cursor.lockState = CursorLockMode.Locked;
-                    }
-
-                    else if (pauseMenu.activeSelf == false)
-                    {
-                        pauseMenu.SetActive(true);
-                        Cursor.visible = true;
-                        Cursor.lockState = CursorLockMode.None;
-                    }
+                    Pause();
                 }
             }
 
@@ -51,6 +36,27 @@ namespace Luminosity.IO
             {
                 SoundScript.PlaySound(uiSource, "UI Click");
                 GameController.instance.resetScene();
+            }
+        }
+
+        public void Pause()
+        {
+            SoundScript.PlaySound(uiSource, "UI Click");
+
+            if (pauseMenu.activeSelf == true)
+            {
+                Time.timeScale = 1;
+                pauseMenu.SetActive(false);
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+
+            else if (pauseMenu.activeSelf == false)
+            {
+                Time.timeScale = 0;
+                pauseMenu.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }
