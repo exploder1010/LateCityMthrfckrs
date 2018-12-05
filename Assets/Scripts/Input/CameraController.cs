@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate () {
 
-        if (focus != null)
+        if (focus != null && Time.timeScale == 1)
         {
 
             float dist = 100f;

@@ -21,7 +21,9 @@ public class AiController : MonoBehaviour {
     private bool stopCar;
     private float prevHitDistance = float.MaxValue;
     private List<AxleInfo> axleInfos;
-    
+
+    float refreshTimer;
+    float refreshTimeSet = 0.3f;
 
     // Use this for initialization
     void Start () {
@@ -36,6 +38,8 @@ public class AiController : MonoBehaviour {
 	void FixedUpdate () {
         if (!stopUpdate)
         {
+            refreshTimer -= Time.fixedDeltaTime;
+
             if( vehicleScript != null && vehicleScript.player)
             {
                 stopUpdate = true; //temp solution
@@ -56,7 +60,8 @@ public class AiController : MonoBehaviour {
                 //if (DebugThis)
                 //    Debug.DrawRay(pos, -transform.up * 1000f, Color.red, 0.1f);
                 //update waypoint queues
-                if (Physics.Raycast(pos, -transform.up, out hit, 1000f))//, 1 << LayerMask.NameToLayer("Road")))
+                
+                if (refreshTimer <= 0  && Physics.Raycast(pos, -transform.up, out hit, 1000f))//, 1 << LayerMask.NameToLayer("Road")))
                 {
                     //if (DebugThis)
                     //{
@@ -101,7 +106,7 @@ public class AiController : MonoBehaviour {
                 
                 //if(DebugThis)
                 //    Debug.DrawRay(pos, transform.forward * dist, Color.red, 0.1f);
-                if (Physics.Raycast(pos, transform.forward, out hit, dist, layerMask))
+                if (refreshTimer <= 0 && Physics.Raycast(pos, transform.forward, out hit, dist, layerMask))
                 {
                     
                     float distance = hit.distance;
@@ -183,6 +188,11 @@ public class AiController : MonoBehaviour {
                 else
                 {
                     vehicleScript.inputHorz(0);
+                }
+
+                if (refreshTimer <= 0)
+                {
+                    refreshTimer = refreshTimeSet;
                 }
             }
         }

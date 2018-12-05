@@ -27,8 +27,11 @@ public class GameController : MonoBehaviour {
     GameObject startVehicleInstance;
     GameObject mainCamera;
 
-    GameObject[] OriginalVehicles;
-    GameObject[] SpawnedVehicles;
+    GameObject HUD;
+    GameObject HUDInstance;
+
+    GameObject[] OriginalResetObjects;
+    GameObject[] InstanceResetObjects;
 
     private void OnEnable()
     {
@@ -47,18 +50,23 @@ public class GameController : MonoBehaviour {
   
     void InitializeScene(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name != "MainMenu")
+        {
+            print("Finding Vehicles");
+            OriginalResetObjects = GameObject.FindGameObjectsWithTag("ResetInScene");
+            InstanceResetObjects = new GameObject[OriginalResetObjects.Length];
+            foreach (GameObject v in OriginalResetObjects)
+                v.SetActive(false);
 
-        print("Finding Vehicles");
-        OriginalVehicles = GameObject.FindGameObjectsWithTag("Vehicle");
-        SpawnedVehicles = new GameObject[OriginalVehicles.Length];
-        foreach (GameObject v in OriginalVehicles)
-            v.SetActive(false);
+            HUD = GameObject.FindGameObjectWithTag("HUD");
+            HUD.SetActive(false);
 
-        SpawnStartCar();
+            SpawnStartCar();
 
-        mainCamera = Instantiate(mainCamera_Prefab);
+            mainCamera = Instantiate(mainCamera_Prefab);
 
-        resetScene();
+            resetScene();
+        }
     }
 
     void SpawnStartCar()
@@ -74,26 +82,29 @@ public class GameController : MonoBehaviour {
 
     public void resetScene()
     {
-
         print("Resetting Scene");
-        ResetCars();
+        ResetObjects();
         SpawnPlayer();
     }
 
-    private void ResetCars()
+    private void ResetObjects()
     {
         // Destroy and Instantiate scene cars
-        print("Resetting vehicles");
-        for (int i = 0; i < SpawnedVehicles.Length; i++)
+        print("Resetting Objects");
+        for (int i = 0; i < InstanceResetObjects.Length; i++)
         {
-            GameObject.Destroy(SpawnedVehicles[i]);
+            GameObject.Destroy(InstanceResetObjects[i]);
         }
-        SpawnedVehicles = new GameObject[OriginalVehicles.Length];
-        for (int i = 0; i < OriginalVehicles.Length; i++)
+        InstanceResetObjects = new GameObject[OriginalResetObjects.Length];
+        for (int i = 0; i < OriginalResetObjects.Length; i++)
         {
-            SpawnedVehicles[i] = Instantiate(OriginalVehicles[i]);
-            SpawnedVehicles[i].SetActive(true);
+            InstanceResetObjects[i] = Instantiate(OriginalResetObjects[i]);
+            InstanceResetObjects[i].SetActive(true);
         }
+
+        Destroy(HUDInstance);
+        HUDInstance = Instantiate(HUD);
+        HUDInstance.SetActive(true);
 
         // Destroy and Instantiate start car
         GameObject.Destroy(startVehicleInstance);
