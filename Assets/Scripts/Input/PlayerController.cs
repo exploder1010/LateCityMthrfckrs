@@ -86,7 +86,7 @@ namespace Luminosity.IO
                 case PlayerState.Vehicle:
 
                     //---------------------------------------------------------speed
-                    Speedometer.ShowSpeed(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude, 0, 100);
+                    //Speedometer.ShowSpeed(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude, 0, 100);
 
                     //speed > boost threshold
                     if(curVehicle.transform.GetComponent<Rigidbody>().velocity.magnitude > curVehicle.returnActualMaxSpeed() * selectedCharacter_Prefab.GetComponent<BasicRider>().boostThreshold )

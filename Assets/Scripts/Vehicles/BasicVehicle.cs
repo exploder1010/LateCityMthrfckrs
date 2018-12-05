@@ -139,7 +139,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 //constrain speed
                 constrainMaxSpeed();
 
-                Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
+                //Speedometer.ShowSpeed(rb.velocity.magnitude, 0, 100);
 
 
             }
