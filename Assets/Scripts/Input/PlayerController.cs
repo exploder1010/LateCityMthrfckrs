@@ -30,7 +30,6 @@ namespace Luminosity.IO
 
         //references to audio sources
         public AudioSource playerSource;
-        public AudioSource musicSource;
         public AudioSource ambientSource;
 
         //states
