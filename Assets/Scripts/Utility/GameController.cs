@@ -32,7 +32,10 @@ public class GameController : MonoBehaviour {
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += InitializeScene;
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            SceneManager.sceneLoaded += InitializeScene;
+        }
     }
 
     // Use this for initialization

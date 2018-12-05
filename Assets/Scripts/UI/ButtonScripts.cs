@@ -18,7 +18,10 @@ public class ButtonScripts : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        comboUI.SetActive(false);
+        if(comboUI)
+        {
+            comboUI.SetActive(false);
+        }
 	}
 	
 	// Update is called once per frame
