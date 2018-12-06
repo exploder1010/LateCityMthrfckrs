@@ -14,6 +14,7 @@ public class CustomWindow : EditorWindow
     private string localPath = "Assets/Prefabs/LevelBlocks/";
     private string prefabName = "";
     private string increaseAmount = "";
+    private string increasePitch = "";
     private bool is3D = false;
 
     private GameObject lastOrbUsed;
@@ -88,11 +89,12 @@ public class CustomWindow : EditorWindow
         }
         else if (selectedObject.tag.Contains("LevelBlock"))
         {
-            Option_Rotate();
+            Option_Rotate(selectedObject);
             Option_RepeatAction();
             Option_Replace(levelEditor, selectedObject);
             Option_CreateAtOrb(selectedObject);
             Option_RaiseBlock(selectedObject);
+            Option_Pitch(selectedObject);
         }
         else if (selectedObject.name.Contains("LevelEditor3D"))
         {
@@ -107,6 +109,7 @@ public class CustomWindow : EditorWindow
             EditorGUILayout.LabelField("Please select an orb, then reselect this window");
         }
     }
+    
     private void Option_Convert(GameObject levelEditor)
     {
         GUILayout.Label("Convert 2D prefab to 3D");
@@ -123,17 +126,81 @@ public class CustomWindow : EditorWindow
         {
             DestroyImmediate(levelEditor);
             GameObject[] oldBlocks = GameObject.FindGameObjectsWithTag("LevelBlock");
-            GameObject blank = new GameObject();
-            blank.name = "Old Blocks";
+           
             foreach (GameObject block in oldBlocks)
             {
-                block.transform.parent = blank.transform;
                 block.tag = "Untagged";
+                GameObject empty = new GameObject();
+                empty.name = "GeneratedBlock";
+                empty.tag = "LevelBlock";
+                Vector3 pos = block.transform.position;
+                Debug.Log(pos);
+                pos.y += 30;
+                empty.transform.position = pos;
+                block.transform.parent = empty.transform;
+
             }
-            DestroyImmediate(GameObject.Find("LevelBlocks"));
             GameObject newEditor = Resources.Load<GameObject>("Prefabs/LevelEditor3D");
             newEditor = Instantiate(newEditor);
             newEditor.name = "LevelEditor3D";
+        }
+    }
+    private void Option_Pitch(GameObject selectedObject)
+    {
+        bool pitch = true; //only do pitch change if all children can change
+        foreach (Transform child in selectedObject.transform)
+        {
+            LevelBlock script = child.GetComponent<LevelBlock>();
+            if (script == null || !script.Pitch)
+            {
+                pitch = false;
+            }
+        }
+        if (pitch)
+        {
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("Change Pitch");
+            GUILayout.BeginHorizontal();
+            increasePitch = GUILayout.TextField(increasePitch, GUILayout.Width(100));
+            float increaseInt = 0;
+            if (increasePitch.Contains("%"))
+            {
+                float.TryParse(increasePitch.Replace("%", ""), out increaseInt);
+            }
+            else
+            {
+                float.TryParse(increasePitch, out increaseInt);
+            }
+
+            if (GUILayout.Button("Change Pitch") && increaseInt != 0)
+            {
+                EditorUtility.DisplayDialog("SORRY",
+                        "This feature is still a work in progress. I will update you when it is complete",
+                        "OK");
+                ////rotate
+                //Vector3 byAngle = new Vector3(increaseInt, 0, 0);
+
+                //foreach (Transform child in selectedObject.transform)
+                //{
+                //    if (increaseInt + child.eulerAngles.x > 45)
+                //        increaseInt = 45 - child.eulerAngles.x;
+                //    Vector3 scale = child.localScale;
+                //    Vector3 pos = child.position;
+                //    float cTheta = Mathf.Cos(increaseInt * Mathf.PI / 180);
+                //    float h = Mathf.Abs(child.eulerAngles.x) < Mathf.Abs(byAngle.x) ? scale.z / cTheta : scale.z * cTheta;
+                //    float o = Mathf.Tan(increaseInt * Mathf.PI / 180) * 60;
+
+                //    scale.z = h;
+                //    pos.y += o/2;
+
+                //    child.localScale = scale;
+                //    child.position = pos;
+                //    Quaternion toAngle = Quaternion.Euler(child.eulerAngles + byAngle);
+                //    child.rotation = toAngle;
+                //}
+                increasePitch = "";
+            }
+            GUILayout.EndHorizontal();
         }
     }
     private void Option_RaiseBlock(GameObject selectedObject)
@@ -256,13 +323,13 @@ public class CustomWindow : EditorWindow
             InstantiatePrimitive(selectedObject);
         }
     }
-    private void Option_Rotate()
+    private void Option_Rotate(GameObject selectedObject)
     {
         if (GUILayout.Button("Rotate"))
         {
             Vector3 byAngle = new Vector3(0, 90, 0);
-            Quaternion toAngle = Quaternion.Euler(Selection.activeTransform.eulerAngles + byAngle);
-            Selection.activeTransform.rotation = toAngle;
+            Quaternion toAngle = Quaternion.Euler(selectedObject.transform.eulerAngles + byAngle);
+            selectedObject.transform.rotation = toAngle;
         }
     }
 
