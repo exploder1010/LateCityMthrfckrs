@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 23851886642410390}
   - component: {fileID: 64572176348136968}
   - component: {fileID: 65176021901223184}
+  - component: {fileID: 205471053354543012}
   m_Layer: 11
   m_Name: MuscleCar
   m_TagString: Untagged
@@ -10873,3 +10874,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!205 &205471053354543012
+LODGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140857003849020}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LODs:
+  - screenRelativeHeight: 0.851071
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
