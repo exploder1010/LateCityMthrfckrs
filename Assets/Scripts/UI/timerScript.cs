@@ -20,7 +20,11 @@ public class timerScript : MonoBehaviour {
     void Update()
     {
         //if( !GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>().win)
-        timeRemaining -= Time.deltaTime;
+        if(Time.timeScale == 1)
+        {
+            timeRemaining -= Time.deltaTime;
+
+        }
         int minutes = (int)timeRemaining / 60;
         int seconds = (int)timeRemaining % 60;
 

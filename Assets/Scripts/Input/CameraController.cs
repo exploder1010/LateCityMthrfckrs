@@ -190,9 +190,9 @@ public class CameraController : MonoBehaviour
                 case CameraState.Win:
                     
                         Debug.Log("win");
-                        curOffset = focus.position + focus.forward;
+                        //curOffset = focus.position + focus.forward;
 
-                        transform.LookAt(focus);
+                        //transform.LookAt(focus);
 
                         //Quaternion rot = transform.rotation;
                         //rot.eulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
@@ -246,7 +246,7 @@ public class CameraController : MonoBehaviour
     {
         Debug.Log(state);
         //forward = newFocus.rotation;
-        if (focus != newFocus)
+        if (focus != newFocus || state != 0)
         {
             if(focus != null)
             {
@@ -267,8 +267,10 @@ public class CameraController : MonoBehaviour
             }
             else if (focus.GetComponent<BasicRider>())
             {
+                Debug.Log(state);
                 if(state == 1f)
                 {
+                    Debug.Log("good");
                     curState = CameraState.Win;
                 }
                 else

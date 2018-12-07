@@ -244,7 +244,7 @@ namespace Luminosity.IO
                         curRider.goalCollider.returnColliders()[0].transform.parent.Find("shatter1").gameObject.SetActive(true);
                         curRider.goalCollider.returnColliders()[0].gameObject.SetActive(false);
                         Time.timeScale = 0.1f;
-                        mainCamera.ChangeFocus(curRider.transform, 1);
+                        //mainCamera.ChangeFocus(curRider.transform, 1);
                         curRider.off = true;
                         SoundScript.PlaySound(playerSource, "Win");
                         if (comboBS)
