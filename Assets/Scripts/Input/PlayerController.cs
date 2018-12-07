@@ -66,6 +66,7 @@ namespace Luminosity.IO
 
         public void CleanDestroy()
         {
+            Debug.Log("cleandestroy");
             if (curBoostEffect)
             {
                 Destroy(curBoostEffect);

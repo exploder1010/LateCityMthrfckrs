@@ -6,9 +6,6 @@ public class BR_Business : BasicRider {
 
     //business specific variables
 
-    //references set in editor
-    public GameObject briefcasePrefab;
-
     //double jump variables
     protected float doubleJumpTimer;
     protected float doubleJumpVelocity;
@@ -78,6 +75,13 @@ public class BR_Business : BasicRider {
     {
         if(curAbilityAmmo > 0)
         {
+            if (briefcasePrefab)
+            {
+                GameObject bc = Instantiate(briefcasePrefab, briefcasePrefab.transform.position, briefcasePrefab.transform.rotation);
+                bc.SetActive(true);
+                bc.transform.GetComponent<Rigidbody>().velocity = new Vector3 (rb.velocity.x, -5f, rb.velocity.z) * 0.9f;
+            }
+            
             charAnim.SetBool("Special_Buisness", true);
             curAbilityAmmo--;
 

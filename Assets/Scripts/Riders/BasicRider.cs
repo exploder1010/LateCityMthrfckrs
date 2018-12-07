@@ -14,6 +14,7 @@ public class BasicRider : MonoBehaviour, IRider {
     bool cameraLockOn = false;
 
     //references to set in prefab
+    public GameObject briefcasePrefab;
     public Rigidbody rb;
     public Animator charAnim;
     public GameObject ragdollPrefab;
