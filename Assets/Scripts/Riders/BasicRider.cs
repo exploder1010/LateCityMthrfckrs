@@ -10,7 +10,7 @@ public class BasicRider : MonoBehaviour, IRider {
     //make sure jump boost threshold is visible
     //make sure car weight gets polished
     //misc polishing
-
+    public bool off;
     bool cameraLockOn = false;
 
     //references to set in prefab
@@ -106,6 +106,10 @@ public class BasicRider : MonoBehaviour, IRider {
         handleRoadCollision();
         handleVehicleCollision();
 
+        if (off)
+        {
+            rb.velocity = Vector3.zero;
+        }
     }
 
     //---------------------------input:

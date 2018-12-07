@@ -24,6 +24,7 @@ namespace Luminosity.IO
         GameObject curBoostEffect;
         bool prevBoostEffect;
 
+        bool win;
 
         //reference to camera
         CameraController mainCamera;
@@ -72,7 +73,7 @@ namespace Luminosity.IO
             }
             if (curRagdoll)
             {
-                Destroy(curRagdoll);
+                Destroy(curRagdoll.gameObject);
             }
             if (curRider)
             {
@@ -87,6 +88,7 @@ namespace Luminosity.IO
         {
             if(comboBS == null && GameObject.Find("HUD") && GameObject.Find("HUD").GetComponent<ButtonScripts>())
             {
+                Debug.Log("found");
                 comboBS = GameObject.Find("HUD").GetComponent<ButtonScripts>(); //.comboUpdate(comboTimer, comboTimeSet, comboMultiplier);
             }
             //Debug.Log("cm " + comboMultiplier);
@@ -222,7 +224,7 @@ namespace Luminosity.IO
 
                             curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
 
-                            mainCamera.ChangeFocus(curRagdoll.transform);
+                            mainCamera.ChangeFocus(curRagdoll.transform, 0);
                             //mainCamera.ChangeDistance(6f, 2f);
                             curRider.destroyThis();
                         }
@@ -236,14 +238,17 @@ namespace Luminosity.IO
                         break;
                     }
 
-                    if(curRider.goalCollider.collidersCount() > 0)
+                    if(!win && curRider.goalCollider.collidersCount() > 0)
                     {
+                        win = true;
                         curRider.goalCollider.returnColliders()[0].transform.parent.Find("shatter1").gameObject.SetActive(true);
                         curRider.goalCollider.returnColliders()[0].gameObject.SetActive(false);
                         Time.timeScale = 0.1f;
-                        //SoundScript.PlaySound(playerSource, "Win");
-                        //if (comboBS)
-                        //    comboBS.Win();
+                        mainCamera.ChangeFocus(curRider.transform, 1);
+                        curRider.off = true;
+                        SoundScript.PlaySound(playerSource, "Win");
+                        if (comboBS)
+                            comboBS.Win();
                     }
 
 
@@ -366,7 +371,7 @@ namespace Luminosity.IO
                     curVehicle.initializeSpeed(0, 0, false);
                 }
 
-                mainCamera.ChangeFocus(curVehicle.transform);
+                mainCamera.ChangeFocus(curVehicle.transform, 0);
                 //mainCamera.ChangeDistance(10f, 2f);
             }
             else
@@ -423,7 +428,7 @@ namespace Luminosity.IO
                     curRider.externalStart(mainCamera.transform);
                 }
 
-                mainCamera.ChangeFocus(curRider.transform);
+                mainCamera.ChangeFocus(curRider.transform, 0);
                 //mainCamera.ChangeDistance(12f, 2f);
 
                 prevVehicle = curVehicle.gameObject;

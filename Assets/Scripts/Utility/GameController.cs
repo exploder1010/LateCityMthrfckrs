@@ -27,8 +27,8 @@ public class GameController : MonoBehaviour {
     GameObject startVehicleInstance;
     GameObject mainCamera;
 
-    GameObject HUD;
-    GameObject HUDInstance;
+    //GameObject HUD;
+    //GameObject HUDInstance;
 
     GameObject[] OriginalResetObjects;
     GameObject[] InstanceResetObjects;
@@ -58,8 +58,9 @@ public class GameController : MonoBehaviour {
             foreach (GameObject v in OriginalResetObjects)
                 v.SetActive(false);
 
-            HUD = GameObject.FindGameObjectWithTag("HUD");
-            HUD.SetActive(false);
+            //HUD = GameObject.FindGameObjectWithTag("HUD");
+            //HUD.SetActive(false);
+
 
             SpawnStartCar();
 
@@ -102,9 +103,13 @@ public class GameController : MonoBehaviour {
             InstanceResetObjects[i].SetActive(true);
         }
 
-        Destroy(HUDInstance);
-        HUDInstance = Instantiate(HUD);
-        HUDInstance.SetActive(true);
+        if (GameObject.FindGameObjectWithTag("HUD"))
+        {
+            GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().timeRemaining = GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().startTime;
+        }
+        //Destroy(HUDInstance);
+        //HUDInstance = Instantiate(HUD);
+        //HUDInstance.SetActive(true);
 
         // Destroy and Instantiate start car
         GameObject.Destroy(startVehicleInstance);
@@ -122,6 +127,7 @@ public class GameController : MonoBehaviour {
 
         curPlayerController = GameObject.Instantiate(playerController_Prefab, Vector3.zero, Quaternion.identity).transform.GetComponent<PlayerController>();
         curPlayerController.SetCamera(mainCamera.GetComponent<CameraController>());
+        mainCamera.GetComponent<CameraController>().ResetFocus();
 
         curPlayerController.SelectRider(selectedRider_Prefab);
 
