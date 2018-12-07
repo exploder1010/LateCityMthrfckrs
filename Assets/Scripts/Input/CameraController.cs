@@ -244,6 +244,7 @@ public class CameraController : MonoBehaviour
 
     public void ChangeFocus(Transform newFocus, int state)
     {
+        Debug.Log(state);
         //forward = newFocus.rotation;
         if (focus != newFocus)
         {

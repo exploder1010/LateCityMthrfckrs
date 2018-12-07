@@ -2489,14 +2489,13 @@ GameObject:
   - component: {fileID: 4260828900981294}
   - component: {fileID: 135108692748351880}
   - component: {fileID: 114676964478064052}
-  - component: {fileID: 54921010798367714}
   m_Layer: 10
   m_Name: LockOnCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1995083272217306
 GameObject:
   m_ObjectHideFlags: 1
@@ -5077,21 +5076,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!54 &54921010798367714
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1994704568749096}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &65554664923086374
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -5211,7 +5195,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1994704568749096}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e9b8549b7ef71b4ca33b5d8cbc52611, type: 3}
   m_Name: 
@@ -5228,6 +5212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f7c896099b6884084d04132e201423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  off: 0
   rb: {fileID: 54512190633680160}
   charAnim: {fileID: 95530733415878374}
   ragdollPrefab: {fileID: 1279109049040664}
@@ -5285,7 +5270,7 @@ SphereCollider:
   m_GameObject: {fileID: 1994704568749096}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0, y: 0.67, z: 0}
@@ -5299,7 +5284,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.6
   m_Center: {x: 0, y: 0.67, z: 0}
 --- !u!135 &135454133938491350
 SphereCollider:
@@ -5323,7 +5308,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.3
+  m_Radius: 1.6
   m_Center: {x: 0, y: 0.67, z: 0}
 --- !u!135 &135667792158942722
 SphereCollider:
