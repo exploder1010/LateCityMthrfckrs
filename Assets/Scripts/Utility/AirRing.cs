@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class AirRing : MonoBehaviour {
 
+    public int timeExtend = 5;
     public Text textPrefab;
     public GameObject particlePrefab;
     public float speed = 20f;
@@ -32,11 +33,11 @@ public class AirRing : MonoBehaviour {
         {
             if(done == false)
             {
-                GameObject.FindGameObjectWithTag("HUD").transform.GetComponent<timerScript>().addTime(10);
+                GameObject.FindGameObjectWithTag("HUD").transform.GetComponent<timerScript>().addTime(timeExtend);
                 Text bonustext = Instantiate(textPrefab, new Vector3(233, 55, 0), GameObject.FindGameObjectWithTag("HUD").transform.rotation) as Text;
                 bonustext.transform.SetParent(GameObject.FindGameObjectWithTag("HUD").transform, false);
                 bonustext.fontSize = 50;
-                bonustext.text = "10 seconds added!";
+                bonustext.text = "TIME EXTENDED: " + timeExtend + " S!!!";
                 done = true;
                 airEffect();
             }

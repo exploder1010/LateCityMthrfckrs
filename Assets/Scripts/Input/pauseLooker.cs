@@ -8,7 +8,7 @@ namespace Luminosity.IO
 {
     public class pauseLooker : MonoBehaviour
     {
-
+        float prevTime;
         public GameObject pauseMenu;
         public GameObject winMenu;
         public GameObject gameOverMenu;
@@ -37,6 +37,7 @@ namespace Luminosity.IO
                 SoundScript.PlaySound(uiSource, "UI Click");
                 GameController.instance.resetScene();
             }
+            
         }
 
         public void Pause()
@@ -45,7 +46,7 @@ namespace Luminosity.IO
 
             if (pauseMenu.activeSelf == true)
             {
-                Time.timeScale = 1;
+                Time.timeScale = prevTime;
                 pauseMenu.SetActive(false);
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
@@ -53,6 +54,7 @@ namespace Luminosity.IO
 
             else if (pauseMenu.activeSelf == false)
             {
+                prevTime = Time.timeScale;
                 Time.timeScale = 0;
                 pauseMenu.SetActive(true);
                 Cursor.visible = true;
