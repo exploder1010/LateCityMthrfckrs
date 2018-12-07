@@ -55,6 +55,8 @@ namespace Luminosity.IO
         ButtonScripts comboBS;
         bool prevBroken;
 
+        float deathTimer = 4f;
+
         // Use this for initialization
         void Start()
         {
@@ -251,6 +253,10 @@ namespace Luminosity.IO
                         if (comboBS)
                             comboBS.Win();
                     }
+                    if (win)
+                    {
+                        updateReset();
+                    }
 
 
                     //input horizontal movement
@@ -306,6 +312,8 @@ namespace Luminosity.IO
 
                 case PlayerState.Dead:
 
+                    updateReset();
+
                     break;
 
                 default:
@@ -315,6 +323,36 @@ namespace Luminosity.IO
 
         }
 
+        void updateReset()
+        {
+            if(Time.timeScale != 0)
+            {
+                if (deathTimer > 2f)
+                {
+
+                    deathTimer -= Time.deltaTime / Time.timeScale;
+                }
+                if (curRagdoll && curRagdoll.velocity.magnitude <= 3f)
+                {
+
+                    deathTimer -= Time.deltaTime / Time.timeScale;
+                }
+                else if (!curRagdoll && deathTimer <= 2f)
+                {
+
+                    deathTimer -= Time.deltaTime / Time.timeScale;
+                }
+
+                if (deathTimer <= 0)
+                {
+
+                    GameController.instance.resetScene();
+
+                    //deathTimer = 4f;
+                }
+            }
+        
+        }
 
         public void SetCamera(CameraController newCamera)
         {
