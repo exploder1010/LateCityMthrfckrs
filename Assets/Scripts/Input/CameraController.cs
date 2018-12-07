@@ -10,8 +10,9 @@ public class CameraController : MonoBehaviour
 
     private Transform focus;
     
-    private Vector3 targetPosition;
+    //private Vector3 targetPosition;
     private Vector3 curOffset;
+    private Vector3 curEuler;
 
     private Vector3 targetEulerAngles;
 
@@ -20,8 +21,8 @@ public class CameraController : MonoBehaviour
 
     private float deathZoomMax = 3f;
     private float deathZoomMin = 12f;
-    private float deathZoomFollow = 18f;
-    private float deathZoomTrack = 8f;
+    private float deathZoomFollow = 30;
+    private float deathZoomTrack = 100;
     private float deathZoom;
 
     private Vector3 prevFocusPos;
@@ -35,6 +36,16 @@ public class CameraController : MonoBehaviour
     // Use this for initialization
     void Start () {
         //forward = new Quaternion(0, 0, 0, 0);
+       // ResetFocus();
+        curOffset = Vector3.zero;
+        curLBI = null;
+    }
+
+    public void ResetFocus()
+    {
+        focus = null;
+        curOffset = Vector3.zero;
+        curLBI = null;
     }
 	
 	// Update is called once per frame
@@ -77,11 +88,32 @@ public class CameraController : MonoBehaviour
                 case CameraState.Vehicle:
                     if (curLBI)
                     {
-                        targetEulerAngles =  curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
-                        targetPosition = focus.transform.position  + curLBI.transform.rotation * curLBI.VehicleCameraOffset;
-                        curOffset = curLBI.transform.rotation * curLBI.VehicleCameraOffset;
+                        Vector3 modifiedFocus = focus.position + curLBI.transform.rotation * curLBI.VehicleCameraOffset;
 
-                        updateActualMovement( curLBI.VehicleCameraFollowSpeed, curLBI.VehicleCameraTrackSpeed);
+                        if (curOffset == Vector3.zero)
+                        {
+                            curOffset = modifiedFocus;
+                            transform.eulerAngles = curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                        }
+                        else
+                        {
+                            Vector3 dir = (modifiedFocus - transform.position).normalized * Mathf.Min((modifiedFocus - transform.position).magnitude, 1);
+
+                            curOffset += dir * curLBI.VehicleCameraFollowSpeed * Time.deltaTime;
+
+
+                            Quaternion rot = transform.rotation;
+                            rot.eulerAngles = curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, curLBI.VehicleCameraTrackSpeed * Time.deltaTime);
+
+                        }
+
+
+                        //targetEulerAngles =  curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                        //targetPosition = focus.transform.position  + curLBI.transform.rotation * curLBI.VehicleCameraOffset;
+                        //curOffset = curLBI.transform.rotation * curLBI.VehicleCameraOffset;
+
+                        //updateActualMovement( curLBI.VehicleCameraFollowSpeed, curLBI.VehicleCameraTrackSpeed);
                     }
 
                     break;
@@ -89,12 +121,33 @@ public class CameraController : MonoBehaviour
                 case CameraState.Rider:
                     if (curLBI)
                     {
-                        targetEulerAngles =  curLBI.RiderCameraEulerAngles + new Vector3(0,curLBI.transform.eulerAngles.y,0);
-                        targetPosition = focus.transform.position  + curLBI.transform.rotation * curLBI.RiderCameraOffset;
-                        curOffset = curLBI.transform.rotation * curLBI.RiderCameraOffset;
+                        Vector3 modifiedFocus = focus.position + curLBI.transform.rotation * curLBI.RiderCameraOffset;
+
+                        if (curOffset == Vector3.zero)
+                        {
+                            curOffset = modifiedFocus;
+                            transform.eulerAngles = curLBI.RiderCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                        }
+                        else
+                        {
+                            Vector3 dir = (modifiedFocus - transform.position).normalized * Mathf.Min((modifiedFocus - transform.position).magnitude, 1);
+
+                            curOffset += dir * curLBI.RiderCameraFollowSpeed * Time.deltaTime;
 
 
-                        updateActualMovement(curLBI.RiderCameraFollowSpeed, curLBI.RiderCameraTrackSpeed);
+                            Quaternion rot = transform.rotation;
+                            rot.eulerAngles = curLBI.RiderCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, curLBI.RiderCameraTrackSpeed * Time.deltaTime);
+
+                        }
+
+
+                        //targetEulerAngles =  curLBI.RiderCameraEulerAngles + new Vector3(0,curLBI.transform.eulerAngles.y,0);
+                        //targetPosition = focus.transform.position  + curLBI.transform.rotation * curLBI.RiderCameraOffset;
+                        //curOffset = curLBI.transform.rotation * curLBI.RiderCameraOffset;
+
+
+                        //updateActualMovement(curLBI.RiderCameraFollowSpeed, curLBI.RiderCameraTrackSpeed);
                     }
 
                     break;
@@ -102,18 +155,28 @@ public class CameraController : MonoBehaviour
                 case CameraState.Dead:
                     if (curLBI)
                     {
-                        //deathZoom -= Time.deltaTime;
-                        //deathZoom = Mathf.Max(deathZoom, deathZoomMin);
-
                         deathZoom += Time.deltaTime;
                         deathZoom = Mathf.Min(deathZoom, deathZoomMin);
 
-                        //transform.LookAt(new Vector3 (targetPosition.x, focus.position.y, targetPosition.z) + curLBI.transform.forward * 0.3f);
-                        targetEulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
-                        targetPosition = focus.transform.position + Vector3.up * deathZoom  -curLBI.transform.forward * 0.3f;
-                        curOffset = Vector3.up;
+                        Vector3 modifiedFocus = focus.position + Vector3.up * deathZoom;
 
-                        updateActualMovement(deathZoomFollow, deathZoomTrack);
+                        Vector3 dir = (modifiedFocus - transform.position).normalized * Mathf.Min((modifiedFocus - transform.position).magnitude, 1);
+
+                        curOffset += dir * deathZoomFollow * Time.deltaTime;
+
+
+                        Quaternion rot = transform.rotation;
+                        rot.eulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, deathZoomTrack * Time.deltaTime);
+
+                        //deathZoom += Time.deltaTime;
+                        //deathZoom = Mathf.Min(deathZoom, deathZoomMin);
+
+                        //targetEulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
+                        //targetPosition = focus.transform.position + Vector3.up * deathZoom  -curLBI.transform.forward * 0.3f;
+                        //curOffset = Vector3.up;
+
+                        //updateActualMovement(deathZoomFollow, deathZoomTrack);
                     }
 
                     break;
@@ -123,7 +186,7 @@ public class CameraController : MonoBehaviour
                     break;
             }
 
-            
+            transform.position = focus.position + curOffset;
  
         }
     }
@@ -131,22 +194,22 @@ public class CameraController : MonoBehaviour
     public void updateActualMovement(float follow, float track)
     {
 
-        if (firstLBI)
-        {
-            transform.position = targetPosition;
-            transform.eulerAngles = targetEulerAngles;
-            firstLBI = false;
-        }
+        //if (firstLBI)
+        //{
+        //    transform.position = targetPosition;
+        //    transform.eulerAngles = targetEulerAngles;
+        //    firstLBI = false;
+        //}
 
-        Quaternion rot = transform.rotation;
-        rot.eulerAngles = targetEulerAngles;// (targetEulerAngles.x,targetEulerAngles.y,targetEulerAngles.z);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, track * Time.deltaTime);
+        //Quaternion rot = transform.rotation;
+        //rot.eulerAngles = targetEulerAngles;// (targetEulerAngles.x,targetEulerAngles.y,targetEulerAngles.z);
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, track * Time.deltaTime);
 
-        Vector3 dir = (targetPosition - transform.position).normalized * Mathf.Min((targetPosition - transform.position).magnitude, 1) * (Mathf.Max((targetPosition - transform.position).magnitude, 1));
+        //Vector3 dir = (targetPosition - transform.position).normalized * Mathf.Min((targetPosition - transform.position).magnitude, 1) * (Mathf.Max((targetPosition - transform.position).magnitude, 1));
 
-        transform.position += dir * follow * Time.deltaTime;//default rotation behind
+        //transform.position += dir * follow * Time.deltaTime;//default rotation behind
 
-        prevFocusPos = focus.position;
+        //prevFocusPos = focus.position;
     }
 
     public void ChangeFocus(Transform newFocus)
@@ -154,21 +217,34 @@ public class CameraController : MonoBehaviour
         //forward = newFocus.rotation;
         if (focus != newFocus)
         {
+            if(focus != null)
+            {
+                //curOffset = focus.position -= transform.position ;
+            }
+            else
+            {
+                
+            }
+
             focus = newFocus;
+
+            
+
+            if (focus.GetComponent<BasicVehicle>() != null)
+            {
+                curState = CameraState.Vehicle;
+            }
+            else if (focus.GetComponent<BasicRider>())
+            {
+                curState = CameraState.Rider;
+            }
+            else
+            {
+                deathZoom = deathZoomMax;
+                curState = CameraState.Dead;
+            }
         }
-        if (focus.GetComponent<BasicVehicle>() != null)
-        {
-            curState = CameraState.Vehicle;
-        }
-        else if (focus.GetComponent<BasicRider>())
-        {
-            curState = CameraState.Rider;
-        }
-        else
-        {
-            deathZoom = deathZoomMax;
-            curState = CameraState.Dead;
-        }
+
     }
 
     public void ChangeDistance(float distanceBack, float speedMultiplier)

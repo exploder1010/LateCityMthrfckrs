@@ -116,7 +116,9 @@ public class GameController : MonoBehaviour {
     {
         print("Spawning player");
         if (curPlayerController != null)
-            Destroy(curPlayerController.gameObject);
+        {
+            curPlayerController.CleanDestroy();
+        }
 
         curPlayerController = GameObject.Instantiate(playerController_Prefab, Vector3.zero, Quaternion.identity).transform.GetComponent<PlayerController>();
         curPlayerController.SetCamera(mainCamera.GetComponent<CameraController>());

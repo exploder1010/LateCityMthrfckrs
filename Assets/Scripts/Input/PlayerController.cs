@@ -63,6 +63,24 @@ namespace Luminosity.IO
             //previousVelocity = 0;
         }
 
+        public void CleanDestroy()
+        {
+            if (curBoostEffect)
+            {
+                Destroy(curBoostEffect);
+
+            }
+            if (curRagdoll)
+            {
+                Destroy(curRagdoll);
+            }
+            if (curRider)
+            {
+                Destroy(curRider.gameObject);
+            }
+            Destroy(this);
+        }
+
         // IMPORTANT: This should never be fixed update. Input always needs to be in normal update, or you constantly drop inputs.
         // TLDR: Use Update() for input and FixedUpdate() for motors/movement
         void Update()
@@ -223,8 +241,9 @@ namespace Luminosity.IO
                         curRider.goalCollider.returnColliders()[0].transform.parent.Find("shatter1").gameObject.SetActive(true);
                         curRider.goalCollider.returnColliders()[0].gameObject.SetActive(false);
                         Time.timeScale = 0.1f;
-                        SoundScript.PlaySound(playerSource, "Win");
-                        comboBS.Win();
+                        //SoundScript.PlaySound(playerSource, "Win");
+                        //if (comboBS)
+                        //    comboBS.Win();
                     }
 
 
