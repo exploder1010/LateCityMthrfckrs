@@ -58,11 +58,11 @@ public class ButtonScripts : MonoBehaviour {
 
     public void Win()
     {
-        //pauseUI.SetActive(false);
-        //Cursor.visible = true;
-        //Cursor.lockState = CursorLockMode.None;
-        //winUI.SetActive(true);
-        //gameOverUI.SetActive(false);
+        pauseUI.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        winUI.SetActive(true);
+        gameOverUI.SetActive(false);
     }
 
     public void comboUpdate(float time, float startTime, int multiplier)

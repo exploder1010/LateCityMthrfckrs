@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class LeaderboardScript : MonoBehaviour {
 
@@ -22,6 +23,11 @@ public class LeaderboardScript : MonoBehaviour {
 
     public void SavetoDictionary()
     {
+        //if(File.Exists(Application.dataPath + "leaderboard.json"))
+        //{
+        //    string leaderboardJSON = File.ReadAllText(Application.dataPath + "leaderboard.json");
+        //    leaderboard = JsonUtility.FromJson<LeaderboardScript>(leaderboardJSON);
+        //}
         print("saving");
         if (!leaderboard.ContainsKey(namePrompt.text))
         {
@@ -32,6 +38,9 @@ public class LeaderboardScript : MonoBehaviour {
         {
             leaderboard[namePrompt.text] = Timer.timeRemaining;
         }
+        //string leaderboardJSON = JsonUtility.ToJson(leaderboard);
+        //string filePath = Application.dataPath;
+        //File.WriteAllText(filePath + "leaderboard.json", leaderboardJSON);
         print(leaderboard[namePrompt.text]);
     }
 

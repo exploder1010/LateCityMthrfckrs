@@ -255,7 +255,7 @@ namespace Luminosity.IO
                     }
                     if (win)
                     {
-                        updateReset();
+                        //updateReset();
                     }
 
 
