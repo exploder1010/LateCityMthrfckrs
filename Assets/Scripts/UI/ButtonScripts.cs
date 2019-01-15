@@ -31,6 +31,7 @@ public class ButtonScripts : MonoBehaviour {
 
     public void Retry()
     {
+        pauseUI.SetActive(false);
         GameController.instance.resetScene();
     }
 
