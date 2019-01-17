@@ -279,7 +279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1478023544499950
 GameObject:
   m_ObjectHideFlags: 1
@@ -540,7 +540,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1662206317279098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.99, y: 3.5226502, z: 59.9}
+  m_LocalPosition: {x: -12.99, y: 3.5226502, z: 191.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4350316642082234}
@@ -1938,7 +1938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e74abedfb13324fb03c198c09a5b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overrideDistance: 0
+  overrideDistance: 10000
 --- !u!114 &114399990399103612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1985,8 +1985,9 @@ MonoBehaviour:
   GroundedStablizationRate: 300
   gravityDirection: {x: 0, y: -1, z: 0}
   normalMaxSpeed: 50
-  computerMaxSpeed: 15
+  computerMaxSpeed: 5
   crashSpeed: 20
+  boosting: 0
   AutoCorrect: 0
 --- !u!114 &114815772688829674
 MonoBehaviour:
@@ -2011,6 +2012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2d44c7d311454ebfa6a55b6ddfa275f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disabled: 0
   laneID: 0
   DebugThis: 0
   pedestrianPrefab: {fileID: 0}

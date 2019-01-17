@@ -58,7 +58,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1105010619405076
 GameObject:
   m_ObjectHideFlags: 1
@@ -1550,6 +1550,7 @@ MonoBehaviour:
   normalMaxSpeed: 70
   computerMaxSpeed: 20
   crashSpeed: 20
+  boosting: 0
   AutoCorrect: 0
 --- !u!114 &114805480152496820
 MonoBehaviour:
@@ -1562,6 +1563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2d44c7d311454ebfa6a55b6ddfa275f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disabled: 0
   laneID: 0
   DebugThis: 0
   pedestrianPrefab: {fileID: 0}
