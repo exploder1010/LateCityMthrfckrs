@@ -239,7 +239,6 @@ GameObject:
   - component: {fileID: 4197298721943084}
   - component: {fileID: 33908379106650670}
   - component: {fileID: 23392087846583616}
-  - component: {fileID: 64562391347568708}
   - component: {fileID: 65935628405253684}
   m_Layer: 11
   m_Name: Sedan
@@ -540,7 +539,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1662206317279098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.99, y: 3.5226502, z: 59.9}
+  m_LocalPosition: {x: -9.28, y: -11.622651, z: 860.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4350316642082234}
@@ -1782,20 +1781,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 14
   m_CollisionDetection: 0
---- !u!64 &64562391347568708
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1426450036190280}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: 75749ad4087f9874e95d3ffe475be75c, type: 3}
 --- !u!65 &65245418039054668
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1938,7 +1923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e74abedfb13324fb03c198c09a5b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overrideDistance: 0
+  overrideDistance: 350
 --- !u!114 &114399990399103612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1985,7 +1970,7 @@ MonoBehaviour:
   GroundedStablizationRate: 300
   gravityDirection: {x: 0, y: -1, z: 0}
   normalMaxSpeed: 50
-  computerMaxSpeed: 15
+  computerMaxSpeed: 25
   crashSpeed: 20
   AutoCorrect: 0
 --- !u!114 &114815772688829674
@@ -2011,7 +1996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2d44c7d311454ebfa6a55b6ddfa275f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laneID: 0
+  laneID: 1
   DebugThis: 0
   pedestrianPrefab: {fileID: 0}
   stopUpdate: 0
