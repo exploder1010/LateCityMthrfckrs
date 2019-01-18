@@ -45,6 +45,8 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     //Brady: New variables for crash.
     public float crashSpeed;
 
+    public bool boosting = false;
+
     float newSteering;
 
     //collision
@@ -81,9 +83,16 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 {
                     if (axle.motor)
                     {
-
-                        axle.leftWheel.motorTorque = (motorInput) * MotorTorque;
-                        axle.rightWheel.motorTorque = (motorInput) * MotorTorque;
+                        if (boosting)
+                        {
+                            axle.leftWheel.motorTorque = (1) * MotorTorque;
+                            axle.rightWheel.motorTorque = (1) * MotorTorque;
+                        }
+                        else
+                        {                            
+                            axle.leftWheel.motorTorque = (motorInput) * MotorTorque;
+                            axle.rightWheel.motorTorque = (motorInput) * MotorTorque;
+                        }
                     }
                     if (axle.steering)
                     {
