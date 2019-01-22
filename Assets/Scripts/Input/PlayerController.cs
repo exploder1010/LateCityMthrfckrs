@@ -91,7 +91,7 @@ namespace Luminosity.IO
         {
             if(comboBS == null && GameObject.Find("HUD") && GameObject.Find("HUD").GetComponent<ButtonScripts>())
             {
-                Debug.Log("found");
+                //Debug.Log("found");
                 comboBS = GameObject.Find("HUD").GetComponent<ButtonScripts>(); //.comboUpdate(comboTimer, comboTimeSet, comboMultiplier);
             }
             //Debug.Log("cm " + comboMultiplier);
@@ -337,10 +337,10 @@ namespace Luminosity.IO
 
                     deathTimer -= Time.deltaTime / Time.timeScale;
                 }
-                else if (!curRagdoll && deathTimer <= 2f)
+                else if (deathTimer <= 2f)
                 {
 
-                    deathTimer -= Time.deltaTime / Time.timeScale;
+                    deathTimer -= Time.deltaTime  * 0.5f / Time.timeScale;
                 }
 
                 if (deathTimer <= 0)

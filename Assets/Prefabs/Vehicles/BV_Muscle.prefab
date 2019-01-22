@@ -191,7 +191,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4634240548530920}
   - component: {fileID: 54974780657252770}
-  - component: {fileID: 114902161580190392}
   - component: {fileID: 114805480152496820}
   - component: {fileID: 114804112056161128}
   - component: {fileID: 82435984910501540}
@@ -1568,18 +1567,6 @@ MonoBehaviour:
   DebugThis: 0
   pedestrianPrefab: {fileID: 0}
   stopUpdate: 0
---- !u!114 &114902161580190392
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1261640690947128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e74abedfb13324fb03c198c09a5b7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  overrideDistance: 0
 --- !u!146 &146051289080817568
 WheelCollider:
   m_ObjectHideFlags: 1

@@ -92,6 +92,13 @@ public class GameController : MonoBehaviour {
     {
         // Destroy and Instantiate scene cars
         print("Resetting Objects");
+
+        GameObject[] killtheseheehee = GameObject.FindGameObjectsWithTag("DestroyInScene");
+        for (int i = 0; i < killtheseheehee.Length; i++)
+        {
+            GameObject.Destroy(killtheseheehee[i]);
+        }
+
         for (int i = 0; i < InstanceResetObjects.Length; i++)
         {
             GameObject.Destroy(InstanceResetObjects[i]);
@@ -119,10 +126,10 @@ public class GameController : MonoBehaviour {
 
     void SpawnPlayer()
     {
-        print("Spawning player");
+        //print("Spawning player");
         if (curPlayerController != null)
         {
-            print("cleand");
+            //print("cleand");
             curPlayerController.CleanDestroy();
         }
 
