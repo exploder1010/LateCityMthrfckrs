@@ -287,29 +287,42 @@ public class CustomWindow : EditorWindow
         GUILayout.Label("Spawn block at Orb");
         index = EditorGUILayout.Popup(index, options, GUILayout.Width(490));
         GUILayout.BeginHorizontal();
+        GameObject orb = null;
         if (GUILayout.Button("White", GUILayout.Width(120)))
         {
-            GameObject orb = GameObject.Find("LevelEditorORB_North");
+            orb = GameObject.Find("LevelEditorORB_North");
             if (orb != null)
+            {
+                lastOrbUsed = orb;
                 InstantiatePrimitive(orb);
+            }
         }
         if (GUILayout.Button("Blue", GUILayout.Width(120)))
         {
-            GameObject orb = GameObject.Find("LevelEditorORB_East");
+            orb = GameObject.Find("LevelEditorORB_East");
             if (orb != null)
+            {
+                lastOrbUsed = orb;
                 InstantiatePrimitive(orb);
+            }
         }
         if (GUILayout.Button("Red", GUILayout.Width(120)))
         {
-            GameObject orb = GameObject.Find("LevelEditorORB_South");
+            orb = GameObject.Find("LevelEditorORB_South");
             if (orb != null)
+            {
+                lastOrbUsed = orb;
                 InstantiatePrimitive(orb);
+            }
         }
         if (GUILayout.Button("Green", GUILayout.Width(120)))
         {
-            GameObject orb = GameObject.Find("LevelEditorORB_West");
+            orb = GameObject.Find("LevelEditorORB_West");
             if (orb != null)
+            {
+                lastOrbUsed = orb;
                 InstantiatePrimitive(orb);
+            }
         }
         GUILayout.EndHorizontal();
     }

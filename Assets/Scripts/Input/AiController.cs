@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AiController : MonoBehaviour {
 
+    public bool disabled;
+
     public int laneID;
     private LevelBlockInfo curLBI;
     private int curWaypoint;
@@ -44,7 +46,7 @@ public class AiController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (!stopUpdate)
+        if (!stopUpdate && !disabled)
         {
             refreshTimer -= Time.fixedDeltaTime;
             refreshTimer2 -= Time.fixedDeltaTime;
