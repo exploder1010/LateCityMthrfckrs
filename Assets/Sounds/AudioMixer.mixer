@@ -5,7 +5,7 @@ AudioMixerController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: TestAudioMixer
+  m_Name: AudioMixer
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
@@ -14,7 +14,13 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 4476548b2385099458737c72a27db942
+    name: masterVolume
+  - guid: 6f61923d81adb4b4a88650419af16c51
+    name: musicVolume
+  - guid: 3daf8bca3413baa40bcc83368e31f0cc
+    name: soundVolume
   m_AudioMixerGroupViews:
   - guids:
     - 7a424f46f8992d84bb535b3d03087632
