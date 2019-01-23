@@ -10,6 +10,8 @@ public class BasicRider : MonoBehaviour, IRider {
     //make sure jump boost threshold is visible
     //make sure car weight gets polished
     //misc polishing
+
+    public bool noClip;
     public bool off;
     bool cameraLockOn = false;
 
@@ -392,28 +394,32 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected virtual void handleRoadCollision()
     {
-        if (targetedVehicle == null && roadCollider.collidersCount() > 0 )//|| brokenVehicleCollider.collidersCount() > 0)
+        if (!noClip)
         {
-            ragdollUp = Vector3.up;
-            rdSpawnPoint = transform.position;
-            RaycastHit hit;
-            int layerMask = 1 << LayerMask.NameToLayer("Road");
-            //Debug.DrawLine(transform.position - rb.velocity.normalized, transform.position - rb.velocity.normalized + rb.velocity.normalized * 5f, Color.red, 10f);
-            if (Physics.Raycast(transform.position - rb.velocity.normalized, rb.velocity.normalized, out hit, 5f, layerMask))
+            if (targetedVehicle == null && roadCollider.collidersCount() > 0)//|| brokenVehicleCollider.collidersCount() > 0)
             {
-               // Debug.Log("hit");
-                ragdollUp = hit.normal;
-                rdSpawnPoint = hit.point;
-            }
+                ragdollUp = Vector3.up;
+                rdSpawnPoint = transform.position;
+                RaycastHit hit;
+                int layerMask = 1 << LayerMask.NameToLayer("Road");
+                //Debug.DrawLine(transform.position - rb.velocity.normalized, transform.position - rb.velocity.normalized + rb.velocity.normalized * 5f, Color.red, 10f);
+                if (Physics.Raycast(transform.position - rb.velocity.normalized, rb.velocity.normalized, out hit, 5f, layerMask))
+                {
+                    // Debug.Log("hit");
+                    ragdollUp = hit.normal;
+                    rdSpawnPoint = hit.point;
+                }
 
-            spawnRagdoll();
+                spawnRagdoll();
+            }
         }
+       
 
     }
 
     protected virtual void spawnRagdoll()
     {
-        if (currentRagdoll == null)
+        if (currentRagdoll == null && !noClip)
         {
             currentRagdoll = Instantiate(ragdollPrefab, rdSpawnPoint, transform.rotation);
             currentRagdoll.SetActive(true);

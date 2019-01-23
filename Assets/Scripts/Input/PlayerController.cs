@@ -246,6 +246,9 @@ namespace Luminosity.IO
                     if(!win && curRider.goalCollider.collidersCount() > 0)
                     {
                         win = true;
+                        GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setWin();
+                        
+
                         curRider.goalCollider.returnColliders()[0].transform.root.Find("shatter1").gameObject.SetActive(true);
                         curRider.goalCollider.returnColliders()[0].gameObject.SetActive(false);
                         curState = PlayerState.Win;
@@ -257,7 +260,11 @@ namespace Luminosity.IO
                         killrb.velocity = Vector3.zero;
                         SoundScript.PlaySound(playerSource, "Win");
                         if (comboBS)
+                        {
+                            comboMultiplier = 0;
+                            comboBS.comboEnd(comboMultiplier);
                             comboBS.Win();
+                        }
                     }
 
 
@@ -369,7 +376,6 @@ namespace Luminosity.IO
         public void SetSpawnState(GameObject focus)
         {
             curState = PlayerState.Spawning;
-
             mainCamera.ChangeFocus(focus.transform, 2);
         }
 

@@ -32,6 +32,7 @@ public class ButtonScripts : MonoBehaviour {
     public void Retry()
     {
         pauseUI.SetActive(false);
+        StopAllCoroutines();
         GameController.instance.resetScene();
     }
 
@@ -66,11 +67,15 @@ public class ButtonScripts : MonoBehaviour {
     IEnumerator WinCountdown()
     {
         yield return new WaitForSeconds(3f);
-        pauseUI.SetActive(false);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        winUI.SetActive(true);
-        gameOverUI.SetActive(false);
+
+        
+            pauseUI.SetActive(false);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            winUI.SetActive(true);
+            gameOverUI.SetActive(false);
+        
+        
     }
 
     public void comboUpdate(float time, float startTime, int multiplier)

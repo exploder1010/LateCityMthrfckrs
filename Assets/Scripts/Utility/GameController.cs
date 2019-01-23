@@ -99,6 +99,8 @@ public class GameController : MonoBehaviour {
         // Destroy and Instantiate scene cars
         print("Resetting Objects");
 
+        GameObject.Find("HUD").GetComponent<ButtonScripts>().StopAllCoroutines();
+
         GameObject[] killtheseheehee = GameObject.FindGameObjectsWithTag("DestroyInScene");
         for (int i = 0; i < killtheseheehee.Length; i++)
         {
@@ -137,6 +139,8 @@ public class GameController : MonoBehaviour {
 
         fallingRider = Instantiate(selectedRider_Prefab, startVehicleInstance.transform.position + Vector3.up * 65f, startVehicleInstance.transform.rotation);
         fallingRider.transform.GetComponent<BR_Business>().maxFallSpeed = 30f;
+        fallingRider.transform.GetComponent<BR_Business>().noClip = true;
+        //fallingRider.transform.GetComponent<Rigidbody>().isKinematic = true;
         //print("Spawning player");
         if (curPlayerController != null)
         {
@@ -159,6 +163,7 @@ public class GameController : MonoBehaviour {
 
         mainCamera.GetComponent<CameraController>().SetCameraPosition(startVehicleInstance.transform.position - startVehicleInstance.transform.forward  * 2f + startVehicleInstance.transform.up * 15f);
 
+        StopAllCoroutines();
         StartCoroutine(SpawnCountdown());
         //if (startVehicle != null)
         //{

@@ -11,6 +11,7 @@ public class timerScript : MonoBehaviour {
     public ButtonScripts buttonScripts;
 
     bool spawning;
+    bool win;
 
     // Use this for initialization
     void Start()
@@ -23,11 +24,17 @@ public class timerScript : MonoBehaviour {
     {
 
             //if( !GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>().win)
-            if (Time.timeScale == 1 && !spawning)
+            if (!win && !spawning)
             {
                 timeRemaining -= Time.deltaTime;
+                timeDisplay.enabled = true;
 
             }
+            else
+            {
+                timeDisplay.enabled = false;
+            }
+
             int minutes = (int)timeRemaining / 60;
             int seconds = (int)timeRemaining % 60;
 
@@ -51,8 +58,13 @@ public class timerScript : MonoBehaviour {
     {
         spawning = true;
     }
+    public void setWin()
+    {
+        win = true;
+    }
     public void setGame()
     {
         spawning = false;
+        win = false;
     }
 }

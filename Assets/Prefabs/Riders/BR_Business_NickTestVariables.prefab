@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 114728272509642480}
   m_Layer: 10
   m_Name: BR_Business_NickTestVariables
-  m_TagString: Untagged
+  m_TagString: DestroyInScene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5472,6 +5472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f7c896099b6884084d04132e201423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noClip: 0
   off: 0
   briefcasePrefab: {fileID: 1737401950395208}
   rb: {fileID: 54512190633680160}
