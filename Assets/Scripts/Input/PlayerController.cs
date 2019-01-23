@@ -34,7 +34,7 @@ namespace Luminosity.IO
         public AudioSource ambientSource;
 
         //states
-        private enum PlayerState { Vehicle = 0, Rider, Dead };
+        private enum PlayerState { Vehicle = 0, Rider, Dead, Win, Spawning };
         private PlayerState curState;
 
         //Brady: This Bool is used to see what type of car exit it is (button press<true> or collision<false>).
@@ -49,7 +49,7 @@ namespace Luminosity.IO
         //flexing on the haters @ dell 
         float comboTimer = 0f;
         float comboTimeSet = 3f;
-        int comboMultiplier = 1;
+        int comboMultiplier = 0;
         float comboDistance = 50f;
         Vector3 prevComboPosition;
         ButtonScripts comboBS;
@@ -197,8 +197,10 @@ namespace Luminosity.IO
                         }
                     }
 
-
-                    ambientSource.volume = curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
+                    if (curRider)
+                    {
+                        ambientSource.volume = curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
+                    }
 
                     if(curRider.vehicleToEnter() != null && curState != PlayerState.Dead && (curRider.vehicleToEnter().gameObject != prevVehicle || (curRider.vehicleToEnter().easyCheckWheelsOnGround() && curRider.vehicleToEnter().getGravity() == Vector3.down) || prevVehicleIntangibility <= 0))
                     {
@@ -227,7 +229,7 @@ namespace Luminosity.IO
 
                             curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
 
-                            mainCamera.ChangeFocus(curRagdoll.transform, 0);
+                            mainCamera.ChangeFocus(curRagdoll.transform, -1);
                             //mainCamera.ChangeDistance(6f, 2f);
                             curRider.destroyThis();
                         }
@@ -244,18 +246,18 @@ namespace Luminosity.IO
                     if(!win && curRider.goalCollider.collidersCount() > 0)
                     {
                         win = true;
-                        curRider.goalCollider.returnColliders()[0].transform.parent.Find("shatter1").gameObject.SetActive(true);
+                        curRider.goalCollider.returnColliders()[0].transform.root.Find("shatter1").gameObject.SetActive(true);
                         curRider.goalCollider.returnColliders()[0].gameObject.SetActive(false);
-                        Time.timeScale = 0.1f;
-                        //mainCamera.ChangeFocus(curRider.transform, 1);
-                        curRider.off = true;
+                        curState = PlayerState.Win;
+                        mainCamera.ChangeFocus(curRider.transform, 1);
+                        mainCamera.SetCameraPosition(curRider.transform.position + curRider.transform.forward * 1.3f + curRider.transform.up * 1.1f);
+                        Rigidbody killrb = curRider.rb;
+                        Destroy(curRider);
+                        killrb.isKinematic = true;
+                        killrb.velocity = Vector3.zero;
                         SoundScript.PlaySound(playerSource, "Win");
                         if (comboBS)
                             comboBS.Win();
-                    }
-                    if (win)
-                    {
-                        //updateReset();
                     }
 
 
@@ -317,7 +319,7 @@ namespace Luminosity.IO
                     break;
 
                 default:
-                    Debug.Log("ERROR - NO RIDER OR VEHICLE");
+                    //Debug.Log("ERROR - NO RIDER OR VEHICLE");
                     break;
             }
 
@@ -325,22 +327,22 @@ namespace Luminosity.IO
 
         void updateReset()
         {
-            if(Time.timeScale != 0)
+            if(win != true)
             {
                 if (deathTimer > 2f)
                 {
 
-                    deathTimer -= Time.deltaTime / Time.timeScale;
+                    deathTimer -= Time.deltaTime;
                 }
                 if (curRagdoll && curRagdoll.velocity.magnitude <= 3f)
                 {
 
-                    deathTimer -= Time.deltaTime / Time.timeScale;
+                    deathTimer -= Time.deltaTime;
                 }
                 else if (deathTimer <= 2f)
                 {
 
-                    deathTimer -= Time.deltaTime  * 0.5f / Time.timeScale;
+                    deathTimer -= Time.deltaTime  * 0.5f;
                 }
 
                 if (deathTimer <= 0)
@@ -364,6 +366,13 @@ namespace Luminosity.IO
             selectedCharacter_Prefab = newCharacter;
         }
         
+        public void SetSpawnState(GameObject focus)
+        {
+            curState = PlayerState.Spawning;
+
+            mainCamera.ChangeFocus(focus.transform, 2);
+        }
+
         public void EnterVehicle(BasicVehicle newVehicle)
         {
             //Debug.Log("ENTER CAR " + Time.time);
@@ -387,8 +396,11 @@ namespace Luminosity.IO
                 //drop combo b/c too close
                 else
                 {
-                    if (comboBS)
+                    if (comboBS && comboMultiplier != 0)
+                    {
+
                         comboBS.comboEnd(comboMultiplier);
+                    }
                     comboMultiplier = 0;
                     comboTimer = 0;
                 }

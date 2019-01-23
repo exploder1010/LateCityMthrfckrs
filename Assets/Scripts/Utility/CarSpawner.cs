@@ -12,6 +12,7 @@ public class CarSpawner : MonoBehaviour {
 
     bool[] spawned;
 
+    float SpawnCountdown;
 
     // Use this for initialization
     void Start()
@@ -20,58 +21,73 @@ public class CarSpawner : MonoBehaviour {
         {
             mc = GameObject.FindGameObjectWithTag("MainCamera").transform;
         }
+
+        for(int i = 0; i < CarToSpawn.Length; i++)
+        {
+            CarToSpawn[i].SetActive(false);
+        }
+
+        SpawnCountdown = 3f;
     }
 
     // Update is called once per frame
     void Update()
     {
-
- 
-        if (mc == null && GameObject.FindGameObjectWithTag("MainCamera") != null)
+        if(SpawnCountdown > 0)
         {
-            mc = GameObject.FindGameObjectWithTag("MainCamera").transform;
+
+            SpawnCountdown -= Time.deltaTime;
         }
         else
         {
-
-            if (spawned == null && ((transform.position - mc.position).magnitude < 200))
+            if (mc == null && GameObject.FindGameObjectWithTag("MainCamera") != null)
+            {
+                mc = GameObject.FindGameObjectWithTag("MainCamera").transform;
+            }
+            else
             {
 
-
-                spawned = new bool[CarToSpawn.Length];
-                SpawnedCar = new GameObject[CarToSpawn.Length];
-                for (int i = 0; i < CarToSpawn.Length; i++)
+                if (spawned == null && ((transform.position - mc.position).magnitude < 200))
                 {
-                    spawned[i] = true;
-                    SpawnedCar[i] = Instantiate(CarToSpawn[i], CarToSpawn[i].transform.position, CarToSpawn[i].transform.rotation);
-                    SpawnedCar[i].SetActive(true);
-                    SpawnedCar[i].tag = "DestroyInScene";
+
+
+                    spawned = new bool[CarToSpawn.Length];
+                    SpawnedCar = new GameObject[CarToSpawn.Length];
+                    for (int i = 0; i < CarToSpawn.Length; i++)
+                    {
+                        spawned[i] = true;
+                        SpawnedCar[i] = Instantiate(CarToSpawn[i], CarToSpawn[i].transform.position, CarToSpawn[i].transform.rotation);
+                        SpawnedCar[i].SetActive(true);
+                        SpawnedCar[i].tag = "DestroyInScene";
+                    }
+
+
+
+                    //SpawnedCar = Instantiate(CarToSpawn, transform.position, transform.rotation);
+                    //SpawnedCar.SetActive(true);
+                    //SpawnedCar.tag = "DestroyInScene";
+
                 }
 
-
-
-                //SpawnedCar = Instantiate(CarToSpawn, transform.position, transform.rotation);
-                //SpawnedCar.SetActive(true);
-                //SpawnedCar.tag = "DestroyInScene";
-
-            }
-
-            if(spawned != null)
-            {
-                for (int i = 0; i < SpawnedCar.Length; i++)
+                if (spawned != null)
                 {
-                    if (spawned[i] && (SpawnedCar[i].transform.position - mc.position).magnitude > 200)
+                    for (int i = 0; i < SpawnedCar.Length; i++)
                     {
-                        Debug.Log("despawn");
-                        spawned[i] = false;
-                        Destroy(SpawnedCar[i]);
-                        SpawnedCar[i] = null;
+                        if (spawned[i] && (SpawnedCar[i].transform.position - mc.position).magnitude > 200)
+                        {
+                            Debug.Log("despawn");
+                            spawned[i] = false;
+                            Destroy(SpawnedCar[i]);
+                            SpawnedCar[i] = null;
 
 
+                        }
                     }
                 }
+
+
+
             }
-            
 
 
         }

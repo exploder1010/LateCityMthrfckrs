@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
 
     private Vector3 prevFocusPos;
 
-    private enum CameraState { Vehicle = 0, Rider, Dead, Win  };
+    private enum CameraState { Vehicle = 0, Rider, Dead, Win, Spawning  };
     private CameraState curState;
 
     private LevelBlockInfo curLBI;
@@ -190,25 +190,30 @@ public class CameraController : MonoBehaviour
                 case CameraState.Win:
                     
                         Debug.Log("win");
-                        //curOffset = focus.position + focus.forward;
+                    transform.LookAt(focus.position + focus.transform.up * 1.1f);
+                    //curOffset = focus.position + focus.forward;
 
-                        //transform.LookAt(focus);
+                    //transform.LookAt(focus);
 
-                        //Quaternion rot = transform.rotation;
-                        //rot.eulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
-                        //transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, deathZoomTrack * Time.deltaTime);
+                    //Quaternion rot = transform.rotation;
+                    //rot.eulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
+                    //transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, deathZoomTrack * Time.deltaTime);
 
-                        //deathZoom += Time.deltaTime;
-                        //deathZoom = Mathf.Min(deathZoom, deathZoomMin);
+                    //deathZoom += Time.deltaTime;
+                    //deathZoom = Mathf.Min(deathZoom, deathZoomMin);
 
-                        //targetEulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
-                        //targetPosition = focus.transform.position + Vector3.up * deathZoom  -curLBI.transform.forward * 0.3f;
-                        //curOffset = Vector3.up;
+                    //targetEulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
+                    //targetPosition = focus.transform.position + Vector3.up * deathZoom  -curLBI.transform.forward * 0.3f;
+                    //curOffset = Vector3.up;
 
-                        //updateActualMovement(deathZoomFollow, deathZoomTrack);
-                    
+                    //updateActualMovement(deathZoomFollow, deathZoomTrack);
 
 
+
+                    break;
+
+                case CameraState.Spawning:
+                    transform.LookAt(focus);
                     break;
 
                 default:
@@ -216,7 +221,11 @@ public class CameraController : MonoBehaviour
                     break;
             }
 
-            transform.position = focus.position + curOffset;
+            if(curState != CameraState.Spawning && curState != CameraState.Win)
+            {
+                //Debug.Log("doing offset " + curState);
+                transform.position = focus.position + curOffset;
+            }
  
         }
     }
@@ -244,47 +253,47 @@ public class CameraController : MonoBehaviour
 
     public void ChangeFocus(Transform newFocus, int state)
     {
-        //Debug.Log(state);
-        //forward = newFocus.rotation;
         if (focus != newFocus || state != 0)
         {
-            if(focus != null)
-            {
-                //curOffset = focus.position -= transform.position ;
-            }
-            else
-            {
-                curOffset = Vector3.zero;
-            }
-
+            curOffset = Vector3.zero;
             focus = newFocus;
-
-            
 
             if (focus.GetComponent<BasicVehicle>() != null)
             {
                 curState = CameraState.Vehicle;
             }
-            else if (focus.GetComponent<BasicRider>())
-            {
-                Debug.Log(state);
-                if(state == 1f)
-                {
-                    Debug.Log("good");
-                    curState = CameraState.Win;
-                }
-                else
-                {
-                    curState = CameraState.Rider;
-                }
-            }
             else
             {
-                deathZoom = deathZoomMax;
-                curState = CameraState.Dead;
+                Debug.Log(state);
+                if(state == 2)
+                {
+                    Debug.Log("spawn cam set");
+                    curState = CameraState.Spawning;
+                }
+                else if(state == 1)
+                {
+                    Debug.Log("win cam set");
+                    curState = CameraState.Win;
+                }
+                else if(state == 0)
+                {
+                    Debug.Log("rider cam set");
+                    curState = CameraState.Rider;
+                }
+                else if(state == -1)
+                {
+                    deathZoom = deathZoomMax;
+                    curState = CameraState.Dead;
+                }
+                Debug.Log(state);
             }
         }
 
+    }
+
+    public void SetCameraPosition(Vector3 pos)
+    {
+        transform.position = pos;
     }
 
     public void ChangeDistance(float distanceBack, float speedMultiplier)

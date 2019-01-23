@@ -59,6 +59,13 @@ public class ButtonScripts : MonoBehaviour {
 
     public void Win()
     {
+
+        StartCoroutine(WinCountdown());
+    }
+
+    IEnumerator WinCountdown()
+    {
+        yield return new WaitForSeconds(3f);
         pauseUI.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -83,7 +90,7 @@ public class ButtonScripts : MonoBehaviour {
     {
         if(multiplier > 0)
         {
-            //print(multiplier);
+            print(multiplier);
             GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().addTime(multiplier);
             Text bonustext = Instantiate(bonusPrefab, bonusPrefab.rectTransform.position, GameObject.FindGameObjectWithTag("HUD").transform.rotation) as Text;
             bonustext.transform.SetParent(this.transform, false);

@@ -10,6 +10,8 @@ public class timerScript : MonoBehaviour {
     public Text timeDisplay;
     public ButtonScripts buttonScripts;
 
+    bool spawning;
+
     // Use this for initialization
     void Start()
     {
@@ -19,26 +21,38 @@ public class timerScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //if( !GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>().win)
-        if(Time.timeScale == 1)
-        {
-            timeRemaining -= Time.deltaTime;
 
-        }
-        int minutes = (int)timeRemaining / 60;
-        int seconds = (int)timeRemaining % 60;
+            //if( !GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>().win)
+            if (Time.timeScale == 1 && !spawning)
+            {
+                timeRemaining -= Time.deltaTime;
 
-        string textTime = string.Format("{0:00} : {1:00}", minutes, seconds);
-        timeDisplay.text = textTime;
+            }
+            int minutes = (int)timeRemaining / 60;
+            int seconds = (int)timeRemaining % 60;
 
-        if(timeRemaining < 0)
-        {
-            buttonScripts.GameOver();
-        }
+            string textTime = string.Format("{0:00} : {1:00}", minutes, seconds);
+            timeDisplay.text = textTime;
+
+            if (timeRemaining < 0)
+            {
+                buttonScripts.GameOver();
+            }
+        
+        
     }
 
     public void addTime(int additionalTime)
     {
         timeRemaining += additionalTime;
+    }
+
+    public void setSpawning()
+    {
+        spawning = true;
+    }
+    public void setGame()
+    {
+        spawning = false;
     }
 }
