@@ -187,5 +187,6 @@ public class GameController : MonoBehaviour {
         Destroy(fallingRider);
         if (GameObject.FindGameObjectWithTag("HUD"))
             GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setGame();
+        GameObject.Find("HUD").GetComponent<StartLightScript>().StartTheLights();
     }
 }
