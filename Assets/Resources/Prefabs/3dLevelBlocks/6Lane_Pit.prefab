@@ -210,7 +210,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1413180036827866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.550892, y: 2.8215103, z: 37.11203}
+  m_LocalPosition: {x: -9.550892, y: 2.3, z: 937.76}
   m_LocalScale: {x: 60, y: 1, z: 59.999977}
   m_Children:
   - {fileID: 4151907407929106}
@@ -277,7 +277,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 9a1b6b552cb15dc47b36da1c01534b99, type: 3}
+  - {fileID: 2100000, guid: 2a2cfbf0a61b3b34dbe1ee9d3a649f42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -382,7 +382,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 077ae73a2d26ded49a7eba22316f9f01, type: 2}
+  - {fileID: 2100000, guid: 2a2cfbf0a61b3b34dbe1ee9d3a649f42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -646,9 +646,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VehicleCameraOffset: {x: 0, y: 8, z: -20}
-  VehicleCameraEulerAngles: {x: 25, y: 0, z: 0}
-  VehicleCameraFollowSpeed: 10
-  VehicleCameraTrackSpeed: 25
+  VehicleCameraEulerAngles: {x: 25, y: 5, z: 0}
+  VehicleCameraFollowSpeed: 45
+  VehicleCameraTrackSpeed: 45
   RiderCameraOffset: {x: 0, y: 3.4, z: -6}
   RiderCameraEulerAngles: {x: 33, y: 0, z: 0}
   RiderCameraFollowSpeed: 20
