@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25984344, g: 0.15233886, b: 0.32344955, a: 1}
+  m_IndirectSpecularColor: {r: 0.2597739, g: 0.15234107, b: 0.32345858, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2262,7 +2262,8 @@ MonoBehaviour:
   roadPrefabs:
   - {fileID: 1914304582392624, guid: 0d12d00085b70a442bc1355b38aec7e5, type: 2}
   - {fileID: 1744798432902724, guid: 0f0c8768bfe1a594ab36546dbda9df4a, type: 2}
-  - {fileID: 1236694925783266, guid: 1e10d803346ccfb47ac77e064456d64f, type: 2}
+  - {fileID: 1853448308589388, guid: 1e10d803346ccfb47ac77e064456d64f, type: 2}
+  - {fileID: 1413180036827866, guid: 40f67958d2b9c034295fbc1005916141, type: 2}
   - {fileID: 1306443872693960, guid: b8bee837225e4274c9a39258aa5bcf04, type: 2}
   - {fileID: 1764790015649616, guid: 52f3e52ec1423144184483d8a16de02c, type: 2}
   - {fileID: 1110512298041482, guid: 33561ef141e108c4e8e0924c029e8512, type: 2}
@@ -12131,12 +12132,12 @@ GameObject:
   - component: {fileID: 478926745}
   - component: {fileID: 478926744}
   m_Layer: 5
-  m_Name: BlankLevel1
+  m_Name: OffTheWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &478926743
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14289,6 +14290,7 @@ RectTransform:
   - {fileID: 2027440651}
   - {fileID: 1989953145}
   - {fileID: 1761810564}
+  - {fileID: 708202214}
   m_Father: {fileID: 1208511105}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15243,6 +15245,721 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 579145807}
   m_CullTransparentMesh: 0
+--- !u!1 &579368296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1426989004046072, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 579368301}
+  - component: {fileID: 579368300}
+  - component: {fileID: 579368299}
+  - component: {fileID: 579368298}
+  - component: {fileID: 579368297}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: InputManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &579368297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114763264031547316, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 579368296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff45da8a1cd6484396c3764dd2d7564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &579368298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114229351609942880, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 579368296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98b79d0d092b27f42b4008cfe92cc0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clips:
+  - name: Death
+    Clip: {fileID: 8300000, guid: df188a6c41f354a4287c356ee0f949f7, type: 3}
+  - name: Jump
+    Clip: {fileID: 8300000, guid: 429c55866811d30488dd337767946575, type: 3}
+  - name: Win
+    Clip: {fileID: 8300000, guid: cfe00bc0e77608b45b03035da0ee62f1, type: 3}
+  - name: Ability
+    Clip: {fileID: 8300000, guid: 6e4d7fdf602f61041960792d28f3329b, type: 3}
+  - name: UI Click
+    Clip: {fileID: 8300000, guid: 29f919df0da1b394bb3b8c9410142bc7, type: 3}
+  - name: Engine
+    Clip: {fileID: 8300000, guid: b7f71dc4d3727714c8b4b34caa016132, type: 3}
+--- !u!114 &579368299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114511544142092730, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 579368296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a84dcdb1aa751e24496a02075018959a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTimeSet: 3
+  mainCamera_Prefab: {fileID: 1081822885258984, guid: c3135ffcfce64b74889799f9de5b6e13,
+    type: 2}
+  playerController_Prefab: {fileID: 1880477644275540, guid: 1127f6d14d85b264cb3cb900178fb920,
+    type: 2}
+  startingVehicle_Prefab: {fileID: 1261640690947128, guid: c9dc1835f4cf5614e8062c42c52f5cbe,
+    type: 2}
+  selectedRider_Prefab: {fileID: 1258154895977210, guid: 7362886f6fc94494a8f5a4599704dcf0,
+    type: 2}
+  spawnLocation: {fileID: 0}
+  startInAir: 0
+--- !u!114 &579368300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 579368296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb91bdba6520fd248bbc41b14d02e9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_controlSchemes:
+  - m_name: KeyboardAndMouse
+    m_description: 
+    m_isExpanded: 1
+    m_uniqueID: 06cd669440d0422a95f3e89bd3812515
+    m_actions:
+    - m_name: Horizontal
+      m_description: 
+      m_bindings:
+      - m_positive: 100
+        m_negative: 97
+        m_deadZone: 0
+        m_gravity: 1000
+        m_sensitivity: 1000
+        m_snap: 1
+        m_invert: 0
+        m_type: 2
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Vertical
+      m_description: 
+      m_bindings:
+      - m_positive: 119
+        m_negative: 115
+        m_deadZone: 0
+        m_gravity: 1000
+        m_sensitivity: 1000
+        m_snap: 1
+        m_invert: 0
+        m_type: 2
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Accelerate
+      m_description: 
+      m_bindings:
+      - m_positive: 119
+        m_negative: 115
+        m_deadZone: 0
+        m_gravity: 1000
+        m_sensitivity: 1000
+        m_snap: 1
+        m_invert: 0
+        m_type: 2
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Jump
+      m_description: 
+      m_bindings:
+      - m_positive: 32
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Retry
+      m_description: 
+      m_bindings:
+      - m_positive: 114
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: FastFall
+      m_description: 
+      m_bindings:
+      - m_positive: 304
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: BreakIn
+      m_description: 
+      m_bindings:
+      - m_positive: 304
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: LookHorizontal
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 0.1
+        m_snap: 0
+        m_invert: 0
+        m_type: 1
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: LookVertical
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 0.1
+        m_snap: 0
+        m_invert: 0
+        m_type: 1
+        m_axis: 1
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Pause
+      m_description: 
+      m_bindings:
+      - m_positive: 27
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: PauseMenu
+      m_description: 
+      m_bindings:
+      - m_positive: 27
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Up
+      m_description: 
+      m_bindings:
+      - m_positive: 119
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 273
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Down
+      m_description: 
+      m_bindings:
+      - m_positive: 115
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 274
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Left
+      m_description: 
+      m_bindings:
+      - m_positive: 97
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 276
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Right
+      m_description: 
+      m_bindings:
+      - m_positive: 100
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Submit
+      m_description: 
+      m_bindings:
+      - m_positive: 13
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 32
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Cancel
+      m_description: 
+      m_bindings:
+      - m_positive: 8
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 27
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+  - m_name: Gamepad
+    m_description: 
+    m_isExpanded: 1
+    m_uniqueID: 410c68e0bb7d4b4a9ce7068e7e283889
+    m_actions:
+    - m_name: Horizontal
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 6
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Vertical
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 1
+        m_type: 6
+        m_axis: 1
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Accelerate
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 1
+        m_type: 6
+        m_axis: 2
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Jump
+      m_description: 
+      m_bindings:
+      - m_positive: 350
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Retry
+      m_description: 
+      m_bindings:
+      - m_positive: 356
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: FastFall
+      m_description: 
+      m_bindings:
+      - m_positive: 352
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: LookHorizontal
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 0
+        m_sensitivity: 0.3
+        m_snap: 0
+        m_invert: 0
+        m_type: 6
+        m_axis: 3
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: LookVertical
+      m_description: 
+      m_bindings:
+      - m_positive: 356
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 1
+        m_sensitivity: 0.3
+        m_snap: 0
+        m_invert: 1
+        m_type: 6
+        m_axis: 4
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Pause
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0.5
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 1
+        m_type: 0
+        m_axis: 1
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: PauseMenu
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Up
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0.5
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 1
+        m_type: 5
+        m_axis: 1
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Down
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0.5
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 5
+        m_axis: 1
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Left
+      m_description: 
+      m_bindings:
+      - m_positive: 350
+        m_negative: 0
+        m_deadZone: 0.5
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 5
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Right
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0.5
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 1
+        m_type: 5
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Submit
+      m_description: 
+      m_bindings:
+      - m_positive: 350
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Cancel
+      m_description: 
+      m_bindings:
+      - m_positive: 351
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+  m_playerOneDefault: 06cd669440d0422a95f3e89bd3812515
+  m_playerTwoDefault: 
+  m_playerThreeDefault: 
+  m_playerFourDefault: 
+  m_ignoreTimescale: 1
+--- !u!4 &579368301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 579368296}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &581471841
 GameObject:
   m_ObjectHideFlags: 0
@@ -18267,6 +18984,75 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 703234467}
   m_CullTransparentMesh: 0
+--- !u!1 &708202213
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 708202214}
+  - component: {fileID: 708202216}
+  - component: {fileID: 708202215}
+  m_Layer: 5
+  m_Name: OffTheWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &708202214
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 708202213}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.87278605, y: 0.8727892, z: 0.87278664}
+  m_Children: []
+  m_Father: {fileID: 551070627}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000030517578, y: -0.000030517578}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &708202215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 708202213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 784cd76139482ef48b73abc767f61e3b, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &708202216
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 708202213}
+  m_CullTransparentMesh: 0
 --- !u!4 &710003731 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4039641634093202, guid: 28737cbc026765248b994433396b7d1e,
@@ -19698,647 +20484,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4994906474065438, guid: 33561ef141e108c4e8e0924c029e8512,
     type: 2}
   m_PrefabInternal: {fileID: 1284751904}
---- !u!1001 &763743153
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.size
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.size
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[10].m_bindings.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[13].m_bindings.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[14].m_bindings.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[15].m_bindings.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[16].m_bindings.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[14].m_bindings.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[15].m_bindings.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[16].m_bindings.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -2.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114511544142092730, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1426989004046072, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_TagString
-      value: InputManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_isExpanded
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_isExpanded
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[4].m_name
-      value: Retry
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[4].m_bindings.Array.data[0].m_positive
-      value: 114
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[5].m_name
-      value: FastFall
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[5].m_bindings.Array.data[0].m_positive
-      value: 304
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[6].m_name
-      value: LookHorizontal
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[6].m_bindings.Array.data[0].m_positive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[6].m_bindings.Array.data[0].m_gravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[6].m_bindings.Array.data[0].m_sensitivity
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[6].m_bindings.Array.data[0].m_type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[7].m_name
-      value: LookVertical
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[7].m_bindings.Array.data[0].m_axis
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[8].m_name
-      value: Pause
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[8].m_bindings.Array.data[0].m_positive
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[8].m_bindings.Array.data[0].m_gravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[8].m_bindings.Array.data[0].m_sensitivity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[8].m_bindings.Array.data[0].m_type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[8].m_bindings.Array.data[0].m_axis
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[9].m_name
-      value: PauseMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[10].m_name
-      value: UI_Up
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[10].m_bindings.Array.data[0].m_positive
-      value: 119
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[11].m_name
-      value: UI_Down
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[11].m_bindings.Array.data[0].m_positive
-      value: 115
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[11].m_bindings.Array.data[1].m_positive
-      value: 274
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[12].m_name
-      value: UI_Left
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[12].m_bindings.Array.data[0].m_positive
-      value: 97
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[12].m_bindings.Array.data[1].m_positive
-      value: 276
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[13].m_name
-      value: UI_Right
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[13].m_bindings.Array.data[0].m_positive
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[13].m_bindings.Array.data[1].m_positive
-      value: 276
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[13].m_bindings.Array.data[1].m_gravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[13].m_bindings.Array.data[1].m_sensitivity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[14].m_name
-      value: UI_Submit
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[14].m_bindings.Array.data[0].m_positive
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[15].m_name
-      value: UI_Cancel
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[15].m_bindings.Array.data[0].m_positive
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[15].m_bindings.Array.data[1].m_positive
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[15].m_bindings.Array.data[1].m_gravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[15].m_bindings.Array.data[1].m_sensitivity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[16].m_name
-      value: UI_Cancel
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[16].m_bindings.Array.data[0].m_positive
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[10].m_bindings.Array.data[1].m_positive
-      value: 273
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[10].m_bindings.Array.data[1].m_gravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[10].m_bindings.Array.data[1].m_sensitivity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[14].m_bindings.Array.data[1].m_positive
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[14].m_bindings.Array.data[1].m_gravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[0].m_actions.Array.data[14].m_bindings.Array.data[1].m_sensitivity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[4].m_name
-      value: Retry
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[4].m_bindings.Array.data[0].m_positive
-      value: 356
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[5].m_name
-      value: FastFall
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[5].m_bindings.Array.data[0].m_positive
-      value: 352
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[6].m_name
-      value: LookHorizontal
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[6].m_bindings.Array.data[0].m_positive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[6].m_bindings.Array.data[0].m_deadZone
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[6].m_bindings.Array.data[0].m_sensitivity
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[6].m_bindings.Array.data[0].m_type
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[6].m_bindings.Array.data[0].m_axis
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[7].m_name
-      value: LookVertical
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[7].m_bindings.Array.data[0].m_positive
-      value: 356
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[7].m_bindings.Array.data[0].m_gravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[7].m_bindings.Array.data[0].m_invert
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[7].m_bindings.Array.data[0].m_axis
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[8].m_name
-      value: Pause
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[8].m_bindings.Array.data[0].m_positive
-      value: 357
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[8].m_bindings.Array.data[0].m_deadZone
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[8].m_bindings.Array.data[0].m_gravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[8].m_bindings.Array.data[0].m_sensitivity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[8].m_bindings.Array.data[0].m_type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[8].m_bindings.Array.data[0].m_axis
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[9].m_name
-      value: PauseMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[9].m_bindings.Array.data[0].m_deadZone
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[9].m_bindings.Array.data[0].m_sensitivity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[9].m_bindings.Array.data[0].m_invert
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[9].m_bindings.Array.data[0].m_axis
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[10].m_name
-      value: UI_Up
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[10].m_bindings.Array.data[0].m_deadZone
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[10].m_bindings.Array.data[0].m_sensitivity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[10].m_bindings.Array.data[0].m_invert
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[10].m_bindings.Array.data[0].m_type
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[11].m_name
-      value: UI_Down
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[11].m_bindings.Array.data[0].m_sensitivity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[11].m_bindings.Array.data[0].m_axis
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[12].m_name
-      value: UI_Left
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[12].m_bindings.Array.data[0].m_positive
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[12].m_bindings.Array.data[0].m_deadZone
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[12].m_bindings.Array.data[0].m_sensitivity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[12].m_bindings.Array.data[0].m_invert
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[12].m_bindings.Array.data[0].m_type
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[12].m_bindings.Array.data[0].m_axis
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[13].m_name
-      value: UI_Right
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[13].m_bindings.Array.data[0].m_positive
-      value: 357
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[13].m_bindings.Array.data[0].m_deadZone
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[13].m_bindings.Array.data[0].m_invert
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[13].m_bindings.Array.data[0].m_type
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[14].m_name
-      value: UI_Submit
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[14].m_bindings.Array.data[0].m_positive
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[14].m_bindings.Array.data[0].m_deadZone
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[14].m_bindings.Array.data[0].m_invert
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[14].m_bindings.Array.data[0].m_type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[15].m_name
-      value: UI_Cancel
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[16].m_name
-      value: UI_Cancel
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[16].m_bindings.Array.data[0].m_positive
-      value: 356
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[10].m_bindings.Array.data[0].m_axis
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[11].m_bindings.Array.data[0].m_invert
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[14].m_bindings.Array.data[0].m_gravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[14].m_bindings.Array.data[0].m_sensitivity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
-        type: 2}
-      propertyPath: m_controlSchemes.Array.data[1].m_actions.Array.data[15].m_bindings.Array.data[0].m_positive
-      value: 351
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!4 &764493029 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4039641634093202, guid: 28737cbc026765248b994433396b7d1e,
@@ -40035,7 +40180,7 @@ MonoBehaviour:
   prefab2D: {fileID: 0}
   roadPrefabs:
   - {fileID: 1744798432902724, guid: 0f0c8768bfe1a594ab36546dbda9df4a, type: 2}
-  - {fileID: 1236694925783266, guid: 1e10d803346ccfb47ac77e064456d64f, type: 2}
+  - {fileID: 0}
   - {fileID: 1306443872693960, guid: b8bee837225e4274c9a39258aa5bcf04, type: 2}
   - {fileID: 1764790015649616, guid: 52f3e52ec1423144184483d8a16de02c, type: 2}
   - {fileID: 1110512298041482, guid: 33561ef141e108c4e8e0924c029e8512, type: 2}
@@ -43380,7 +43525,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'BlankLevel1
+  m_Text: 'OffTheWall
 
 '
 --- !u!222 &1617192560

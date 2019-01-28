@@ -58,6 +58,9 @@ public class GameController : MonoBehaviour {
     {
         if (scene.name != "MainMenu")
         {
+            if (GameObject.FindGameObjectWithTag("SpawnPoint"))
+                spawnLocation = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+
             print("Finding Vehicles");
             OriginalResetObjects = GameObject.FindGameObjectsWithTag("ResetInScene");
             InstanceResetObjects = new GameObject[OriginalResetObjects.Length];
