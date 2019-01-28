@@ -4,24 +4,58 @@ using UnityEngine;
 
 public class Piston : MonoBehaviour
 {
- //   private Vector3 location = transform.position;
- //   public float MovementTime, StallingTime;
+    public bool moving = true;
+    public Vector3 Destination, Original;
+    public float StallingTime, CrushTime, CrushSpeed;
+    public float direction = 1;
 
-	//// Use this for initialization
-	//void Start ()
- //   {
-            
-	//}
-	
- //   IEnumerator Pushing()
- //   {
- //       yield return new WaitForSeconds(MovementTime);
+    void Start()
+    {
+        Original = transform.position;
+        Destination = transform.position;
+        StartCoroutine(Crush());
+    }
 
- //   }
+    public void FixedUpdate()
+    {
+        if (moving == true)
+        {
+            transform.Translate(Vector3.up * direction * CrushSpeed * Time.deltaTime);
+            Destination = transform.position;
+            //if (Vector3.Distance(transform.position, Destination) < 0.1f)
+            //{
+            //    transform.position = Destination;
+            //    moving = false;
+            //    if (Original != Destination)
+            //    {
+            //        Destination = Original;
+            //    }
+            //    else
+            //    {
+            //        Destination.y = Destination.y + PistonDistance;
+            //    }
+            //    direction = direction * -1;
+            //    StartCoroutine(StayPut());
+            //}
+        }
+    }
 
- //   IEnumerator StayPut()
- //   {
- //       yield return new WaitForSeconds(StallingTime);
+    IEnumerator StayPut()
+    {
+        yield return new WaitForSeconds(StallingTime);
+        moving = true;
+        StartCoroutine(Crush());
+    }
 
- //   }
+    IEnumerator Crush()
+    {
+        yield return new WaitForSeconds(CrushTime);
+        moving = false;
+        if(direction == -1)
+        {
+            transform.position = Original;
+        }
+        direction *= -1;
+        StartCoroutine(StayPut());
+    }
 }
