@@ -182,7 +182,7 @@ public class GameController : MonoBehaviour {
     {
         yield return new WaitForSeconds(spawnTimeSet);
 
-        Debug.Log("frog");
+        //Debug.Log("frog");
         curPlayerController.EnterVehicle(startVehicleInstance.GetComponent<BasicVehicle>());
         Destroy(fallingRider);
         if (GameObject.FindGameObjectWithTag("HUD"))

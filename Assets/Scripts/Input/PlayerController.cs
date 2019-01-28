@@ -191,6 +191,10 @@ namespace Luminosity.IO
                     if (prevVehicleIntangibility > 0)
                     {
                         prevVehicleIntangibility -= Time.deltaTime;
+                        if(curRider.curAbilityAmmo == 0)
+                        {
+                            prevVehicleIntangibility = 0;
+                        }
                         if(prevVehicleIntangibility < 0)
                         {
                             prevVehicleIntangibility = 0;
@@ -202,7 +206,7 @@ namespace Luminosity.IO
                         ambientSource.volume = curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
                     }
 
-                    if(curRider.vehicleToEnter() != null && curState != PlayerState.Dead && (curRider.vehicleToEnter().gameObject != prevVehicle || (curRider.vehicleToEnter().easyCheckWheelsOnGround() && curRider.vehicleToEnter().getGravity() == Vector3.down) || prevVehicleIntangibility <= 0))
+                    if(curRider.vehicleToEnter() != null && curState != PlayerState.Dead && (curRider.vehicleToEnter().gameObject != prevVehicle || (curRider.vehicleToEnter().easyCheckWheelsOnGround() && (curRider.vehicleToEnter().getGravity() == Vector3.down )) || prevVehicleIntangibility <= 0))
                     {
                         EnterVehicle(curRider.vehicleToEnter());
                         //if(curRider.veh)

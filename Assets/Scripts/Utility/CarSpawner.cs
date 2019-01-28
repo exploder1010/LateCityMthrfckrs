@@ -8,6 +8,11 @@ public class CarSpawner : MonoBehaviour {
     GameObject[] CarToSpawn;
     GameObject[] SpawnedCar;
 
+    [SerializeField]
+    float spawnDist = 200f;
+    [SerializeField]
+    float despawnDist = 300f;
+
     Transform mc;
 
     bool[] spawned;
@@ -47,7 +52,7 @@ public class CarSpawner : MonoBehaviour {
             else
             {
 
-                if (spawned == null && ((transform.position - mc.position).magnitude < 200))
+                if (spawned == null && ((transform.position - mc.position).magnitude < spawnDist))
                 {
 
 
@@ -59,6 +64,7 @@ public class CarSpawner : MonoBehaviour {
                         SpawnedCar[i] = Instantiate(CarToSpawn[i], CarToSpawn[i].transform.position, CarToSpawn[i].transform.rotation);
                         SpawnedCar[i].SetActive(true);
                         SpawnedCar[i].tag = "DestroyInScene";
+                        Debug.Log("spawned car #" + i);
                     }
 
 
@@ -73,7 +79,7 @@ public class CarSpawner : MonoBehaviour {
                 {
                     for (int i = 0; i < SpawnedCar.Length; i++)
                     {
-                        if (spawned[i] && (SpawnedCar[i].transform.position - mc.position).magnitude > 200)
+                        if (spawned[i] && (SpawnedCar[i].transform.position - mc.position).magnitude > despawnDist)
                         {
                             Debug.Log("despawn");
                             spawned[i] = false;

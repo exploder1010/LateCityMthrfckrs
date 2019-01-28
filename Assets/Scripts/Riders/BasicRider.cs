@@ -77,7 +77,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     // basic player doesn't use these variables but all characters will use them so storing them here
     public int charAbilityAmmo = 1;
-    protected int curAbilityAmmo = 0;
+    public int curAbilityAmmo = 0;
 
     //---------------------------start:
     // Use this for initialization (to ensure things happen in proper order)

@@ -267,8 +267,17 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         Vector3 pos = transform.position + transform.up;
         float hitmod = 1;
 
-        if(easyCheckWheelsOnGround() && Physics.Raycast(pos, -transform.up, out hit, 10f, 1 << LayerMask.NameToLayer("Road")) && hit.transform.GetComponent<GravityRoad>())
+        //if (DebugThis)
+        //{
+        //    Debug.DrawRay(pos, -transform.up * 10f, Color.red, 5f);
+        //}
+
+        if ((easyCheckWheelsOnGround() || !player)&& Physics.Raycast(pos, -transform.up, out hit, 10f, 1 << LayerMask.NameToLayer("Road")) && hit.transform.GetComponent<GravityRoad>())
         {
+            //if (DebugThis)
+            //{
+            //    Debug.Log("grav");
+            //}
             gravityMagnitude = hit.transform.GetComponent<GravityRoad>().gravity;
             gravityDirection = -hit.normal;
             Vector3.RotateTowards(transform.up, hit.normal, 100f * Time.deltaTime, 100f * Time.deltaTime);
@@ -276,8 +285,13 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
             //transform.up = hit.normal;
             hitmod = 3f;
         }
-        if (!easyCheckWheelsOnGround())
+        else if (!easyCheckWheelsOnGround())
         {
+            bool hoobool = Physics.Raycast(pos, -transform.up, out hit, 10f, 1 << LayerMask.NameToLayer("Road")) && hit.transform.GetComponent<GravityRoad>();
+            //if (DebugThis)
+            //{
+            //    Debug.Log("not grav: ( " + easyCheckWheelsOnGround() + " or " + !player + " ) and " + hoobool);
+            //}
             gravityMagnitude = 20f;
             gravityDirection = Vector3.down;
         }

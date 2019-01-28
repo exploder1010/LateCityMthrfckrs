@@ -264,20 +264,20 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                Debug.Log(state);
+                //Debug.Log(state);
                 if(state == 2)
                 {
-                    Debug.Log("spawn cam set");
+                    //Debug.Log("spawn cam set");
                     curState = CameraState.Spawning;
                 }
                 else if(state == 1)
                 {
-                    Debug.Log("win cam set");
+                    //Debug.Log("win cam set");
                     curState = CameraState.Win;
                 }
                 else if(state == 0)
                 {
-                    Debug.Log("rider cam set");
+                    //Debug.Log("rider cam set");
                     curState = CameraState.Rider;
                 }
                 else if(state == -1)
@@ -285,7 +285,7 @@ public class CameraController : MonoBehaviour
                     deathZoom = deathZoomMax;
                     curState = CameraState.Dead;
                 }
-                Debug.Log(state);
+                //Debug.Log(state);
             }
         }
 
