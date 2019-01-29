@@ -26,8 +26,18 @@ public class timerScript : MonoBehaviour {
             //if( !GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>().win)
             if (!win && !spawning)
             {
+            if (timeRemaining >= 0)
+            {
                 timeRemaining -= Time.deltaTime;
                 timeDisplay.enabled = true;
+                timeDisplay.color = Color.white;
+                if (timeRemaining < 0)
+                {
+                    timeRemaining = 0;
+                    timeDisplay.color = Color.red;
+                }
+            }
+                
 
             }
             else

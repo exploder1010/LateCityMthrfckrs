@@ -56,6 +56,7 @@ public class GameController : MonoBehaviour {
   
     void InitializeScene(Scene scene, LoadSceneMode mode)
     {
+        spawnTimeSet = 3.00f;
         if (scene.name != "MainMenu")
         {
             if (GameObject.FindGameObjectWithTag("SpawnPoint"))
@@ -93,6 +94,7 @@ public class GameController : MonoBehaviour {
     public void resetScene()
     {
         print("Resetting Scene");
+        
         ResetObjects();
         SpawnPlayer();
     }
@@ -131,6 +133,7 @@ public class GameController : MonoBehaviour {
         //HUDInstance.SetActive(true);
 
 
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().ResetThis();
     }
 
     void SpawnPlayer()
@@ -167,7 +170,13 @@ public class GameController : MonoBehaviour {
         mainCamera.GetComponent<CameraController>().SetCameraPosition(startVehicleInstance.transform.position - startVehicleInstance.transform.forward  * 2f + startVehicleInstance.transform.up * 15f);
 
         StopAllCoroutines();
+        GameObject.Find("HUD").GetComponent<StartLightScript>().StartTheLights();
+        //if (GameObject.Find("HUD").GetComponent<StartLightScript>().isFirstRun)
+        // {
+        //    spawnTimeSet = 3;
+        //}
         StartCoroutine(SpawnCountdown());
+        spawnTimeSet = 0.00f;
         //if (startVehicle != null)
         //{
         //    curPlayerController.EnterVehicle(startVehicleInstance.GetComponent<BasicVehicle>());
@@ -184,12 +193,12 @@ public class GameController : MonoBehaviour {
     IEnumerator SpawnCountdown()
     {
         yield return new WaitForSeconds(spawnTimeSet);
-
+        
         //Debug.Log("frog");
         curPlayerController.EnterVehicle(startVehicleInstance.GetComponent<BasicVehicle>());
         Destroy(fallingRider);
         if (GameObject.FindGameObjectWithTag("HUD"))
             GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setGame();
-        GameObject.Find("HUD").GetComponent<StartLightScript>().StartTheLights();
+        
     }
 }

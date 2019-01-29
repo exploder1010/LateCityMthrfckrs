@@ -121,6 +121,7 @@ namespace Luminosity.IO
                         }
 
                         curBoostEffect.transform.position = curVehicle.transform.position;
+                        curBoostEffect.transform.rotation = curVehicle.transform.rotation;
 
                     }
                     else
@@ -258,16 +259,19 @@ namespace Luminosity.IO
                         curState = PlayerState.Win;
                         mainCamera.ChangeFocus(curRider.transform, 1);
                         mainCamera.SetCameraPosition(curRider.transform.position + curRider.transform.forward * 1.3f + curRider.transform.up * 1.1f);
+
+                        //curRider.off = true;
                         Rigidbody killrb = curRider.rb;
                         Destroy(curRider);
                         killrb.isKinematic = true;
                         killrb.velocity = Vector3.zero;
+
                         SoundScript.PlaySound(playerSource, "Win");
                         if (comboBS)
                         {
                             comboMultiplier = 0;
                             comboBS.comboEnd(comboMultiplier);
-                            comboBS.Win();
+                            comboBS.Win(GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().timeRemaining > 0);
                         }
                     }
 

@@ -11,6 +11,7 @@ public class BasicRider : MonoBehaviour, IRider {
     //make sure car weight gets polished
     //misc polishing
 
+    public bool winFreeze;
     public bool noClip;
     public bool off;
     bool cameraLockOn = false;
@@ -334,7 +335,8 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             float newY = rb.velocity.y;
             newY += (carJumpVelocityAdd * carJumpModifier / carJumpTimeSet) * Time.deltaTime;
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z) + carJumpUpDirection * newY;
+            Debug.Log("DE BUG: WHAT THE FUCK IS UP: " + carJumpUpDirection + " goin " + carJumpUpDirection *newY);
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z) + carJumpUpDirection * Mathf.Abs(newY);
             //rb.AddForce(transform.up * ((carJumpVelocityAdd) / carJumpTimeSet));
             //carJumpVelocity += ((carJumpVelocityAdd) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
 
