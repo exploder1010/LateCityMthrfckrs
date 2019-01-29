@@ -204,7 +204,7 @@ namespace Luminosity.IO
 
                     if (curRider)
                     {
-                        ambientSource.volume = curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
+                        ambientSource.volume = 0;//forever.S curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
                     }
 
                     if(curRider.vehicleToEnter() != null && curState != PlayerState.Dead && (curRider.vehicleToEnter().gameObject != prevVehicle || (curRider.vehicleToEnter().easyCheckWheelsOnGround() && (curRider.vehicleToEnter().getGravity() == Vector3.down )) || prevVehicleIntangibility <= 0))
