@@ -32,4 +32,9 @@ public class LevelselectScript : MonoBehaviour {
     {
         LevelPreview.transform.Find(selectedLevel).gameObject.SetActive(false);
     }
+
+    public void HighlightButton(UnityEngine.UI.Button button)
+    {
+        button.Select();
+    }
 }
