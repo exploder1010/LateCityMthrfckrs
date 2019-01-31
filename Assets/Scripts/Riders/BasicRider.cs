@@ -10,6 +10,9 @@ public class BasicRider : MonoBehaviour, IRider {
     //make sure jump boost threshold is visible
     //make sure car weight gets polished
     //misc polishing
+
+    public bool winFreeze;
+    public bool noClip;
     public bool off;
     bool cameraLockOn = false;
 
@@ -75,7 +78,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     // basic player doesn't use these variables but all characters will use them so storing them here
     public int charAbilityAmmo = 1;
-    protected int curAbilityAmmo = 0;
+    public int curAbilityAmmo = 0;
 
     //---------------------------start:
     // Use this for initialization (to ensure things happen in proper order)
@@ -332,7 +335,8 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             float newY = rb.velocity.y;
             newY += (carJumpVelocityAdd * carJumpModifier / carJumpTimeSet) * Time.deltaTime;
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z) + carJumpUpDirection * newY;
+            Debug.Log("DE BUG: WHAT THE FUCK IS UP: " + carJumpUpDirection + " goin " + carJumpUpDirection *newY);
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z) + carJumpUpDirection * Mathf.Abs(newY);
             //rb.AddForce(transform.up * ((carJumpVelocityAdd) / carJumpTimeSet));
             //carJumpVelocity += ((carJumpVelocityAdd) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
 
@@ -392,28 +396,32 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected virtual void handleRoadCollision()
     {
-        if (targetedVehicle == null && roadCollider.collidersCount() > 0 )//|| brokenVehicleCollider.collidersCount() > 0)
+        if (!noClip)
         {
-            ragdollUp = Vector3.up;
-            rdSpawnPoint = transform.position;
-            RaycastHit hit;
-            int layerMask = 1 << LayerMask.NameToLayer("Road");
-            //Debug.DrawLine(transform.position - rb.velocity.normalized, transform.position - rb.velocity.normalized + rb.velocity.normalized * 5f, Color.red, 10f);
-            if (Physics.Raycast(transform.position - rb.velocity.normalized, rb.velocity.normalized, out hit, 5f, layerMask))
+            if (targetedVehicle == null && roadCollider.collidersCount() > 0)//|| brokenVehicleCollider.collidersCount() > 0)
             {
-               // Debug.Log("hit");
-                ragdollUp = hit.normal;
-                rdSpawnPoint = hit.point;
-            }
+                ragdollUp = Vector3.up;
+                rdSpawnPoint = transform.position;
+                RaycastHit hit;
+                int layerMask = 1 << LayerMask.NameToLayer("Road");
+                //Debug.DrawLine(transform.position - rb.velocity.normalized, transform.position - rb.velocity.normalized + rb.velocity.normalized * 5f, Color.red, 10f);
+                if (Physics.Raycast(transform.position - rb.velocity.normalized, rb.velocity.normalized, out hit, 5f, layerMask))
+                {
+                    // Debug.Log("hit");
+                    ragdollUp = hit.normal;
+                    rdSpawnPoint = hit.point;
+                }
 
-            spawnRagdoll();
+                spawnRagdoll();
+            }
         }
+       
 
     }
 
     protected virtual void spawnRagdoll()
     {
-        if (currentRagdoll == null)
+        if (currentRagdoll == null && !noClip)
         {
             currentRagdoll = Instantiate(ragdollPrefab, rdSpawnPoint, transform.rotation);
             currentRagdoll.SetActive(true);

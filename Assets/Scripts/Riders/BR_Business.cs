@@ -14,7 +14,6 @@ public class BR_Business : BasicRider {
     public float doubleJumpVelocityAdd = 200f;
     public float doubleJumpHorizontalModifier = .2f;
     public float maxSpeedThisJumpDJModifier = 1.2f;
-
     // Use this for initialization
     void Start () {
 		

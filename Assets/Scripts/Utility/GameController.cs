@@ -6,6 +6,12 @@ using Luminosity.IO;
 
 public class GameController : MonoBehaviour {
 
+    //cinematic stuff 
+    //float spawnTimer;
+    [SerializeField]
+    float spawnTimeSet = 3f;
+    GameObject fallingRider;
+
     public static GameController instance;
 
     public GameObject mainCamera_Prefab;
@@ -50,8 +56,12 @@ public class GameController : MonoBehaviour {
   
     void InitializeScene(Scene scene, LoadSceneMode mode)
     {
+        spawnTimeSet = 3.00f;
         if (scene.name != "MainMenu")
         {
+            if (GameObject.FindGameObjectWithTag("SpawnPoint"))
+                spawnLocation = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+
             print("Finding Vehicles");
             OriginalResetObjects = GameObject.FindGameObjectsWithTag("ResetInScene");
             InstanceResetObjects = new GameObject[OriginalResetObjects.Length];
@@ -84,6 +94,7 @@ public class GameController : MonoBehaviour {
     public void resetScene()
     {
         print("Resetting Scene");
+        
         ResetObjects();
         SpawnPlayer();
     }
@@ -92,6 +103,8 @@ public class GameController : MonoBehaviour {
     {
         // Destroy and Instantiate scene cars
         print("Resetting Objects");
+
+        GameObject.Find("HUD").GetComponent<ButtonScripts>().StopAllCoroutines();
 
         GameObject[] killtheseheehee = GameObject.FindGameObjectsWithTag("DestroyInScene");
         for (int i = 0; i < killtheseheehee.Length; i++)
@@ -113,19 +126,27 @@ public class GameController : MonoBehaviour {
         if (GameObject.FindGameObjectWithTag("HUD"))
         {
             GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().timeRemaining = GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().startTime;
+            GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setSpawning();
         }
         //Destroy(HUDInstance);
         //HUDInstance = Instantiate(HUD);
         //HUDInstance.SetActive(true);
 
-        // Destroy and Instantiate start car
-        GameObject.Destroy(startVehicleInstance);
-        startVehicleInstance = Instantiate(startVehicle);
-        startVehicleInstance.SetActive(true);
+
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().ResetThis();
     }
 
     void SpawnPlayer()
     {
+        // Destroy and Instantiate start car
+        GameObject.Destroy(startVehicleInstance);
+        startVehicleInstance = Instantiate(startVehicle);
+        startVehicleInstance.SetActive(true);
+
+        fallingRider = Instantiate(selectedRider_Prefab, startVehicleInstance.transform.position + Vector3.up * 65f, startVehicleInstance.transform.rotation);
+        fallingRider.transform.GetComponent<BR_Business>().maxFallSpeed = 30f;
+        fallingRider.transform.GetComponent<BR_Business>().noClip = true;
+        //fallingRider.transform.GetComponent<Rigidbody>().isKinematic = true;
         //print("Spawning player");
         if (curPlayerController != null)
         {
@@ -139,17 +160,45 @@ public class GameController : MonoBehaviour {
 
         curPlayerController.SelectRider(selectedRider_Prefab);
 
-        if (startVehicle != null)
+        if (startVehicleInstance.GetComponent<AiController>())
         {
-            curPlayerController.EnterVehicle(startVehicleInstance.GetComponent<BasicVehicle>());
+            Destroy(startVehicleInstance.GetComponent<AiController>());
         }
-        else
-        {
-            selectedRider_Prefab.transform.position = spawnLocation.position;
-            selectedRider_Prefab.transform.rotation = spawnLocation.rotation;
 
-            curPlayerController.ExitVehicle();
-        }
+        curPlayerController.SetSpawnState(fallingRider);
+
+        mainCamera.GetComponent<CameraController>().SetCameraPosition(startVehicleInstance.transform.position - startVehicleInstance.transform.forward  * 2f + startVehicleInstance.transform.up * 15f);
+
+        StopAllCoroutines();
+        GameObject.Find("HUD").GetComponent<StartLightScript>().StartTheLights();
+        //if (GameObject.Find("HUD").GetComponent<StartLightScript>().isFirstRun)
+        // {
+        //    spawnTimeSet = 3;
+        //}
+        StartCoroutine(SpawnCountdown());
+        spawnTimeSet = 0.00f;
+        //if (startVehicle != null)
+        //{
+        //    curPlayerController.EnterVehicle(startVehicleInstance.GetComponent<BasicVehicle>());
+        //}
+        //else
+        //{
+        //    selectedRider_Prefab.transform.position = spawnLocation.position;
+        //    selectedRider_Prefab.transform.rotation = spawnLocation.rotation;
+
+        //    curPlayerController.ExitVehicle();
+        //}
     }
 
+    IEnumerator SpawnCountdown()
+    {
+        yield return new WaitForSeconds(spawnTimeSet);
+        
+        //Debug.Log("frog");
+        curPlayerController.EnterVehicle(startVehicleInstance.GetComponent<BasicVehicle>());
+        Destroy(fallingRider);
+        if (GameObject.FindGameObjectWithTag("HUD"))
+            GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setGame();
+        
+    }
 }

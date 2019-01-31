@@ -12,6 +12,7 @@ namespace Luminosity.IO
         public GameObject pauseMenu;
         public GameObject winMenu;
         public GameObject gameOverMenu;
+        public UnityEngine.UI.Button resume;
         public AudioSource uiSource;
 
         // Use this for initialization
@@ -62,6 +63,7 @@ namespace Luminosity.IO
                 pauseMenu.SetActive(true);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                resume.Select();
             }
         }
     }
