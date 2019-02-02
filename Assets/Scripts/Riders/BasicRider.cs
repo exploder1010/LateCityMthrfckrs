@@ -182,7 +182,7 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             Debug.Log("kick");
             charAnim.SetBool("Special_Karate", true);
-            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(GetRealMaxSpeed()), rb.velocity.z);
         }
     }
 
@@ -304,6 +304,9 @@ public class BasicRider : MonoBehaviour, IRider {
         rb.velocity = (new Vector3(carVelocity.x, yVelRetention , carVelocity.z).normalized ) * maxSpeedThisJump;
        
         float newY = rb.velocity.y;
+
+        float cjsiModded = Mathf.Max(carJumpStartImpulse, carJumpStartImpulse * new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude / 35f);
+
         newY += carJumpStartImpulse;
         rb.velocity = new Vector3(rb.velocity.x, newY, rb.velocity.z);
         //rb.AddForce(carJumpUpDirection * Mathf.Max(carJumpStartImpulse, carJumpStartImpulse));
@@ -372,14 +375,19 @@ public class BasicRider : MonoBehaviour, IRider {
             rb.velocity = new Vector3(horVelocityCheck.x, saveY, horVelocityCheck.z);
         }
 
-        if(rb.velocity.y < -Mathf.Abs(maxFallSpeed))
+        if(rb.velocity.y < -Mathf.Abs(GetRealMaxSpeed()))
         {
-            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(GetRealMaxSpeed()), rb.velocity.z);
         }
 
         //Debug.Log(horVelocityCheck +"HorzVelcocity");
         //get the speed for animation stuff
         speed = horVelocityCheck.magnitude / 50f;
+    }
+
+    protected float GetRealMaxSpeed()
+    {
+        return Mathf.Max(maxFallSpeed, maxFallSpeed * new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude / 50f);
     }
     
     //move towards selected car

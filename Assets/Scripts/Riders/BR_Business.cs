@@ -80,7 +80,8 @@ public class BR_Business : BasicRider {
                 bc.SetActive(true);
                 bc.transform.GetComponent<Rigidbody>().velocity = new Vector3 (rb.velocity.x, -5f, rb.velocity.z) * 0.9f;
             }
-            
+
+            charAnim.SetBool("Special_Karate", false);
             charAnim.SetBool("Special_Buisness", true);
             curAbilityAmmo--;
 
@@ -88,7 +89,9 @@ public class BR_Business : BasicRider {
             //rb.velocity = Vector3.zero;
             //maxSpeedThisJump = maxSpeedThisJump * maxSpeedThisJumpDJModifier;
             carJumpVelocity = 0;
-            rb.velocity = new Vector3(rb.velocity.x, doubleJumpStartImpulse, rb.velocity.z);
+
+            float djsiModded = Mathf.Max(doubleJumpStartImpulse, doubleJumpStartImpulse * new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude / 35f);
+            rb.velocity = new Vector3(rb.velocity.x, djsiModded, rb.velocity.z);
 
 
             doubleJumpTimer = doubleJumpTimeSet;

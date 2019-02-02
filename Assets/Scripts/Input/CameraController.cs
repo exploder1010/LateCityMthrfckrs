@@ -56,27 +56,27 @@ public class CameraController : MonoBehaviour
 
             float dist = 100f;
             int layerMask = 1 << LayerMask.NameToLayer("Vehicle");
-            Vector3 pos = focus.position + transform.up;
+            Vector3 pos = focus.position + focus.up;
             RaycastHit hit;
 
 
             //update waypoint queues
             if (Physics.Raycast(pos, -focus.up, out hit, 1000f))//, 1 << LayerMask.NameToLayer("Road")))
             {
-                if (hit.transform.GetComponent<LevelBlockInfo>() && hit.transform.GetComponent<LevelBlockInfo>() != curLBI)
+                if (hit.transform.GetComponent<LevelBlockInfo>())// && hit.transform.GetComponent<LevelBlockInfo>() != curLBI)
                 {
                     curLBI = hit.transform.GetComponent<LevelBlockInfo>();
                 }
-                else if (hit.transform.parent != null && hit.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
+                else if (hit.transform.parent != null && hit.transform.parent.transform.GetComponent<LevelBlockInfo>())// && hit.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
                 {
                     curLBI = hit.transform.parent.transform.GetComponent<LevelBlockInfo>();
 
                 }
-                else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
+                else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>())// && hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
                 {
                     curLBI = hit.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>();
                 }
-                else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
+                else if (hit.transform.parent != null && hit.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent != null && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>())// && hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>() != curLBI)
                 {
                     curLBI = hit.transform.parent.transform.parent.transform.parent.transform.GetComponent<LevelBlockInfo>();
                 }
@@ -92,33 +92,23 @@ public class CameraController : MonoBehaviour
 
                         if (curOffset == Vector3.zero)
                         {
-                            
                             curOffset = curLBI.VehicleCameraOffset;
-                            //Debug.Log("initial focus " + curOffset + " bc " + focus.position + " " + curLBI.transform.rotation * curLBI.VehicleCameraOffset);
-                            transform.eulerAngles = curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                            //transform.eulerAngles = curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
                         }
                         else
                         {
-
-                            Vector3 modifiedFocus = focus.position + curLBI.transform.rotation * curLBI.VehicleCameraOffset;
-                            //Debug.Log("bish focus " + curOffset + " bc " + focus.position + " " + curLBI.transform.rotation * curLBI.VehicleCameraOffset);
+                            //Vector3 modifiedFocus = focus.position + curLBI.transform.rotation * curLBI.RiderCameraOffset;
+                            Vector3 modifiedFocus = focus.position +  curLBI.VehicleCameraOffset;
                             Vector3 dir = (modifiedFocus - transform.position).normalized * Mathf.Min((modifiedFocus - transform.position).magnitude, 1);
 
                             curOffset += dir * curLBI.VehicleCameraFollowSpeed * Time.deltaTime;
 
-
+                            Debug.Log(curLBI.VehicleCameraTrackSpeed + "from " + curLBI);
                             Quaternion rot = transform.rotation;
-                            rot.eulerAngles = curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                            rot.eulerAngles = curLBI.VehicleCameraEulerAngles; // + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
                             transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, curLBI.VehicleCameraTrackSpeed * Time.deltaTime);
 
                         }
-
-
-                        //targetEulerAngles =  curLBI.VehicleCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
-                        //targetPosition = focus.transform.position  + curLBI.transform.rotation * curLBI.VehicleCameraOffset;
-                        //curOffset = curLBI.transform.rotation * curLBI.VehicleCameraOffset;
-
-                        //updateActualMovement( curLBI.VehicleCameraFollowSpeed, curLBI.VehicleCameraTrackSpeed);
                     }
 
                     break;
@@ -131,11 +121,12 @@ public class CameraController : MonoBehaviour
                         if (curOffset == Vector3.zero)
                         {
                             curOffset = curLBI.RiderCameraOffset;
-                            transform.eulerAngles = curLBI.RiderCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                            //transform.eulerAngles = curLBI.RiderCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
                         }
                         else
                         {
-                            Vector3 modifiedFocus = focus.position + curLBI.transform.rotation * curLBI.RiderCameraOffset;
+                            //Vector3 modifiedFocus = focus.position + curLBI.transform.rotation * curLBI.RiderCameraOffset;
+                            Vector3 modifiedFocus = focus.position + curLBI.RiderCameraOffset;
 
                             Vector3 dir = (modifiedFocus - transform.position).normalized * Mathf.Min((modifiedFocus - transform.position).magnitude, 1);
 
@@ -143,18 +134,10 @@ public class CameraController : MonoBehaviour
 
 
                             Quaternion rot = transform.rotation;
-                            rot.eulerAngles = curLBI.RiderCameraEulerAngles + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
+                            rot.eulerAngles = curLBI.RiderCameraEulerAngles;// + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
                             transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, curLBI.RiderCameraTrackSpeed * Time.deltaTime);
 
                         }
-
-
-                        //targetEulerAngles =  curLBI.RiderCameraEulerAngles + new Vector3(0,curLBI.transform.eulerAngles.y,0);
-                        //targetPosition = focus.transform.position  + curLBI.transform.rotation * curLBI.RiderCameraOffset;
-                        //curOffset = curLBI.transform.rotation * curLBI.RiderCameraOffset;
-
-
-                        //updateActualMovement(curLBI.RiderCameraFollowSpeed, curLBI.RiderCameraTrackSpeed);
                     }
 
                     break;
@@ -175,41 +158,12 @@ public class CameraController : MonoBehaviour
                         Quaternion rot = transform.rotation;
                         rot.eulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
                         transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, deathZoomTrack * Time.deltaTime);
-
-                        //deathZoom += Time.deltaTime;
-                        //deathZoom = Mathf.Min(deathZoom, deathZoomMin);
-
-                        //targetEulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
-                        //targetPosition = focus.transform.position + Vector3.up * deathZoom  -curLBI.transform.forward * 0.3f;
-                        //curOffset = Vector3.up;
-
-                        //updateActualMovement(deathZoomFollow, deathZoomTrack);
                     }
                     break;
 
                 case CameraState.Win:
                     
-                        Debug.Log("win");
                     transform.LookAt(focus.position + focus.transform.up * 1.1f);
-                    //curOffset = focus.position + focus.forward;
-
-                    //transform.LookAt(focus);
-
-                    //Quaternion rot = transform.rotation;
-                    //rot.eulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
-                    //transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, deathZoomTrack * Time.deltaTime);
-
-                    //deathZoom += Time.deltaTime;
-                    //deathZoom = Mathf.Min(deathZoom, deathZoomMin);
-
-                    //targetEulerAngles = new Vector3(90, curLBI.transform.eulerAngles.y, 0);
-                    //targetPosition = focus.transform.position + Vector3.up * deathZoom  -curLBI.transform.forward * 0.3f;
-                    //curOffset = Vector3.up;
-
-                    //updateActualMovement(deathZoomFollow, deathZoomTrack);
-
-
-
                     break;
 
                 case CameraState.Spawning:
@@ -223,7 +177,6 @@ public class CameraController : MonoBehaviour
 
             if(curState != CameraState.Spawning && curState != CameraState.Win)
             {
-                //Debug.Log("doing offset " + curState);
                 transform.position = focus.position + curOffset;
             }
  
