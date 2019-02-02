@@ -54,6 +54,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
     Vector3 prevVelocity_2nd;
     Vector3 prevVelocity_3rd;
     Vector3 crashVelocity;
+    float crashVelocityStorageTime;
 
     // //Brady
      private bool adjusting = false;
@@ -369,6 +370,29 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     protected virtual void handleCrashCollision()
     {
+        if (crashVelocity.magnitude <= rb.velocity.magnitude)
+        {
+            crashVelocity = rb.velocity;
+
+            crashVelocityStorageTime = 0.1f;
+        }
+        else
+        {
+            if(crashVelocityStorageTime > 0)
+            {
+                crashVelocityStorageTime -= Time.deltaTime;
+                if (crashVelocityStorageTime <= 0)
+                {
+                    crashVelocityStorageTime = 0;
+                }
+            }
+            else
+            {
+                crashVelocity = rb.velocity;
+            }
+            
+        }
+
         bool vcheck1 = ((prevVelocity.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity.magnitude > rb.velocity.magnitude);
         bool vcheck2 = ((prevVelocity_2nd.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity_2nd.magnitude > rb.velocity.magnitude);
         bool vcheck3 = ((prevVelocity_3rd.magnitude - rb.velocity.magnitude) > crashSpeed && prevVelocity_3rd.magnitude > rb.velocity.magnitude);
@@ -382,21 +406,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
                 if (smokeParticleEffect != null)
                     smokeParticleEffect.SetActive(true);
 
-                if (vcheck1)
-                {
-                    //Debug.Log("check1");
-                    crashVelocity = prevVelocity;
-                }
-                if (vcheck2)
-                {
-                    //Debug.Log("check2");
-                    crashVelocity = prevVelocity_2nd;
-                }
-                if (vcheck3)
-                {
-                    //Debug.Log("check3");
-                    crashVelocity = prevVelocity_3rd;
-                }
+
 
 
                 if (vehicleHitBox.collidersCount() > 0)

@@ -192,11 +192,12 @@ namespace Luminosity.IO
                     if (prevVehicleIntangibility > 0)
                     {
                         prevVehicleIntangibility -= Time.deltaTime;
-                        if(curRider.curAbilityAmmo == 0)
+
+                        if (curRider.curAbilityAmmo == 0 || curRider.rb.velocity.y <= -50)
                         {
                             prevVehicleIntangibility = 0;
                         }
-                        if(prevVehicleIntangibility < 0)
+                        if (prevVehicleIntangibility < 0)
                         {
                             prevVehicleIntangibility = 0;
                         }
@@ -207,7 +208,10 @@ namespace Luminosity.IO
                         ambientSource.volume = 0;//forever.S curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
                     }
 
-                    if(curRider.vehicleToEnter() != null && curState != PlayerState.Dead && (curRider.vehicleToEnter().gameObject != prevVehicle || (curRider.vehicleToEnter().easyCheckWheelsOnGround() && (curRider.vehicleToEnter().getGravity() == Vector3.down )) || prevVehicleIntangibility <= 0))
+              
+
+                    //maybe ut this back curRider.vehicleToEnter().gameObject != prevVehicle || 
+                    if (curRider.vehicleToEnter() != null && curState != PlayerState.Dead && (prevVehicleIntangibility <= 0))
                     {
                         EnterVehicle(curRider.vehicleToEnter());
                         //if(curRider.veh)
@@ -280,7 +284,7 @@ namespace Luminosity.IO
                     curRider.inputHorz(InputManager.GetAxis("Horizontal"));
 
                     //input vertical movement
-                    curRider.inputVert(InputManager.GetAxis("Vertical"));
+                    curRider.inputVert(InputManager.GetAxis("Accelerate"));
 
                     //input fastfall
                     if (InputManager.GetButtonDown("FastFall"))
@@ -473,14 +477,14 @@ namespace Luminosity.IO
                     curVehicle.inputAccel(0);
 
                     Vector3 newUp = Vector3.up;
-                    if (curVehicle.easyCheckWheelsOnGround())
+                    if (curVehicle.easyCheckWheelsOnGround() && curVehicle.gravityDirection.normalized != Vector3.down)
                     {
                         newUp = curVehicle.transform.up;
                     }
 
 
                     //spawn rider above car.
-                    curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + newUp * 3.5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
+                    curRider = Instantiate(selectedCharacter_Prefab, curVehicle.transform.position + newUp * 5f, Quaternion.Euler(0, curVehicle.transform.eulerAngles.y, 0)).GetComponent<BasicRider>();
 
                     curRider.externalStart(mainCamera.transform);
                     curRider.beginCarJump(curVehicle.returnExitVelocity(), curVehicle.returnActualMaxSpeed(), newUp, curVehicle.easyCheckWheelsOnGround());
@@ -497,7 +501,7 @@ namespace Luminosity.IO
                 //mainCamera.ChangeDistance(12f, 2f);
 
                 prevVehicle = curVehicle.gameObject;
-                prevVehicleIntangibility = 3f;
+                prevVehicleIntangibility = 1f;
                 curRider.setPreviousVehicle(curVehicle.gameObject);
                 curVehicle = null;
             }
