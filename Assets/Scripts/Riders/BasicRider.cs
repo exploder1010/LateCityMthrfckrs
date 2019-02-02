@@ -182,7 +182,7 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             Debug.Log("kick");
             charAnim.SetBool("Special_Karate", true);
-            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(GetRealMaxSpeed()), rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
         }
     }
 
@@ -375,9 +375,9 @@ public class BasicRider : MonoBehaviour, IRider {
             rb.velocity = new Vector3(horVelocityCheck.x, saveY, horVelocityCheck.z);
         }
 
-        if(rb.velocity.y < -Mathf.Abs(GetRealMaxSpeed()))
+        if(rb.velocity.y < -Mathf.Abs(GetRealMaxFallSpeed()))
         {
-            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(GetRealMaxSpeed()), rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(GetRealMaxFallSpeed()), rb.velocity.z);
         }
 
         //Debug.Log(horVelocityCheck +"HorzVelcocity");
@@ -385,7 +385,7 @@ public class BasicRider : MonoBehaviour, IRider {
         speed = horVelocityCheck.magnitude / 50f;
     }
 
-    protected float GetRealMaxSpeed()
+    protected float GetRealMaxFallSpeed()
     {
         return Mathf.Max(maxFallSpeed, maxFallSpeed * new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude / 50f);
     }

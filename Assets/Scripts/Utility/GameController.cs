@@ -196,6 +196,7 @@ public class GameController : MonoBehaviour {
         
         //Debug.Log("frog");
         curPlayerController.EnterVehicle(startVehicleInstance.GetComponent<BasicVehicle>());
+        curPlayerController.comboMultiplier = 0;
         Destroy(fallingRider);
         if (GameObject.FindGameObjectWithTag("HUD"))
             GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setGame();

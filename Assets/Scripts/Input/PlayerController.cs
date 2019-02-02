@@ -49,7 +49,7 @@ namespace Luminosity.IO
         //flexing on the haters @ dell 
         float comboTimer = 0f;
         float comboTimeSet = 3f;
-        int comboMultiplier = 0;
+        public int comboMultiplier = 0;
         float comboDistance = 50f;
         Vector3 prevComboPosition;
         ButtonScripts comboBS;
@@ -423,6 +423,7 @@ namespace Luminosity.IO
                     comboTimer = 0;
                 }
 
+               
 
                 curState = PlayerState.Vehicle;
                 curVehicle = newVehicle;
@@ -442,6 +443,10 @@ namespace Luminosity.IO
 
                 mainCamera.ChangeFocus(curVehicle.transform, 0);
                 //mainCamera.ChangeDistance(10f, 2f);
+
+                //set position for combo
+                if (prevComboPosition != Vector3.zero )
+                    prevComboPosition = curVehicle.transform.position;
             }
             else
             {
@@ -462,14 +467,13 @@ namespace Luminosity.IO
             if (curState != PlayerState.Dead)
             {
 
-                //set position for combo
-                prevComboPosition = curVehicle.transform.position;
+                
 
                 curState = PlayerState.Rider;
 
                 if (curVehicle != null)
                 {
-
+                    curVehicle.transform.GetComponent<Rigidbody>().velocity *= 0.5f;
                     curVehicle.player = false;
 
                     //let go of steering wheel
