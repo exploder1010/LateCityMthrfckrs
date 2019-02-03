@@ -17,7 +17,7 @@ public class CarSpawner : MonoBehaviour {
 
     bool[] spawned;
 
-    float SpawnCountdown;
+    public float SpawnCountdown;
 
     // Use this for initialization
     void Start()
@@ -31,8 +31,6 @@ public class CarSpawner : MonoBehaviour {
         {
             CarToSpawn[i].SetActive(false);
         }
-
-        SpawnCountdown = 3f;
     }
 
     // Update is called once per frame
@@ -40,7 +38,6 @@ public class CarSpawner : MonoBehaviour {
     {
         if(SpawnCountdown > 0)
         {
-
             SpawnCountdown -= Time.deltaTime;
         }
         else

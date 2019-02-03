@@ -33,6 +33,8 @@ public class CameraController : MonoBehaviour
     private LevelBlockInfo curLBI;
     private bool firstLBI = true;
 
+    bool b_snapSpawnCam;
+
     // Use this for initialization
     void Start () {
         //forward = new Quaternion(0, 0, 0, 0);
@@ -46,6 +48,19 @@ public class CameraController : MonoBehaviour
         focus = null;
         curOffset = Vector3.zero;
         curLBI = null;
+    }
+
+    public void SnapSpawnCam()
+    {
+        b_snapSpawnCam = true ;
+
+    }
+
+    void Snap()
+    {
+        b_snapSpawnCam = false;
+        transform.position = focus.position + curLBI.VehicleCameraOffset;
+        transform.eulerAngles = curLBI.VehicleCameraEulerAngles;
     }
 	
 	// Update is called once per frame
@@ -88,7 +103,10 @@ public class CameraController : MonoBehaviour
                 case CameraState.Vehicle:
                     if (curLBI)
                     {
-                        
+                        if (b_snapSpawnCam)
+                        {
+                            Snap();
+                        }
 
                         if (curOffset == Vector3.zero)
                         {
@@ -103,7 +121,7 @@ public class CameraController : MonoBehaviour
 
                             curOffset += dir * curLBI.VehicleCameraFollowSpeed * Time.deltaTime;
 
-                            Debug.Log(curLBI.VehicleCameraTrackSpeed + "from " + curLBI);
+                            //Debug.Log(curLBI.VehicleCameraTrackSpeed + "from " + curLBI);
                             Quaternion rot = transform.rotation;
                             rot.eulerAngles = curLBI.VehicleCameraEulerAngles; // + new Vector3(0, curLBI.transform.eulerAngles.y, 0);
                             transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, curLBI.VehicleCameraTrackSpeed * Time.deltaTime);

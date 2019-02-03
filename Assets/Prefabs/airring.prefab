@@ -9,46 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1857758795029952}
+  m_RootGameObject: {fileID: 1469213962134892}
   m_IsPrefabAsset: 1
---- !u!1 &1857758795029952
+--- !u!1 &1469213962134892
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4981506392384970}
-  - component: {fileID: 33626374891977930}
-  - component: {fileID: 23260387987724272}
-  - component: {fileID: 114804989660315598}
-  - component: {fileID: 65709783188062208}
+  - component: {fileID: 4855836549627906}
+  - component: {fileID: 33191409223091344}
+  - component: {fileID: 23788751396026710}
+  - component: {fileID: 114618648162793416}
+  - component: {fileID: 65076519809845564}
   m_Layer: 0
-  m_Name: airringtoputback
+  m_Name: airring
   m_TagString: ResetInScene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4981506392384970
+--- !u!4 &4855836549627906
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857758795029952}
-  m_LocalRotation: {x: -0.4999993, y: -0.4999993, z: 0.5000007, w: 0.5000007}
-  m_LocalPosition: {x: -25.85, y: 10.59, z: 849.4}
-  m_LocalScale: {x: 100.723625, y: 100.723625, z: 100.723625}
+  m_GameObject: {fileID: 1469213962134892}
+  m_LocalRotation: {x: -0.70682013, y: -0.020076714, z: 0.02007788, w: 0.7068233}
+  m_LocalPosition: {x: -2.8, y: -8, z: 424.3}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 90.00001}
---- !u!23 &23260387987724272
+--- !u!23 &23788751396026710
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857758795029952}
+  m_GameObject: {fileID: 1469213962134892}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: c763e19923194fb43ba6ae83b001bb9a, type: 2}
+  - {fileID: 2100000, guid: 10170c0d85e9f354986393b5bcd356e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,41 +78,41 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33626374891977930
+--- !u!33 &33191409223091344
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857758795029952}
+  m_GameObject: {fileID: 1469213962134892}
   m_Mesh: {fileID: 4300000, guid: 374cdd2f6b8ad0646bceb4ad1a183dad, type: 3}
---- !u!65 &65709783188062208
+--- !u!65 &65076519809845564
 BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857758795029952}
+  m_GameObject: {fileID: 1469213962134892}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.032472186, y: 0.0051961546, z: 0.03411613}
   m_Center: {x: -0.00033524074, y: -2.3283064e-10, z: -0.00034119003}
---- !u!114 &114804989660315598
+--- !u!114 &114618648162793416
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857758795029952}
+  m_GameObject: {fileID: 1469213962134892}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 233914b5baedd914fa34687656bf0722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeExtend: 5
+  timeExtend: 6
   textPrefab: {fileID: 114035094424349822, guid: d6343924ff75bc64caea5ff130389e77,
     type: 2}
   particlePrefab: {fileID: 1947871717301538, guid: a990e3ac1318b834488c784d851f42a9,
     type: 2}
   speed: 10
   animLength: 1.2
-  timeRemaining: 0
+  timeRemaining: 1.2

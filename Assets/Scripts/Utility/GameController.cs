@@ -120,6 +120,10 @@ public class GameController : MonoBehaviour {
         for (int i = 0; i < OriginalResetObjects.Length; i++)
         {
             InstanceResetObjects[i] = Instantiate(OriginalResetObjects[i]);
+            if (InstanceResetObjects[i].transform.GetComponent<CarSpawner>())
+            {
+                InstanceResetObjects[i].transform.GetComponent<CarSpawner>().SpawnCountdown = spawnTimeSet;
+            }
             InstanceResetObjects[i].SetActive(true);
         }
 
@@ -196,7 +200,10 @@ public class GameController : MonoBehaviour {
         
         //Debug.Log("frog");
         curPlayerController.EnterVehicle(startVehicleInstance.GetComponent<BasicVehicle>());
+        mainCamera.GetComponent<CameraController>().SnapSpawnCam();
         curPlayerController.comboMultiplier = 0;
+        curPlayerController.comboTimer = 0;
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<ButtonScripts>().comboEnd(0);
         Destroy(fallingRider);
         if (GameObject.FindGameObjectWithTag("HUD"))
             GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setGame();

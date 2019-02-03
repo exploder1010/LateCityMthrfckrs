@@ -47,7 +47,7 @@ namespace Luminosity.IO
         private float previousVelocity;
 
         //flexing on the haters @ dell 
-        float comboTimer = 0f;
+        public float comboTimer = 0f;
         float comboTimeSet = 3f;
         public int comboMultiplier = 0;
         float comboDistance = 50f;

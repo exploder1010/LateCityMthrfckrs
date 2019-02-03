@@ -175,16 +175,7 @@ public class BasicRider : MonoBehaviour, IRider {
         endCarJump(input);
     }
 
-    //attempt to perform fastfall --- helllllla quick and dirty
-    public virtual void inputFastFall(int input)
-    {
-        if(input == 1 )
-        {
-            Debug.Log("kick");
-            charAnim.SetBool("Special_Karate", true);
-            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
-        }
-    }
+  
 
     //attempt to start break in move
     public virtual void inputBreakIn(int input)
@@ -359,6 +350,18 @@ public class BasicRider : MonoBehaviour, IRider {
             carJumpVelocity = 0f;
         }
 
+    }
+
+    //attempt to perform fastfall --- helllllla quick and dirty
+    public virtual void inputFastFall(int input)
+    {
+        if (input == 1)
+        {
+            Debug.Log("kick");
+            charAnim.SetBool("Special_Karate", true);
+            rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
+            carJumpTimer = 0f;
+        }
     }
 
     //constrain max speed
