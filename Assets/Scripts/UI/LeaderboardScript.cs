@@ -42,6 +42,11 @@ public class LeaderboardScript : MonoBehaviour {
         //string filePath = Application.dataPath;
         //File.WriteAllText(filePath + "leaderboard.json", leaderboardJSON);
         print(leaderboard[namePrompt.text]);
+
+
+
+        //SQL code
+        StartCoroutine(SQL_Insert());
     }
 
     public void ShowLeaderboard()
@@ -61,5 +66,19 @@ public class LeaderboardScript : MonoBehaviour {
             leaderboardText.text += entry;
             leaderboardText.text += "\n";
         }
+    }
+
+    IEnumerator SQL_Insert()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("name", "fakeNAme");
+        form.AddField("time", Timer.timeRemaining.ToString());
+        form.AddField("map", SceneManager.GetActiveScene().name);
+        WWW server = new WWW("http://latecityriders.zapto.org/insert.php", form);
+        Debug.Log(namePrompt.text);
+        yield return server;
+        Debug.Log("server response:");
+        Debug.Log(server.text);
+        Debug.Log("END");
     }
 }
