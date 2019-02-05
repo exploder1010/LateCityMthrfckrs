@@ -108,6 +108,8 @@ public class ButtonScripts : MonoBehaviour {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             winUI.SetActive(true);
+            winUI.SendMessage("ShowLeaderboard");
+            winUI.SendMessage("CheckTime");
             gameOverUI.SetActive(false);
         }
            
