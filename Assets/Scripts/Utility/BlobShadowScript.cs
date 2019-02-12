@@ -18,6 +18,7 @@ public class BlobShadowScript : MonoBehaviour
     bool _interp = false;
     Vector3 _lastPos = new Vector3(0,0,0);
     Vector3 _lastUp = new Vector3(0, 1, 0);
+    BR_Business biz;
 
     void Start()
     {
@@ -27,13 +28,14 @@ public class BlobShadowScript : MonoBehaviour
             _parentSpawned.gameObject.SetActive(true);
             _parentSpawned.SetParent(transform);
             _parent.gameObject.SetActive(false);
+            biz = GetComponent<BR_Business>();
         }
         
     }
     
     void Update()
     {
-        if (_parentSpawned != null && _parentSpawned.gameObject.activeSelf)
+        if (_parentSpawned != null && _parentSpawned.gameObject.activeSelf && biz)
         {
             Vector3 cPos = transform.position;
             Vector3 cVel = GetComponent<Rigidbody>().velocity;
@@ -44,9 +46,9 @@ public class BlobShadowScript : MonoBehaviour
                 hit = Physics.Raycast(cPos, cVel, out castHit, TimeStep * cVel.magnitude, _layerMask);
                 Debug.DrawLine(cPos, cPos + TimeStep * cVel);
                 cPos += TimeStep * cVel;
-                cVel += TimeStep * GetComponent<BR_Business>().gravityMagnitude * GetComponent<BR_Business>().gravityDirection;
-                if (cVel.z > GetComponent<BR_Business>().maxFallSpeed)
-                    cVel = new Vector3(cVel.x, cVel.y, GetComponent<BR_Business>().maxFallSpeed);
+                cVel += TimeStep * biz.gravityMagnitude * biz.gravityDirection;
+                if (cVel.z > biz.maxFallSpeed)
+                    cVel = new Vector3(cVel.x, cVel.y, biz.maxFallSpeed);
             }
 
             if (hit)
