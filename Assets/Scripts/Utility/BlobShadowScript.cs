@@ -37,25 +37,17 @@ public class BlobShadowScript : MonoBehaviour
     {
         if (_parentSpawned != null && _parentSpawned.gameObject.activeSelf && biz)
         {
-            Vector3 cPos = transform.position;
-            Vector3 cVel = GetComponent<Rigidbody>().velocity;
+            Vector3 Pos = transform.position;
+            Vector3 Vel = GetComponent<Rigidbody>().velocity;
+            Vector3 Dir = new Vector3(Vel.x, -1 * GetComponent<BR_Business>().maxFallSpeed, Vel.z);
             RaycastHit castHit = new RaycastHit();
-            bool hit = false;
-            for(int i = 0; i < MaxSteps && !hit; i++)
-            {
-                hit = Physics.Raycast(cPos, cVel, out castHit, TimeStep * cVel.magnitude, _layerMask);
-                Debug.DrawLine(cPos, cPos + TimeStep * cVel);
-                cPos += TimeStep * cVel;
-                cVel += TimeStep * biz.gravityMagnitude * biz.gravityDirection;
-                if (cVel.z > biz.maxFallSpeed)
-                    cVel = new Vector3(cVel.x, cVel.y, biz.maxFallSpeed);
-            }
+            Physics.Raycast(new Ray(Pos, Dir), out castHit, _layerMask );
 
-            if (hit)
+            if (castHit.collider != null)
             {
                 if (!_interp)
                 {
-                    _parentSpawned.position = castHit.point + _parentOffset;    // Set Position
+                    _parentSpawned.position = castHit.point + _parentOffset.y * castHit.normal;    // Set Position
                     _parentSpawned.up = castHit.normal;                         // Rotate to same angle as ground
 
                     _lastPos = _parentSpawned.position;

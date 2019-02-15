@@ -17,6 +17,23 @@ ModelImporter:
     100022: //RootNode
     100024: TruckBody
     100026: Windows
+    100028: RammerBody1
+    100030: The_Truck
+    100032: transform1
+    100034: transform10
+    100036: transform11
+    100038: transform12
+    100040: transform13
+    100042: transform2
+    100044: transform3
+    100046: transform4
+    100048: transform5
+    100050: transform6
+    100052: transform7
+    100054: transform8
+    100056: transform9
+    100058: RammerBody1_TruckBody
+    100060: RightFrontWheel
     400000: Headlights
     400002: LeftFrontTire
     400004: LeftFrontTire 1
@@ -31,6 +48,23 @@ ModelImporter:
     400022: //RootNode
     400024: TruckBody
     400026: Windows
+    400028: RammerBody1
+    400030: The_Truck
+    400032: transform1
+    400034: transform10
+    400036: transform11
+    400038: transform12
+    400040: transform13
+    400042: transform2
+    400044: transform3
+    400046: transform4
+    400048: transform5
+    400050: transform6
+    400052: transform7
+    400054: transform8
+    400056: transform9
+    400058: RammerBody1_TruckBody
+    400060: RightFrontWheel
     2100000: lambert6
     2300000: Headlights
     2300002: LeftFrontTire
@@ -45,6 +79,10 @@ ModelImporter:
     2300020: RightRearWheel
     2300022: TruckBody
     2300024: Windows
+    2300026: The_Truck
+    2300028: //RootNode
+    2300030: RammerBody1_TruckBody
+    2300032: RightFrontWheel
     3300000: Headlights
     3300002: LeftFrontTire
     3300004: LeftFrontTire 1
@@ -58,6 +96,10 @@ ModelImporter:
     3300020: RightRearWheel
     3300022: TruckBody
     3300024: Windows
+    3300026: The_Truck
+    3300028: //RootNode
+    3300030: RammerBody1_TruckBody
+    3300032: RightFrontWheel
     4300000: TruckBody
     4300002: LeftFrontWheel
     4300004: LeftFrontTire
@@ -71,7 +113,15 @@ ModelImporter:
     4300020: Headlights
     4300022: MetalGrill
     4300024: Plow
-  externalObjects: {}
+    4300026: The_Truck
+    4300028: RammerBody1_TruckBody
+    4300030: RightFrontWheel
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert6
+    second: {fileID: 2100000, guid: 4dc57e49ac866e54b8f78c140ee2c8ce, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
