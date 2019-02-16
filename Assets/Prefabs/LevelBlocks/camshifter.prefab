@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1955657303767626}
+  m_IsPrefabAsset: 1
+--- !u!1 &1955657303767626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4597081088940292}
+  - component: {fileID: 33814249580685838}
+  - component: {fileID: 23663639422496118}
+  - component: {fileID: 65118761130151536}
+  - component: {fileID: 114562509317806986}
+  m_Layer: 0
+  m_Name: camshifter
+  m_TagString: LevelBlock
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &4597081088940292
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1955657303767626}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2, y: -70.7, z: 645.4}
+  m_LocalScale: {x: 136.758, y: 2.2793, z: 136.758}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23663639422496118
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1955657303767626}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 077ae73a2d26ded49a7eba22316f9f01, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &33814249580685838
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1955657303767626}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65118761130151536
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1955657303767626}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.0929337, z: 1}
+  m_Center: {x: 0, y: 0.046466827, z: 0}
+--- !u!114 &114562509317806986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1955657303767626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ccff73aa5a17004eaed1f46cc214af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VehicleCameraOffset: {x: 0, y: 8, z: -20}
+  VehicleCameraEulerAngles: {x: 25, y: 0, z: 0}
+  VehicleCameraFollowSpeed: 45
+  VehicleCameraTrackSpeed: 45
+  RiderCameraOffset: {x: 0, y: 3.4, z: -6}
+  RiderCameraEulerAngles: {x: 33, y: 0, z: 0}
+  RiderCameraFollowSpeed: 50
+  RiderCameraTrackSpeed: 50
+  Lane1Waypoints:
+  - {fileID: 0}
+  Lane2Waypoints:
+  - {fileID: 0}
+  Lane3Waypoints:
+  - {fileID: 0}
+  Lane4Waypoints:
+  - {fileID: 0}
+  Lane5Waypoints:
+  - {fileID: 0}
+  Lane6Waypoints:
+  - {fileID: 0}
+  Lane7Waypoints: []
+  Lane8Waypoints: []
+  Lane9Waypoints: []
+  Lane10Waypoints: []
+  Lane11Waypoints: []
+  Lane12Waypoints: []
