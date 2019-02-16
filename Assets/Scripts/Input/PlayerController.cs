@@ -176,54 +176,7 @@ namespace Luminosity.IO
                 //process input for air movement
                 case PlayerState.Rider:
 
-                    //only countdown in air
-                    if (comboTimer > 0)
-                    {
-                        comboTimer -= Time.deltaTime;
-                        if (comboTimer <= 0)
-                        {
-                            if (comboBS)
-                                comboBS.comboEnd(comboMultiplier);
-                            comboTimer = 0;
-                            comboMultiplier = 0;
-                        }
-                    }
-
-                    if (prevVehicleIntangibility > 0)
-                    {
-                        prevVehicleIntangibility -= Time.deltaTime;
-
-                        if (curRider.curAbilityAmmo == 0 || curRider.rb.velocity.y <= -50)
-                        {
-                            prevVehicleIntangibility = 0;
-                        }
-                        if (prevVehicleIntangibility < 0)
-                        {
-                            prevVehicleIntangibility = 0;
-                        }
-                    }
-
-                    if (curRider)
-                    {
-                        ambientSource.volume = 0;//forever.S curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
-                    }
-
-              
-
-                    //maybe ut this back curRider.vehicleToEnter().gameObject != prevVehicle || 
-                    if (curRider.vehicleToEnter() != null && curState != PlayerState.Dead && (prevVehicleIntangibility <= 0))
-                    {
-                        EnterVehicle(curRider.vehicleToEnter());
-                        //if(curRider.veh)
-                        //curState != PlayerState.Dead && (newVehicle.gameObject != prevVehicle || (newVehicle.easyCheckWheelsOnGround() && newVehicle.getGravity() == Vector3.down) || prevVehicleIntangibility <= 0)
-                        break;
-                    }
-                    else
-                    {
-                        curRider.rejectVehicleToEnter();
-                    }
-                    
-                    if(curRider.checkRagdoll() != null)
+                    if (curRider.checkRagdoll() != null)
                     {
 
                         //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
@@ -242,93 +195,144 @@ namespace Luminosity.IO
                             //mainCamera.ChangeDistance(6f, 2f);
                             curRider.destroyThis();
                         }
- 
+
                         //drop combo before cashing in for death
                         comboMultiplier = 0;
                         comboTimer = 0;
                         if (comboBS)
                             comboBS.comboEnd(comboMultiplier);
-            
+
                         break;
                     }
-
-                    if(!win && curRider.goalCollider.collidersCount() > 0)
+                    else
                     {
-                        win = true;
-                        GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setWin();
-                        
-
-                        curRider.goalCollider.returnColliders()[0].transform.root.Find("shatter1").gameObject.SetActive(true);
-                        curRider.goalCollider.returnColliders()[0].gameObject.SetActive(false);
-                        curState = PlayerState.Win;
-                        mainCamera.ChangeFocus(curRider.transform, 1);
-                        mainCamera.SetCameraPosition(curRider.transform.position + curRider.transform.forward * 1.3f + curRider.transform.up * 1.1f);
-
-                        //curRider.off = true;
-                        Rigidbody killrb = curRider.rb;
-                        Destroy(curRider);
-                        killrb.isKinematic = true;
-                        killrb.velocity = Vector3.zero;
-
-                        SoundScript.PlaySound(playerSource, "Win");
-                        if (comboBS)
+                        //only countdown combo in air
+                        if (comboTimer > 0)
                         {
-                            comboMultiplier = 0;
-                            comboBS.comboEnd(comboMultiplier);
-                            comboBS.Win(GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().timeRemaining > 0);
+                            comboTimer -= Time.deltaTime;
+                            if (comboTimer <= 0)
+                            {
+                                if (comboBS)
+                                    comboBS.comboEnd(comboMultiplier);
+                                comboTimer = 0;
+                                comboMultiplier = 0;
+                            }
                         }
+
+                        //ENTER VEHICLE
+                        if (prevVehicleIntangibility > 0)
+                        {
+                            prevVehicleIntangibility -= Time.deltaTime;
+
+                            if (curRider.curAbilityAmmo == 0 || curRider.rb.velocity.y <= -50)
+                            {
+                                prevVehicleIntangibility = 0;
+                            }
+                            if (prevVehicleIntangibility < 0)
+                            {
+                                prevVehicleIntangibility = 0;
+                            }
+                        }
+                        //maybe ut this back curRider.vehicleToEnter().gameObject != prevVehicle || 
+                        if (curRider.vehicleToEnter() != null && curState != PlayerState.Dead && (prevVehicleIntangibility <= 0 || curRider.vehicleToEnter().gameObject != prevVehicle))
+                        {
+                            EnterVehicle(curRider.vehicleToEnter());
+                            //if(curRider.veh)
+                            //curState != PlayerState.Dead && (newVehicle.gameObject != prevVehicle || (newVehicle.easyCheckWheelsOnGround() && newVehicle.getGravity() == Vector3.down) || prevVehicleIntangibility <= 0)
+                            break;
+                        }
+                        else
+                        {
+                            curRider.rejectVehicleToEnter();
+                        }
+
+                        //ambience
+                        if (curRider)
+                        {
+                            ambientSource.volume = 0;//forever.S curRider.GetComponent<Rigidbody>().velocity.magnitude / 100;
+                        }
+
+                        //win
+                        if (!win && curRider.goalCollider.collidersCount() > 0)
+                        {
+                            win = true;
+                            GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setWin();
+
+
+                            curRider.goalCollider.returnColliders()[0].transform.root.Find("shatter1").gameObject.SetActive(true);
+                            curRider.goalCollider.returnColliders()[0].gameObject.SetActive(false);
+                            curState = PlayerState.Win;
+                            mainCamera.ChangeFocus(curRider.transform, 1);
+                            mainCamera.SetCameraPosition(curRider.transform.position + curRider.transform.forward * 1.3f + curRider.transform.up * 1.1f);
+
+                            //curRider.off = true;
+                            Rigidbody killrb = curRider.rb;
+                            Destroy(curRider);
+                            killrb.isKinematic = true;
+                            killrb.velocity = Vector3.zero;
+
+                            SoundScript.PlaySound(playerSource, "Win");
+                            if (comboBS)
+                            {
+                                comboMultiplier = 0;
+                                comboBS.comboEnd(comboMultiplier);
+                                comboBS.Win(GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().timeRemaining > 0);
+                            }
+                        }
+
+
+                        //input horizontal movement
+                        curRider.inputHorz(InputManager.GetAxis("Horizontal"));
+
+                        //input vertical movement
+                        curRider.inputVert(InputManager.GetAxis("Accelerate"));
+
+                        //input fastfall
+                        if (InputManager.GetButtonDown("FastFall"))
+                        {
+                            curRider.inputFastFall(1);
+                        }
+
+                        //input abilty
+                        if (InputManager.GetButtonDown("Jump"))
+                        {
+                            curRider.inputAbility(1);
+                        }
+                        else if (InputManager.GetButton("Jump"))
+                        {
+                            curRider.inputAbility(2);
+                        }
+                        else if (InputManager.GetButtonUp("Jump"))
+                        {
+                            curRider.inputAbility(3);
+                        }
+                        else
+                        {
+                            curRider.inputAbility(0);
+                        }
+
+                        //input breakin
+                        if (InputManager.GetButtonDown("BreakIn"))
+                        {
+                            curRider.inputBreakIn(1);
+                        }
+                        else if (InputManager.GetButton("BreakIn"))
+                        {
+                            curRider.inputBreakIn(2);
+                        }
+                        else if (InputManager.GetButtonUp("BreakIn"))
+                        {
+                            curRider.inputBreakIn(3);
+                        }
+                        else
+                        {
+                            curRider.inputBreakIn(0);
+                        }
+
+
                     }
 
 
-                    //input horizontal movement
-                    curRider.inputHorz(InputManager.GetAxis("Horizontal"));
-
-                    //input vertical movement
-                    curRider.inputVert(InputManager.GetAxis("Accelerate"));
-
-                    //input fastfall
-                    if (InputManager.GetButtonDown("FastFall"))
-                    {
-                        curRider.inputFastFall(1);
-                    }
-
-                    //input abilty
-                    if (InputManager.GetButtonDown("Jump"))
-                    {
-                        curRider.inputAbility(1);
-                    }
-                    else if (InputManager.GetButton("Jump"))
-                    {
-                        curRider.inputAbility(2);
-                    }
-                    else if (InputManager.GetButtonUp("Jump"))
-                    {
-                        curRider.inputAbility(3);
-                    }
-                    else
-                    {
-                        curRider.inputAbility(0);
-                    }
-
-                    //input breakin
-                    if (InputManager.GetButtonDown("BreakIn"))
-                    {
-                        curRider.inputBreakIn(1);
-                    }
-                    else if (InputManager.GetButton("BreakIn"))
-                    {
-                        curRider.inputBreakIn(2);
-                    }
-                    else if (InputManager.GetButtonUp("BreakIn"))
-                    {
-                        curRider.inputBreakIn(3);
-                    }
-                    else
-                    {
-                        curRider.inputBreakIn(0);
-                    }
-
-                    
                     break;
 
                 case PlayerState.Dead:
@@ -398,13 +402,13 @@ namespace Luminosity.IO
             {
 
                 //successful combo
-                if (comboTimer > 0 && (prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance)
+                if (comboTimer > 0 && (prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance && newVehicle.gameObject != prevVehicle)
                 {
                     comboMultiplier++;
                     comboTimer = comboTimeSet;
                 }
                 //start new combo
-                else if ((prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance && !prevBroken)
+                else if ((prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance && !prevBroken && newVehicle.gameObject != prevVehicle)
                 {
                     if (comboBS)
                         comboBS.comboStart();

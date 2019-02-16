@@ -5431,7 +5431,7 @@ MonoBehaviour:
   goalCollider: {fileID: 114733968528586682}
   targetIconPrefab: {fileID: 1867227732554446, guid: 106b3a51ad172a54f8ef45adac63b497,
     type: 2}
-  airAccel: 90
+  airAccel: 100
   boostThreshold: 0.85
   carJumpTimeSet: 0.15
   carJumpStartImpulse: 4
@@ -5540,7 +5540,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0.67, z: 0}
 --- !u!136 &136100195519356988
 CapsuleCollider:
