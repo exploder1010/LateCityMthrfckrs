@@ -32,7 +32,7 @@ public class LeaderboardScript : MonoBehaviour {
         form.AddField("name", namePrompt.text);
         form.AddField("time", Timer.timeRemaining.ToString());
         form.AddField("map", SceneManager.GetActiveScene().name);
-        WWW server = new WWW("http://latecityriders.zapto.org/leaderboard/insert.php", form);
+        WWW server = new WWW("http://latecityriders.zapto.org/dev/insert.php", form);
         yield return server;
         ShowLeaderboard();
     }
