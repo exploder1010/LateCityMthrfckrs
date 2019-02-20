@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Piston : MonoBehaviour
 {
-    public bool moving = true;
+    public bool moving = false;
     public Vector3 Destination, Original;
-    public float StallingTime, CrushTime, CrushSpeed;
+    public float StallingTime, CrushTime, CrushDelay, CrushSpeed;
     public float direction = 1;
 
     void Start()
     {
         Original = transform.position;
         Destination = transform.position;
-        StartCoroutine(Crush());
+        StartCoroutine(Delay());
     }
 
     public void FixedUpdate()
@@ -57,5 +57,12 @@ public class Piston : MonoBehaviour
         }
         direction *= -1;
         StartCoroutine(StayPut());
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(CrushDelay);
+        moving = true;
+        StartCoroutine(Crush());
     }
 }
