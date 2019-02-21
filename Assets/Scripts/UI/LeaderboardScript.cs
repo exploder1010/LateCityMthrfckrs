@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System.IO;
 
 public class LeaderboardScript : MonoBehaviour {
-    public Text leaderboardText;
+    public Transform leaderboardUI;
     public Text namePrompt;
     public timerScript Timer;
 
@@ -31,7 +31,7 @@ public class LeaderboardScript : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("name", namePrompt.text);
         form.AddField("time", Timer.timeRemaining.ToString());
-        form.AddField("map", SceneManager.GetActiveScene().name);
+        form.AddField("map", SceneManager.GetActiveScene().name.Replace(" ", "_"));
         WWW server = new WWW("http://latecityriders.zapto.org/dev/insert.php", form);
         yield return server;
         ShowLeaderboard();
@@ -39,14 +39,25 @@ public class LeaderboardScript : MonoBehaviour {
 
     IEnumerator SQL_GetScores()
     {
-        leaderboardText.text = "";
         WWWForm form = new WWWForm();
-        form.AddField("map", SceneManager.GetActiveScene().name);
+        string mapName = SceneManager.GetActiveScene().name.Replace(" ", "_");
+        form.AddField("map", mapName);
         WWW server = new WWW("http://latecityriders.zapto.org/leaderboard/getscores.php", form);
         yield return server;
-        foreach (string row in server.text.Split(';')){
-            leaderboardText.text += row;
-            leaderboardText.text += '\n';
+        Debug.Log(server.text);
+        string[] rows = server.text.Split(';');
+        for (int i = 0; i < 6; i++){
+            Text nameText = leaderboardUI.Find("Name" + (i+1).ToString()).GetComponent<Text>();
+            Text timeText = leaderboardUI.Find("Time" + (i+1).ToString()).GetComponent<Text>();
+            nameText.text = (i+1) + ": ";
+            timeText.text = "";
+
+            if (i < rows.Length){
+                string[] r = rows[i].Split('|');
+                nameText.text += r[0];
+                if (r.Length > 1)
+                    timeText.text = r[1];
+            }
         }
     }
 
