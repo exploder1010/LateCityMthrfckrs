@@ -29,10 +29,10 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
     public float normalMaxSpeed = 40f;
     public float computerMaxSpeed = 20f;
-    float tempMaxSpeed;
-    float tempMaxSpeedLowerLimitPercent = 0.85f;
+    public float tempMaxSpeed;
+    public float tempMaxSpeedLowerLimitPercent = 0.85f;
     float tempMaxSpeedGainRate = 0.5f;
-    float potentialMaxSpeed;
+    public float potentialMaxSpeed;
     //float prevPotentialMaxSpeed;
     float startSpeed;
 
@@ -187,7 +187,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         {
             if (player || transform.GetComponent<AiController>() != null && transform.GetComponent<AiController>().stopUpdate)
             {
-
+                Debug.Log(rb.velocity.magnitude + " and " + tempMaxSpeed + " DONE");
                 if (rb.velocity.magnitude > tempMaxSpeed)
                 {
                     float tempMaxSpeedGain = (potentialMaxSpeed - tempMaxSpeed) * tempMaxSpeedGainRate * Time.deltaTime;
