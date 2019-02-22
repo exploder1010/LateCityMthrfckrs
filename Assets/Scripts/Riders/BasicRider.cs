@@ -407,6 +407,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected virtual void handleRoadCollision()
     {
+        rdSpawnPoint = transform.position;
         if (!noClip)
         {
             if (targetedVehicle == null && roadCollider.collidersCount() > 0)//|| brokenVehicleCollider.collidersCount() > 0)
@@ -430,7 +431,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
     }
 
-    protected virtual void spawnRagdoll()
+    public virtual void spawnRagdoll()
     {
         if (currentRagdoll == null && !noClip)
         {

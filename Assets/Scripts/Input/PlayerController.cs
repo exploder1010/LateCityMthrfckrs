@@ -175,10 +175,11 @@ namespace Luminosity.IO
 
                 //process input for air movement
                 case PlayerState.Rider:
-
-                    if (curRider.checkRagdoll() != null)
+                    Debug.Log(curRider.transform.position.y + " POSITION");
+                    if (curRider.checkRagdoll() != null || curRider.transform.position.y < -500)
                     {
-
+                        
+                        
                         //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
                         if (Time.timeScale == 1)
                         {
@@ -189,6 +190,10 @@ namespace Luminosity.IO
 
                             curState = PlayerState.Dead;
 
+                            if(curRider.checkRagdoll() == null)
+                            {
+                                curRider.spawnRagdoll();
+                            }
                             curRagdoll = curRider.checkRagdoll().transform.GetComponent<RagdollStorage>().rb;
 
                             mainCamera.ChangeFocus(curRagdoll.transform, -1);
