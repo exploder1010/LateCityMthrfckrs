@@ -501,15 +501,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -15.232135
+      value: -6.245476
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.56
+      value: -7.3313694
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 307.57825
+      value: 284.43628
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -617,15 +617,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.216305
+      value: -2.2296457
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.614303
+      value: -7.2770653
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 55.129013
+      value: 31.98706
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1948,15 +1948,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -14.8
+      value: -5.813341
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.95
+      value: -6.941368
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 511.3568
+      value: 488.21484
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2167,11 +2167,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 38.319, y: -25.586, z: 127.02901}
---- !u!224 &460078339 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 224993115667210062, guid: b5185f3ccc7202d4dadad1bafc06b104,
-    type: 2}
-  m_PrefabInternal: {fileID: 1137968023}
 --- !u!1001 &466826599
 Prefab:
   m_ObjectHideFlags: 0
@@ -4109,6 +4104,711 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 585790083}
   m_Mesh: {fileID: 4300024, guid: 8da7e959d2334284e821e13d1f6fb248, type: 3}
+--- !u!1 &591177130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1426989004046072, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 591177135}
+  - component: {fileID: 591177134}
+  - component: {fileID: 591177133}
+  - component: {fileID: 591177132}
+  - component: {fileID: 591177131}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: InputManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &591177131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114763264031547316, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 591177130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff45da8a1cd6484396c3764dd2d7564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &591177132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114229351609942880, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 591177130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98b79d0d092b27f42b4008cfe92cc0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clips:
+  - name: Death
+    Clip: {fileID: 8300000, guid: df188a6c41f354a4287c356ee0f949f7, type: 3}
+  - name: Jump
+    Clip: {fileID: 8300000, guid: 429c55866811d30488dd337767946575, type: 3}
+  - name: Win
+    Clip: {fileID: 8300000, guid: cfe00bc0e77608b45b03035da0ee62f1, type: 3}
+  - name: Ability
+    Clip: {fileID: 8300000, guid: 6e4d7fdf602f61041960792d28f3329b, type: 3}
+  - name: UI Click
+    Clip: {fileID: 8300000, guid: 29f919df0da1b394bb3b8c9410142bc7, type: 3}
+  - name: Engine
+    Clip: {fileID: 8300000, guid: b7f71dc4d3727714c8b4b34caa016132, type: 3}
+--- !u!114 &591177133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114511544142092730, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 591177130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a84dcdb1aa751e24496a02075018959a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTimeSet: 3
+  mainCamera_Prefab: {fileID: 1081822885258984, guid: c3135ffcfce64b74889799f9de5b6e13,
+    type: 2}
+  playerController_Prefab: {fileID: 1880477644275540, guid: 1127f6d14d85b264cb3cb900178fb920,
+    type: 2}
+  startingVehicle_Prefab: {fileID: 1261640690947128, guid: c9dc1835f4cf5614e8062c42c52f5cbe,
+    type: 2}
+  selectedRider_Prefab: {fileID: 1258154895977210, guid: 7362886f6fc94494a8f5a4599704dcf0,
+    type: 2}
+  spawnLocation: {fileID: 1035136793}
+  startInAir: 0
+--- !u!114 &591177134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114118286750020480, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 591177130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb91bdba6520fd248bbc41b14d02e9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_controlSchemes:
+  - m_name: KeyboardAndMouse
+    m_description: 
+    m_isExpanded: 1
+    m_uniqueID: 06cd669440d0422a95f3e89bd3812515
+    m_actions:
+    - m_name: Horizontal
+      m_description: 
+      m_bindings:
+      - m_positive: 100
+        m_negative: 97
+        m_deadZone: 0
+        m_gravity: 1000
+        m_sensitivity: 1000
+        m_snap: 1
+        m_invert: 0
+        m_type: 2
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Vertical
+      m_description: 
+      m_bindings:
+      - m_positive: 119
+        m_negative: 115
+        m_deadZone: 0
+        m_gravity: 1000
+        m_sensitivity: 1000
+        m_snap: 1
+        m_invert: 0
+        m_type: 2
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Accelerate
+      m_description: 
+      m_bindings:
+      - m_positive: 119
+        m_negative: 115
+        m_deadZone: 0
+        m_gravity: 1000
+        m_sensitivity: 1000
+        m_snap: 1
+        m_invert: 0
+        m_type: 2
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Jump
+      m_description: 
+      m_bindings:
+      - m_positive: 32
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: BreakIn
+      m_description: 
+      m_bindings:
+      - m_positive: 306
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Retry
+      m_description: 
+      m_bindings:
+      - m_positive: 114
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: FastFall
+      m_description: 
+      m_bindings:
+      - m_positive: 304
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: LookHorizontal
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 0.1
+        m_snap: 0
+        m_invert: 0
+        m_type: 1
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: LookVertical
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 0.1
+        m_snap: 0
+        m_invert: 0
+        m_type: 1
+        m_axis: 1
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Pause
+      m_description: 
+      m_bindings:
+      - m_positive: 27
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: PauseMenu
+      m_description: 
+      m_bindings:
+      - m_positive: 27
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Up
+      m_description: 
+      m_bindings:
+      - m_positive: 119
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 273
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Down
+      m_description: 
+      m_bindings:
+      - m_positive: 115
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 274
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Left
+      m_description: 
+      m_bindings:
+      - m_positive: 97
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 276
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Right
+      m_description: 
+      m_bindings:
+      - m_positive: 100
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Submit
+      m_description: 
+      m_bindings:
+      - m_positive: 32
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 13
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Cancel
+      m_description: 
+      m_bindings:
+      - m_positive: 27
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+  - m_name: Gamepad
+    m_description: 
+    m_isExpanded: 1
+    m_uniqueID: 410c68e0bb7d4b4a9ce7068e7e283889
+    m_actions:
+    - m_name: Horizontal
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 6
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Vertical
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 1
+        m_type: 6
+        m_axis: 1
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Accelerate
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 1
+        m_type: 6
+        m_axis: 2
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Jump
+      m_description: 
+      m_bindings:
+      - m_positive: 350
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: BreakIn
+      m_description: 
+      m_bindings:
+      - m_positive: 352
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Retry
+      m_description: 
+      m_bindings:
+      - m_positive: 356
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: FastFall
+      m_description: 
+      m_bindings:
+      - m_positive: 352
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: LookHorizontal
+      m_description: 
+      m_bindings:
+      - m_positive: 0
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 0
+        m_sensitivity: 0.3
+        m_snap: 0
+        m_invert: 0
+        m_type: 6
+        m_axis: 3
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: LookVertical
+      m_description: 
+      m_bindings:
+      - m_positive: 356
+        m_negative: 0
+        m_deadZone: 0.2
+        m_gravity: 1
+        m_sensitivity: 0.3
+        m_snap: 0
+        m_invert: 1
+        m_type: 6
+        m_axis: 4
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: Pause
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0.5
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 1
+        m_type: 0
+        m_axis: 1
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: PauseMenu
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Up
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0.5
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 1
+        m_type: 5
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Down
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0.5
+        m_gravity: 0
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 1
+        m_type: 5
+        m_axis: 1
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Left
+      m_description: 
+      m_bindings:
+      - m_positive: 350
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Right
+      m_description: 
+      m_bindings:
+      - m_positive: 357
+        m_negative: 0
+        m_deadZone: 0.5
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 1
+        m_type: 5
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: UI_Submit
+      m_description: 
+      m_bindings: []
+    - m_name: UI_Cancel
+      m_description: 
+      m_bindings:
+      - m_positive: 356
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+  m_playerOneDefault: 06cd669440d0422a95f3e89bd3812515
+  m_playerTwoDefault: 
+  m_playerThreeDefault: 
+  m_playerFourDefault: 
+  m_ignoreTimescale: 1
+--- !u!4 &591177135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 591177130}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -2.69}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &604053472
 GameObject:
   m_ObjectHideFlags: 0
@@ -4225,15 +4925,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.764292
+      value: -2.7776327
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.614303
+      value: -7.2770653
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 304.40573
+      value: 281.2638
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4366,15 +5066,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -8.261764
+      value: 0.7248955
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.614303
+      value: -7.2770653
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 413.31
+      value: 390.16803
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4416,15 +5116,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -8.545834
+      value: 0.44082546
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.614303
+      value: -7.2770653
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 510.16
+      value: 487.01807
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4456,48 +5156,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
-  m_IsPrefabAsset: 0
---- !u!1001 &665152259
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -2.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690604245023528, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
-      propertyPath: m_RootOrder
-      value: 14
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0c764a85e46e25041b17d50324dec120, type: 2}
   m_IsPrefabAsset: 0
 --- !u!4 &665922111 stripped
 Transform:
@@ -4666,15 +5324,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.061805
+      value: -2.0751457
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.5913694
+      value: -7.299999
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 190.82373
+      value: 167.68178
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4722,15 +5380,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -15.00536
+      value: -6.0187006
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.8913693
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 123.11274
+      value: 99.97079
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4785,7 +5443,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 830219667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 8.986659, y: -10.891369, z: -23.141953}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1186201573}
@@ -5037,75 +5695,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 852785978}
   m_Mesh: {fileID: 4300018, guid: 8da7e959d2334284e821e13d1f6fb248, type: 3}
---- !u!1 &861920721
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 861920722}
-  - component: {fileID: 861920724}
-  - component: {fileID: 861920723}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &861920722
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 861920721}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 460078339}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00015259, y: 0}
-  m_SizeDelta: {x: 705.68, y: 372.82}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &861920723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 861920721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c503576a34917114db3dcf41fc72fe52, type: 3}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &861920724
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 861920721}
-  m_CullTransparentMesh: 0
 --- !u!4 &862217692 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4516112664958098, guid: 59e4b1cc462e62342962d014e786e6fe,
@@ -5339,15 +5928,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.536468
+      value: -2.5498085
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.614303
+      value: -7.2770653
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 510.13074
+      value: 486.98877
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -6312,7 +6901,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1035136790}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: -1}
-  m_LocalPosition: {x: -9.59, y: 5.02, z: 13.58}
+  m_LocalPosition: {x: 0, y: -5.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6563,15 +7152,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11.456861
+      value: -2.4702015
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.614303
+      value: -7.2770653
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 408.17612
+      value: 385.03418
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -8262,7 +8851,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1376956621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: -8.3, z: 570.4}
+  m_LocalPosition: {x: 0.48665905, y: -19.191368, z: 547.25806}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 625952861}
@@ -9141,15 +9730,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -14.986659
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.8913693
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 238.14195
+      value: 215
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -9298,15 +9887,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -8.390679
+      value: 0.5959797
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.614303
+      value: -7.2770653
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 90.71474
+      value: 67.572784
       objectReference: {fileID: 0}
     - target: {fileID: 4239335574485788, guid: 3410840c3e38ba24e98cdaea08d6903d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -10728,15 +11317,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4220965331321910, guid: 351bd0c071520ac49916d19b463dd6de, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -10.4
+      value: -1.4133406
       objectReference: {fileID: 0}
     - target: {fileID: 4220965331321910, guid: 351bd0c071520ac49916d19b463dd6de, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3.31
+      value: -14.201368
       objectReference: {fileID: 0}
     - target: {fileID: 4220965331321910, guid: 351bd0c071520ac49916d19b463dd6de, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 1158.91
+      value: 1135.7681
       objectReference: {fileID: 0}
     - target: {fileID: 4220965331321910, guid: 351bd0c071520ac49916d19b463dd6de, type: 2}
       propertyPath: m_LocalRotation.x
