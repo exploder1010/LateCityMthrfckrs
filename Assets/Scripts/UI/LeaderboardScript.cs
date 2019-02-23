@@ -18,7 +18,8 @@ public class LeaderboardScript : MonoBehaviour {
 
     public void ShowLeaderboard()
     {
-        StartCoroutine(SQL_GetScores());
+        string mapName = SceneManager.GetActiveScene().name.Replace(" ", "_");
+        StartCoroutine(SQL_GetScores(mapName));
     }
 
     public void CheckTime()
@@ -37,14 +38,13 @@ public class LeaderboardScript : MonoBehaviour {
         ShowLeaderboard();
     }
 
-    IEnumerator SQL_GetScores()
+    public IEnumerator SQL_GetScores(string mapName)
     {
         WWWForm form = new WWWForm();
-        string mapName = SceneManager.GetActiveScene().name.Replace(" ", "_");
         form.AddField("map", mapName);
         WWW server = new WWW("http://latecityriders.zapto.org/leaderboard/getscores.php", form);
         yield return server;
-        Debug.Log(server.text);
+        Debug.Log(leaderboardUI);
         string[] rows = server.text.Split(';');
         for (int i = 0; i < 6; i++){
             Text nameText = leaderboardUI.Find("Name" + (i+1).ToString()).GetComponent<Text>();
