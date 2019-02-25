@@ -12,7 +12,7 @@ public class BoostPad : MonoBehaviour
             other.GetComponentInParent<BasicVehicle>().boosting = true;
             other.GetComponentInParent<BasicVehicle>().potentialMaxSpeed = other.GetComponentInParent<BasicVehicle>().potentialMaxSpeed * 2;
             other.GetComponentInParent<BasicVehicle>().initializeSpeed(other.GetComponentInParent<BasicVehicle>().normalMaxSpeed * 2, other.GetComponent<BasicVehicle>().GetComponent<Rigidbody>().velocity.magnitude, false);
-            other.GetComponentInParent<BasicVehicle>().MotorTorque = 10000;
+            other.GetComponentInParent<BasicVehicle>().MotorTorque = 15000;
         }
     }
 
