@@ -151,7 +151,7 @@ namespace Luminosity.IO
                     curVehicle.inputVert(InputManager.GetAxis("Vertical"));
 
                     //input jump
-                    if (InputManager.GetButtonDown("Jump") || curVehicle.GetComponent<BasicVehicle>().broken)
+                    if (InputManager.GetButtonDown("Jump") || curVehicle.GetComponent<BasicVehicle>().broken || curVehicle.transform.position.y < -500)
                     {
                         if (curVehicle.GetComponent<BasicVehicle>().broken)
                         {
@@ -175,11 +175,9 @@ namespace Luminosity.IO
 
                 //process input for air movement
                 case PlayerState.Rider:
-                    Debug.Log(curRider.transform.position.y + " POSITION");
+                    //If player has died, whether by ragdolling or beling lower than an arbitrary threshold of -500.
                     if (curRider.checkRagdoll() != null || curRider.transform.position.y < -500)
                     {
-                        
-                        
                         //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
                         if (Time.timeScale == 1)
                         {
