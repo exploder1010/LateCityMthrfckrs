@@ -48,6 +48,7 @@ public class ButtonScripts : MonoBehaviour {
         winText.gameObject.SetActive(false);
         loseText.gameObject.SetActive(false);
         pauseUI.SetActive(false);
+        winUI.SetActive(false);
         StopAllCoroutines();
         GameController.instance.resetScene();
     }
