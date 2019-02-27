@@ -18,8 +18,9 @@ public class LeaderboardScript : MonoBehaviour {
 
     public void ShowLeaderboard()
     {
-        string mapName = SceneManager.GetActiveScene().name.Replace(" ", "_");
-        StartCoroutine(SQL_GetScores(mapName));
+        string mapName = SceneManager.GetActiveScene().name;
+        StartCoroutine(SQL_GetScores(mapName.Replace(" ", "_")));
+        transform.Find("Leaderboard").Find("Title").GetComponent<Text>().text = mapName.Replace("Level_", "");
     }
 
     public void CheckTime()
