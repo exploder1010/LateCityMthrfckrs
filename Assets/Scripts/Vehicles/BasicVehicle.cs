@@ -187,7 +187,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
         {
             if (player || transform.GetComponent<AiController>() != null && transform.GetComponent<AiController>().stopUpdate)
             {
-                Debug.Log(rb.velocity.magnitude + " and " + tempMaxSpeed + " DONE");
+                //Debug.Log(rb.velocity.magnitude + " and " + tempMaxSpeed + " DONE");
                 if (rb.velocity.magnitude > tempMaxSpeed)
                 {
                     float tempMaxSpeedGain = (potentialMaxSpeed - tempMaxSpeed) * tempMaxSpeedGainRate * Time.deltaTime;

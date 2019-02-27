@@ -62,7 +62,7 @@ public class GameController : MonoBehaviour {
             if (GameObject.FindGameObjectWithTag("SpawnPoint"))
                 spawnLocation = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
 
-            print("Finding Vehicles");
+            //print("Finding Vehicles");
             OriginalResetObjects = GameObject.FindGameObjectsWithTag("ResetInScene");
             InstanceResetObjects = new GameObject[OriginalResetObjects.Length];
             foreach (GameObject v in OriginalResetObjects)
@@ -82,7 +82,7 @@ public class GameController : MonoBehaviour {
 
     void SpawnStartCar()
     {
-        print("Spawning start car");
+        //print("Spawning start car");
         //begin level in car
         if (!startInAir)
         {
@@ -93,7 +93,7 @@ public class GameController : MonoBehaviour {
 
     public void resetScene()
     {
-        print("Resetting Scene");
+        //print("Resetting Scene");
         
         ResetObjects();
         SpawnPlayer();
@@ -102,7 +102,7 @@ public class GameController : MonoBehaviour {
     private void ResetObjects()
     {
         // Destroy and Instantiate scene cars
-        print("Resetting Objects");
+        //print("Resetting Objects");
 
         GameObject.Find("HUD").GetComponent<ButtonScripts>().StopAllCoroutines();
 

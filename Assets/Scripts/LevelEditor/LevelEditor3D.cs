@@ -110,11 +110,15 @@ public class LevelEditor3D : MonoBehaviour
     }
 
     private void InformOrbs(string methodName, object message){
-        northOrb.SendMessage(methodName, message);
-        southOrb.SendMessage(methodName, message);
-        eastOrb.SendMessage(methodName, message);
-        westOrb.SendMessage(methodName, message);
-        upOrb.SendMessage(methodName, message);
+        if(northOrb && southOrb && eastOrb && westOrb && upOrb)
+        {
+            northOrb.SendMessage(methodName, message);
+            southOrb.SendMessage(methodName, message);
+            eastOrb.SendMessage(methodName, message);
+            westOrb.SendMessage(methodName, message);
+            upOrb.SendMessage(methodName, message);
+        }
+   
     }
     public void GenerateRoad(GameObject roadType)
     {
