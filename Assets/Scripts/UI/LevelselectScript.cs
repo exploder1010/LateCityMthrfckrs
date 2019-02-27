@@ -18,7 +18,10 @@ public class LevelselectScript : MonoBehaviour {
         selectedLevel = thisLevel.name;
         LevelPreview.transform.Find(selectedLevel).gameObject.SetActive(true);
         Title.text = selectedLevel;
-        //load respective leaderboard
+        string mapname = "Level_" + selectedLevel.Replace(" ", "_");
+        LeaderboardScript lbscript = new LeaderboardScript();
+        lbscript.leaderboardUI = LevelPreview.transform.parent.Find("Leaderboard");
+        StartCoroutine(lbscript.SQL_GetScores(mapname));
     }
 
     public void PlayLevel()
