@@ -70,7 +70,7 @@ public class StartLightScript : MonoBehaviour {
         redLight.SetActive(false);
         yellowLight.SetActive(false);
         greenLight.SetActive(false);
-        Debug.Log("fuck ");
+        //Debug.Log("fuck ");
         isFirstRun = false;
         // Halt player input for 3-4 seconds
         //StartLight.SetActive(true); // Enable StartLight at 0 seconds
