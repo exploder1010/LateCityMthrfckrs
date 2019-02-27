@@ -61,7 +61,7 @@ public class CarSpawner : MonoBehaviour {
                         SpawnedCar[i] = Instantiate(CarToSpawn[i], CarToSpawn[i].transform.position, CarToSpawn[i].transform.rotation);
                         SpawnedCar[i].SetActive(true);
                         SpawnedCar[i].tag = "DestroyInScene";
-                        Debug.Log("spawned car #" + i);
+                        //Debug.Log("spawned car #" + i);
                     }
 
 

@@ -329,7 +329,7 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             float newY = rb.velocity.y;
             newY += (carJumpVelocityAdd * carJumpModifier / carJumpTimeSet) * Time.deltaTime;
-            Debug.Log("DE BUG: WHAT THE FUCK IS UP: " + carJumpUpDirection + " goin " + carJumpUpDirection *newY);
+            //Debug.Log("DE BUG: WHAT THE FUCK IS UP: " + carJumpUpDirection + " goin " + carJumpUpDirection *newY);
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z) + carJumpUpDirection * Mathf.Abs(newY);
             //rb.AddForce(transform.up * ((carJumpVelocityAdd) / carJumpTimeSet));
             //carJumpVelocity += ((carJumpVelocityAdd) / carJumpTimeSet) * Time.deltaTime; //add full hop normalized to 1 second
@@ -357,7 +357,7 @@ public class BasicRider : MonoBehaviour, IRider {
     {
         if (input == 1)
         {
-            Debug.Log("kick");
+            //Debug.Log("kick");
             charAnim.SetBool("Special_Karate", true);
             rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
             carJumpTimer = 0f;
