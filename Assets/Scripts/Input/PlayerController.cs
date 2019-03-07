@@ -144,8 +144,13 @@ namespace Luminosity.IO
                     //input horizontal movement
                     curVehicle.inputHorz(InputManager.GetAxis("Horizontal"));
 
+                    float v_input = InputManager.GetAxis("Vertical") == 0 ? InputManager.GetAxis("Accelerate") : InputManager.GetAxis("Vertical");
+                    
+                    //Debug.Log("1 " + ((v_input / Mathf.Abs(v_input)) * 0.5f) + " 2 " + (v_input * 0.5f) + " 3 " + (((v_input / Mathf.Abs(v_input)) * 0.5f) + (v_input * 0.5f)));
+
+                    //(v_input == 0) ? 0.5f : v_input
                     //input accelleration
-                    curVehicle.inputAccel(InputManager.GetAxis("Accelerate"));
+                    curVehicle.inputAccel(InputManager.GetAxis("Vertical") == 0 ? InputManager.GetAxis("Accelerate") : InputManager.GetAxis("Vertical"));
 
                     //input vertical movement
                     curVehicle.inputVert(InputManager.GetAxis("Vertical"));
@@ -287,8 +292,11 @@ namespace Luminosity.IO
                         //input horizontal movement
                         curRider.inputHorz(InputManager.GetAxis("Horizontal"));
 
+                        //float v_input = InputManager.GetAxis("Vertical") == 0 ? InputManager.GetAxis("Accelerate") : InputManager.GetAxis("Vertical");
+
+
                         //input vertical movement
-                        curRider.inputVert(InputManager.GetAxis("Accelerate"));
+                        curRider.inputVert(InputManager.GetAxis("Vertical") == 0 ? InputManager.GetAxis("Accelerate") : InputManager.GetAxis("Vertical"));
 
                         //input fastfall
                         if (InputManager.GetButtonDown("FastFall"))
