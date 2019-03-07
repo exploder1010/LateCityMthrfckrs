@@ -294,6 +294,7 @@ namespace Luminosity.IO
                         if (InputManager.GetButtonDown("FastFall"))
                         {
                             curRider.inputFastFall(1);
+                            SoundScript.PlaySound(playerSource, "Ability");
                         }
 
                         //input abilty
