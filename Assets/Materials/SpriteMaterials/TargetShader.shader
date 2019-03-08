@@ -19,7 +19,7 @@ Shader "Sprites/Default"
 		{
 			Tags
 			{
-				"Queue" = "Transparent"
+				"Queue" = "Overlay"
 				"IgnoreProjector" = "True"
 				"RenderType" = "Transparent"
 				"PreviewType" = "Plane"
@@ -28,7 +28,7 @@ Shader "Sprites/Default"
 
 			Cull Off
 			Lighting Off
-			ZWrite On
+			ZWrite Off
 			Blend One OneMinusSrcAlpha
 			ZTest Off
 
@@ -58,7 +58,7 @@ Shader "Sprites/Default"
 					c.rgb *= c.a;
 
 					o.color = c;
-					o.depth = 0.0001f;
+					o.depth = 0;
 
 					return o;
 				}
