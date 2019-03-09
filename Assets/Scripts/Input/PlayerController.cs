@@ -180,6 +180,12 @@ namespace Luminosity.IO
 
                 //process input for air movement
                 case PlayerState.Rider:
+                    if (curRider.cashoutcombo)
+                    {
+
+                        CashOutCombo();
+                    }
+
                     //If player has died, whether by ragdolling or beling lower than an arbitrary threshold of -500.
                     if (curRider.checkRagdoll() != null || curRider.transform.position.y < -500)
                     {
@@ -264,6 +270,15 @@ namespace Luminosity.IO
                         if (!win && curRider.goalCollider.collidersCount() > 0)
                         {
                             win = true;
+
+                            if (comboBS && comboMultiplier != 0)
+                            {
+
+                                comboBS.comboEnd(comboMultiplier);
+                            }
+                            comboMultiplier = 0;
+                            comboTimer = 0;
+
                             GameObject.FindGameObjectWithTag("HUD").GetComponent<timerScript>().setWin();
 
 
@@ -407,6 +422,17 @@ namespace Luminosity.IO
             mainCamera.ChangeFocus(focus.transform, 2);
         }
 
+        void CashOutCombo()
+        {
+            if (comboBS && comboMultiplier != 0)
+            {
+
+                comboBS.comboEnd(comboMultiplier);
+            }
+            comboMultiplier = 0;
+            comboTimer = 0;
+        }
+
         public void EnterVehicle(BasicVehicle newVehicle)
         {
             //Debug.Log("ENTER CAR " + Time.time);
@@ -430,13 +456,7 @@ namespace Luminosity.IO
                 //drop combo b/c too close
                 else
                 {
-                    if (comboBS && comboMultiplier != 0)
-                    {
-
-                        comboBS.comboEnd(comboMultiplier);
-                    }
-                    comboMultiplier = 0;
-                    comboTimer = 0;
+                    CashOutCombo();
                 }
 
                

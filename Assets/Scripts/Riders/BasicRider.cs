@@ -26,6 +26,9 @@ public class BasicRider : MonoBehaviour, IRider {
     public HitBox roadCollider;
     public HitBox vehicleCollider;
     public HitBox brokenVehicleCollider;
+
+    public HitBox comboMomboCollider;
+    public bool cashoutcombo;
     public HitBox goalCollider;
     protected GameObject currentRagdoll;
     private Vector3 ragdollUp;
@@ -64,7 +67,9 @@ public class BasicRider : MonoBehaviour, IRider {
     public float carJumpTimeSet = 0.15f;
     public float carJumpStartImpulse = 300;
     public float carJumpVelocityAdd = 200;
-    public float maxFallSpeed = 50;
+    public float maxFallSpeed = 70;
+    public float maxFallSpeedHalf = 20f;
+    public float maxFallSpeedHalfBuffer = 30f;
     protected Vector3 carJumpUpDirection;
     protected float carJumpTimer;
     protected float carJumpVelocity;
@@ -109,6 +114,7 @@ public class BasicRider : MonoBehaviour, IRider {
 
         handleRoadCollision();
         handleVehicleCollision();
+        handleComboCollision();
 
         if (off)
         {
@@ -359,6 +365,7 @@ public class BasicRider : MonoBehaviour, IRider {
         {
             //Debug.Log("kick");
             charAnim.SetBool("Special_Karate", true);
+
             rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
             carJumpTimer = 0f;
         }
@@ -390,7 +397,17 @@ public class BasicRider : MonoBehaviour, IRider {
 
     protected float GetRealMaxFallSpeed()
     {
-        return Mathf.Max(maxFallSpeed, maxFallSpeed * new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude / 50f);
+        if (rb.velocity.y > -maxFallSpeedHalfBuffer)
+        {
+            //rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeedHalf), rb.velocity.z);
+            return Mathf.Max(-maxFallSpeedHalf, rb.velocity.y);
+        }
+        else
+        {
+            return Mathf.Max(-maxFallSpeed, rb.velocity.y);
+            //rb.velocity = new Vector3(rb.velocity.x, -Mathf.Abs(maxFallSpeed), rb.velocity.z);
+        }
+        //return Mathf.Max(maxFallSpeed, maxFallSpeed * new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude / 50f);
     }
     
     //move towards selected car
@@ -451,6 +468,14 @@ public class BasicRider : MonoBehaviour, IRider {
             {
                 hitVehicle = vehicleCollider.returnColliders()[0].transform.root.transform.GetComponent<BasicVehicle>();
             }
+        }
+    }
+
+    protected virtual void handleComboCollision()
+    {
+        if (comboMomboCollider.collidersCount() > 0)//&& (rb.velocity.y < 0 || targetedVehicle!= null)
+        {
+            cashoutcombo = true;
         }
     }
 

@@ -1388,7 +1388,7 @@ GameObject:
   - component: {fileID: 114733968528586682}
   - component: {fileID: 54472143437061538}
   m_Layer: 10
-  m_Name: GoalCollider
+  m_Name: ComboMomboCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1802,6 +1802,24 @@ GameObject:
   - component: {fileID: 4734510528355830}
   m_Layer: 0
   m_Name: Mannequin:hand_r
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1734508685406710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4729878904562052}
+  - component: {fileID: 135615976257055562}
+  - component: {fileID: 114520107213921862}
+  - component: {fileID: 54328187134853880}
+  m_Layer: 10
+  m_Name: GoalCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3208,7 +3226,7 @@ Transform:
   - {fileID: 4998731314158554}
   - {fileID: 4384432027450462}
   m_Father: {fileID: 4919480923320930}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4328554420421350
 Transform:
@@ -4361,6 +4379,19 @@ Transform:
   m_Father: {fileID: 4720869989223574}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4729878904562052
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1734508685406710}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
+  m_Children: []
+  m_Father: {fileID: 4919480923320930}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4730678609435752
 Transform:
   m_ObjectHideFlags: 1
@@ -4538,10 +4569,10 @@ Transform:
   m_GameObject: {fileID: 1553368921085310}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4919480923320930}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4819855656812382
 Transform:
@@ -4741,6 +4772,7 @@ Transform:
   - {fileID: 4077445017679502}
   - {fileID: 4609867963925194}
   - {fileID: 4241581121847778}
+  - {fileID: 4729878904562052}
   - {fileID: 4818309247245404}
   - {fileID: 4312899602027194}
   m_Father: {fileID: 0}
@@ -5103,6 +5135,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!54 &54328187134853880
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1734508685406710}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!54 &54435550627625524
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -5382,6 +5429,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
+--- !u!114 &114520107213921862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1734508685406710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9b8549b7ef71b4ca33b5d8cbc52611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 4
 --- !u!114 &114525450549909264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5428,7 +5487,9 @@ MonoBehaviour:
   roadCollider: {fileID: 114507431979316140}
   vehicleCollider: {fileID: 114437401049480750}
   brokenVehicleCollider: {fileID: 114525450549909264}
-  goalCollider: {fileID: 114733968528586682}
+  comboMomboCollider: {fileID: 114733968528586682}
+  cashoutcombo: 0
+  goalCollider: {fileID: 114520107213921862}
   targetIconPrefab: {fileID: 1867227732554446, guid: 106b3a51ad172a54f8ef45adac63b497,
     type: 2}
   airAccel: 100
@@ -5437,6 +5498,8 @@ MonoBehaviour:
   carJumpStartImpulse: 4
   carJumpVelocityAdd: 6
   maxFallSpeed: 50
+  maxFallSpeedHalf: 20
+  maxFallSpeedHalfBuffer: 30
   gravityMagnitude: 18
   gravityDirection: {x: 0, y: -1, z: 0}
   charAbilityAmmo: 1
@@ -5457,7 +5520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9b8549b7ef71b4ca33b5d8cbc52611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 4
+  Type: 5
 --- !u!114 &114806804970768116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5517,6 +5580,18 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2.5
+  m_Center: {x: 0, y: 0.67, z: 0}
+--- !u!135 &135615976257055562
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1734508685406710}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.6
   m_Center: {x: 0, y: 0.67, z: 0}
 --- !u!135 &135667792158942722
 SphereCollider:
