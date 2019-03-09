@@ -9,7 +9,7 @@ public class LeaderboardScript : MonoBehaviour {
     public Transform leaderboardUI;
     public Text namePrompt;
     public timerScript Timer;
-
+   
     public void SavetoDictionary()
     {
         if (namePrompt.text != "")
@@ -34,7 +34,7 @@ public class LeaderboardScript : MonoBehaviour {
         form.AddField("name", namePrompt.text);
         form.AddField("time", Timer.timeRemaining.ToString());
         form.AddField("map", SceneManager.GetActiveScene().name.Replace(" ", "_"));
-        WWW server = new WWW("http://latecityriders.zapto.org/dev/insert.php", form);
+        WWW server = new WWW("http://latecityriders.com/leaderboard/insert.php", form);
         yield return server;
         ShowLeaderboard();
     }
@@ -43,7 +43,7 @@ public class LeaderboardScript : MonoBehaviour {
     {
         WWWForm form = new WWWForm();
         form.AddField("map", mapName);
-        WWW server = new WWW("http://latecityriders.zapto.org/leaderboard/getscores.php", form);
+        WWW server = new WWW("http://latecityriders.com/leaderboard/getscores.php", form);
         yield return server;
         Debug.Log(leaderboardUI);
         string[] rows = server.text.Split(';');
@@ -67,7 +67,7 @@ public class LeaderboardScript : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("time", Timer.timeRemaining.ToString());
         form.AddField("map", SceneManager.GetActiveScene().name);
-        WWW server = new WWW("http://latecityriders.zapto.org/leaderboard/topten.php", form);
+        WWW server = new WWW("http://latecityriders.com/leaderboard/topten.php", form);
         yield return server;
         //TODO Finish working on this
         //
