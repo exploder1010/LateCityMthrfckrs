@@ -495,6 +495,7 @@ GameObject:
   - component: {fileID: 222158590304343302}
   - component: {fileID: 114870376551927880}
   - component: {fileID: 114632637206420374}
+  - component: {fileID: 114226538392845602}
   m_Layer: 5
   m_Name: WinMenu
   m_TagString: Untagged
@@ -1965,6 +1966,20 @@ MonoBehaviour:
   bonusPrefab: {fileID: 114035094424349822, guid: d6343924ff75bc64caea5ff130389e77,
     type: 2}
   scoreMultiplier: 100
+--- !u!114 &114226538392845602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1393393015904296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bc1b8ef5430344f8a241e0d5ec600e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedLevel: 
+  LevelPreview: {fileID: 0}
+  Title: {fileID: 0}
 --- !u!114 &114275889014390884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3311,6 +3326,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114226538392845602}
+        m_MethodName: HighlightButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 114828195405967824}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
