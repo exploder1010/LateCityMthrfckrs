@@ -45,8 +45,10 @@ public class ButtonScripts : MonoBehaviour {
 
     public void Retry()
     {
+
         winText.gameObject.SetActive(false);
         loseText.gameObject.SetActive(false);
+        winUI.transform.Find("Leaderboard Interactables").gameObject.SetActive(true);
         pauseUI.SetActive(false);
         winUI.SetActive(false);
         StopAllCoroutines();
