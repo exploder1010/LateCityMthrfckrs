@@ -5,13 +5,17 @@ using UnityEngine;
 public class MusicShuffler : MonoBehaviour {
 
 	AudioSource source;
-	public List<AudioClip> Tracks;
+	List<AudioClip> Tracks;
 	List<AudioClip> q;
 	int qindex = 0;
 
 	// Use this for initialization
 	void Start () {
 		source = GetComponent<AudioSource>();
+		Object[] t = Resources.LoadAll("Music", typeof(AudioClip));
+		Tracks = new List<AudioClip>();
+		foreach(Object o in t)
+			Tracks.Add((AudioClip) o);
 		Shuffle();
 	}
 	
