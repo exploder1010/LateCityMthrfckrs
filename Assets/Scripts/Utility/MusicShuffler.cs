@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MusicShuffler : MonoBehaviour
 {
-
+ 
     AudioSource source;
     List<AudioClip> Tracks;
     List<AudioClip> q;
@@ -46,6 +46,10 @@ public class MusicShuffler : MonoBehaviour
 
     public void SelectSong(int SongChoice)
     {
+        if (SongChoice >= Tracks.Count)
+        {
+            SongChoice = Random.Range(0, Tracks.Count);
+        }
         source.Stop();
         source.PlayOneShot(Tracks[SongChoice]);
     }
