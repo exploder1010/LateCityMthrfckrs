@@ -8,7 +8,6 @@ public class GameController : MonoBehaviour {
 
     //cinematic stuff 
     //float spawnTimer;
-    [SerializeField]
     float spawnTimeSet = 3f;
     GameObject fallingRider;
 
@@ -148,7 +147,7 @@ public class GameController : MonoBehaviour {
         startVehicleInstance.SetActive(true);
 
         fallingRider = Instantiate(selectedRider_Prefab, startVehicleInstance.transform.position + Vector3.up * 65f, startVehicleInstance.transform.rotation);
-        fallingRider.transform.GetComponent<BR_Business>().maxFallSpeed = 30f;
+        fallingRider.transform.GetComponent<BR_Business>().maxFallSpeedHalf = 30f;
         fallingRider.transform.GetComponent<BR_Business>().noClip = true;
         //fallingRider.transform.GetComponent<Rigidbody>().isKinematic = true;
         //print("Spawning player");

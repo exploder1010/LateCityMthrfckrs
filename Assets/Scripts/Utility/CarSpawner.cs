@@ -29,7 +29,15 @@ public class CarSpawner : MonoBehaviour {
 
         for(int i = 0; i < CarToSpawn.Length; i++)
         {
-            CarToSpawn[i].SetActive(false);
+            if(CarToSpawn[i] == null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+
+                CarToSpawn[i].SetActive(false);
+            }
         }
     }
 

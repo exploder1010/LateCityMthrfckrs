@@ -99,7 +99,13 @@ namespace Luminosity.IO
             if(comboBS)
                 comboBS.comboUpdate(comboTimer, comboTimeSet, comboMultiplier);
 
-
+            if (curState != PlayerState.Rider)
+            {
+                foreach (GameObject go in GameObject.FindGameObjectsWithTag("VisibleWhenPlaying"))
+                {
+                    go.SetActive(false);
+                }
+            }
 
             //update vehicle or rider respectively, depending on state.
             switch (curState)
@@ -502,8 +508,7 @@ namespace Luminosity.IO
             //Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {
-
-                
+               
 
                 curState = PlayerState.Rider;
 
@@ -544,6 +549,12 @@ namespace Luminosity.IO
                 prevVehicleIntangibility = 1f;
                 curRider.setPreviousVehicle(curVehicle.gameObject);
                 curVehicle = null;
+
+                foreach (GameObject go in GameObject.FindGameObjectsWithTag("VisibleWhenPlaying"))
+                {
+                    go.SetActive(true);
+                }
+
             }
             else
             {
