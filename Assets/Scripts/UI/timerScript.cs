@@ -8,6 +8,7 @@ public class timerScript : MonoBehaviour {
     public float startTime;
     public float timeRemaining;
     public Text timeDisplay;
+    public Text timePreview;
     public ButtonScripts buttonScripts;
 
     bool spawning;
@@ -70,6 +71,7 @@ public class timerScript : MonoBehaviour {
     }
     public void setWin()
     {
+        timePreview.text = timeRemaining.ToString();
         win = true;
     }
     public void setGame()
