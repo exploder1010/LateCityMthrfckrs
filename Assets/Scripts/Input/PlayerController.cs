@@ -57,10 +57,20 @@ namespace Luminosity.IO
 
         float deathTimer = 4f;
 
+        GameObject floorHolder;
+        float floorPerson = -500;
+        float floorCar = -525;
         // Use this for initialization
         void Start()
         {
             Time.timeScale = 1f;
+
+            //The ever present HUD is called as a gameobject, and the position of the floor that causes rider death is recorded.
+            //The car death floor is set to 25 units below this, so that after hitting the point the player doesn't jump out.
+            floorHolder = GameObject.Find("HUD");
+            floorPerson = floorHolder.GetComponent<timerScript>().StageFloor;
+            floorCar = floorPerson - 25;
+
             //forwardMovement = true;
             //recentDirection = true;
             //previousVelocity = 0;
@@ -162,7 +172,7 @@ namespace Luminosity.IO
                     curVehicle.inputVert(InputManager.GetAxis("Vertical"));
 
                     //input jump
-                    if (InputManager.GetButtonDown("Jump") || curVehicle.GetComponent<BasicVehicle>().broken || curVehicle.transform.position.y < -500)
+                    if (InputManager.GetButtonDown("Jump") || curVehicle.GetComponent<BasicVehicle>().broken || curVehicle.transform.position.y < floorPerson - 25)
                     {
                         if (curVehicle.GetComponent<BasicVehicle>().broken)
                         {
@@ -192,8 +202,8 @@ namespace Luminosity.IO
                         CashOutCombo();
                     }
 
-                    //If player has died, whether by ragdolling or beling lower than an arbitrary threshold of -500.
-                    if (curRider.checkRagdoll() != null || curRider.transform.position.y < -500)
+                    //If player has died, whether by ragdolling or being lower than an arbitrary threshold provided by the variable deadFloor.
+                    if (curRider.checkRagdoll() != null || curRider.transform.position.y < floorPerson)
                     {
                         //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
                         if (Time.timeScale == 1)

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class timerScript : MonoBehaviour {
 
+    //A stage floor is included in the hud, as a hud will always be present.
+    public int StageFloor;
     public float startTime;
     public float timeRemaining;
     public Text timeDisplay;

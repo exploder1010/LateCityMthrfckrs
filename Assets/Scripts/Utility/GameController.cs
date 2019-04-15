@@ -27,7 +27,6 @@ public class GameController : MonoBehaviour {
 
     protected PlayerController curPlayerController;
 
-
     GameObject startVehicle;
     GameObject startVehicleInstance;
     GameObject mainCamera;
