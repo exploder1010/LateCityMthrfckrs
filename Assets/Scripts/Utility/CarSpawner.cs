@@ -5,7 +5,7 @@ using UnityEngine;
 public class CarSpawner : MonoBehaviour {
 
     [SerializeField]
-    GameObject[] CarToSpawn;
+    public GameObject[] CarToSpawn;
     GameObject[] SpawnedCar;
 
     [SerializeField]

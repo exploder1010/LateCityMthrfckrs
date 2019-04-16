@@ -551,13 +551,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 170076733}
-  m_LocalRotation: {x: 0.962183, y: 0.18040428, z: 0.043096937, w: 0.19950153}
+  m_LocalRotation: {x: 0.7133726, y: 0.08628663, z: -0.07969273, w: 0.6908714}
   m_LocalPosition: {x: -1.84, y: 7.39, z: 10.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 21.615002, y: 170.408, z: 156.92601}
+  m_LocalEulerAnglesHint: {x: 88.1, y: 170.408, z: 156.92601}
 --- !u!1 &197805104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,6 +1189,21 @@ Prefab:
         type: 2}
       propertyPath: VehicleCameraTrackSpeed
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.z
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraEulerAngles.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.y
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
@@ -2710,6 +2725,21 @@ Prefab:
       propertyPath: VehicleCameraTrackSpeed
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.z
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraEulerAngles.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.y
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -3451,6 +3481,21 @@ Prefab:
         type: 2}
       propertyPath: VehicleCameraTrackSpeed
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.z
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraEulerAngles.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.y
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
@@ -6330,6 +6375,31 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.z
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraEulerAngles.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraFollowSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraTrackSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.y
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -7692,6 +7762,31 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.z
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraEulerAngles.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraFollowSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraTrackSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.y
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
   m_IsPrefabAsset: 0
@@ -8218,17 +8313,27 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: VehicleCameraEulerAngles.x
-      value: 60
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: VehicleCameraOffset.y
-      value: 30
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: VehicleCameraOffset.z
-      value: -24
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraFollowSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraTrackSpeed
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
@@ -9114,17 +9219,27 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: VehicleCameraEulerAngles.x
-      value: 60
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: VehicleCameraOffset.y
-      value: 30
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: VehicleCameraOffset.z
-      value: -24
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraFollowSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraTrackSpeed
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
@@ -10677,17 +10792,27 @@ Prefab:
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: VehicleCameraEulerAngles.x
-      value: 60
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: VehicleCameraOffset.y
-      value: 30
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
         type: 2}
       propertyPath: VehicleCameraOffset.z
-      value: -24
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraFollowSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraTrackSpeed
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
@@ -11666,6 +11791,31 @@ Prefab:
     - target: {fileID: 1807226139907272, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.z
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraEulerAngles.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraFollowSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraTrackSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420440988522186, guid: 4bb141a25858c2648a7a401d4efa2915,
+        type: 2}
+      propertyPath: VehicleCameraOffset.y
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb141a25858c2648a7a401d4efa2915, type: 2}
