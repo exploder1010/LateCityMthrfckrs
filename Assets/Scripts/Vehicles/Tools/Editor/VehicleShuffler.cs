@@ -59,6 +59,7 @@ public class VehicleShuffler : EditorWindow {
 
 	void CopyCarFields(GameObject SourceCar, GameObject TargetCar)
 	{
+		TargetCar.tag = SourceCar.tag;
 		TargetCar.name = SourceCar.name;
 
 		#region Copy Transform
