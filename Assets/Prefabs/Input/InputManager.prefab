@@ -30,23 +30,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1674283194807334
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4906581704318046}
-  - component: {fileID: 23371064092982944}
-  - component: {fileID: 33286185411546918}
-  m_Layer: 0
-  m_Name: SpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!4 &4690604245023528
 Transform:
   m_ObjectHideFlags: 1
@@ -54,68 +37,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1426989004046072}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -2.69}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4906581704318046}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!4 &4906581704318046
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674283194807334}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: -13.82, y: 5.54, z: -9.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4690604245023528}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
---- !u!23 &23371064092982944
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674283194807334}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 2100000, guid: 83cff9d4780aef0499b30e68b52d208e, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &33286185411546918
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674283194807334}
-  m_Mesh: {fileID: 4300000, guid: 83cff9d4780aef0499b30e68b52d208e, type: 3}
 --- !u!114 &114118286750020480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,22 +124,6 @@ MonoBehaviour:
         m_gamepadButton: 0
         m_gamepadAxis: 0
         m_gamepadIndex: 0
-    - m_name: BreakIn
-      m_description: 
-      m_bindings:
-      - m_positive: 306
-        m_negative: 0
-        m_deadZone: 0
-        m_gravity: 0
-        m_sensitivity: 0
-        m_snap: 0
-        m_invert: 0
-        m_type: 0
-        m_axis: 0
-        m_joystick: 0
-        m_gamepadButton: 0
-        m_gamepadAxis: 0
-        m_gamepadIndex: 0
     - m_name: Retry
       m_description: 
       m_bindings:
@@ -230,6 +141,22 @@ MonoBehaviour:
         m_gamepadAxis: 0
         m_gamepadIndex: 0
     - m_name: FastFall
+      m_description: 
+      m_bindings:
+      - m_positive: 304
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: BreakIn
       m_description: 
       m_bindings:
       - m_positive: 304
@@ -412,10 +339,23 @@ MonoBehaviour:
         m_gamepadButton: 0
         m_gamepadAxis: 0
         m_gamepadIndex: 0
+      - m_positive: 275
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
     - m_name: UI_Submit
       m_description: 
       m_bindings:
-      - m_positive: 32
+      - m_positive: 13
         m_negative: 0
         m_deadZone: 0
         m_gravity: 0
@@ -428,7 +368,7 @@ MonoBehaviour:
         m_gamepadButton: 0
         m_gamepadAxis: 0
         m_gamepadIndex: 0
-      - m_positive: 13
+      - m_positive: 32
         m_negative: 0
         m_deadZone: 0
         m_gravity: 1
@@ -444,11 +384,24 @@ MonoBehaviour:
     - m_name: UI_Cancel
       m_description: 
       m_bindings:
-      - m_positive: 27
+      - m_positive: 8
         m_negative: 0
         m_deadZone: 0
         m_gravity: 0
         m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+      - m_positive: 27
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
         m_snap: 0
         m_invert: 0
         m_type: 0
@@ -526,22 +479,6 @@ MonoBehaviour:
         m_gamepadButton: 0
         m_gamepadAxis: 0
         m_gamepadIndex: 0
-    - m_name: BreakIn
-      m_description: 
-      m_bindings:
-      - m_positive: 352
-        m_negative: 0
-        m_deadZone: 0
-        m_gravity: 0
-        m_sensitivity: 0
-        m_snap: 0
-        m_invert: 0
-        m_type: 0
-        m_axis: 0
-        m_joystick: 0
-        m_gamepadButton: 0
-        m_gamepadAxis: 0
-        m_gamepadIndex: 0
     - m_name: Retry
       m_description: 
       m_bindings:
@@ -559,6 +496,22 @@ MonoBehaviour:
         m_gamepadAxis: 0
         m_gamepadIndex: 0
     - m_name: FastFall
+      m_description: 
+      m_bindings:
+      - m_positive: 352
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 0
+        m_sensitivity: 0
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
+    - m_name: BreakIn
       m_description: 
       m_bindings:
       - m_positive: 352
@@ -649,7 +602,7 @@ MonoBehaviour:
         m_snap: 0
         m_invert: 1
         m_type: 5
-        m_axis: 0
+        m_axis: 1
         m_joystick: 0
         m_gamepadButton: 0
         m_gamepadAxis: 0
@@ -663,7 +616,7 @@ MonoBehaviour:
         m_gravity: 0
         m_sensitivity: 1
         m_snap: 0
-        m_invert: 1
+        m_invert: 0
         m_type: 5
         m_axis: 1
         m_joystick: 0
@@ -675,12 +628,12 @@ MonoBehaviour:
       m_bindings:
       - m_positive: 350
         m_negative: 0
-        m_deadZone: 0
+        m_deadZone: 0.5
         m_gravity: 0
         m_sensitivity: 0
         m_snap: 0
         m_invert: 0
-        m_type: 0
+        m_type: 5
         m_axis: 0
         m_joystick: 0
         m_gamepadButton: 0
@@ -704,11 +657,24 @@ MonoBehaviour:
         m_gamepadIndex: 0
     - m_name: UI_Submit
       m_description: 
-      m_bindings: []
+      m_bindings:
+      - m_positive: 350
+        m_negative: 0
+        m_deadZone: 0
+        m_gravity: 1
+        m_sensitivity: 1
+        m_snap: 0
+        m_invert: 0
+        m_type: 0
+        m_axis: 0
+        m_joystick: 0
+        m_gamepadButton: 0
+        m_gamepadAxis: 0
+        m_gamepadIndex: 0
     - m_name: UI_Cancel
       m_description: 
       m_bindings:
-      - m_positive: 356
+      - m_positive: 351
         m_negative: 0
         m_deadZone: 0
         m_gravity: 0
@@ -743,13 +709,23 @@ MonoBehaviour:
   - name: Jump
     Clip: {fileID: 8300000, guid: 429c55866811d30488dd337767946575, type: 3}
   - name: Win
-    Clip: {fileID: 8300000, guid: cfe00bc0e77608b45b03035da0ee62f1, type: 3}
+    Clip: {fileID: 8300000, guid: 2ded716558ded79478fc7687a3974552, type: 3}
   - name: Ability
     Clip: {fileID: 8300000, guid: 6e4d7fdf602f61041960792d28f3329b, type: 3}
-  - name: UI Click
-    Clip: {fileID: 8300000, guid: 29f919df0da1b394bb3b8c9410142bc7, type: 3}
+  - name: UI Confirm
+    Clip: {fileID: 8300000, guid: 3e5f98d3dbec82647ab7227ad636408f, type: 3}
   - name: Engine
     Clip: {fileID: 8300000, guid: b7f71dc4d3727714c8b4b34caa016132, type: 3}
+  - name: Lose
+    Clip: {fileID: 8300000, guid: f6382cc303a5dcf43ad281c83896cf77, type: 3}
+  - name: Combo
+    Clip: {fileID: 8300000, guid: 43ade630550d45945bfadb8999321a5f, type: 3}
+  - name: Jump2
+    Clip: {fileID: 8300000, guid: 02da7e4bc467a6048a722347f1334c41, type: 3}
+  - name: UI Move
+    Clip: {fileID: 8300000, guid: c4cab8d8c6bb0904da9cf33d8c3f35d2, type: 3}
+  - name: Car Crash
+    Clip: {fileID: 8300000, guid: b1e57ddd64cc3734fa4762c62251dece, type: 3}
 --- !u!114 &114511544142092730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -769,7 +745,7 @@ MonoBehaviour:
     type: 2}
   selectedRider_Prefab: {fileID: 1258154895977210, guid: 7362886f6fc94494a8f5a4599704dcf0,
     type: 2}
-  spawnLocation: {fileID: 4906581704318046}
+  spawnLocation: {fileID: 0}
   startInAir: 0
 --- !u!114 &114763264031547316
 MonoBehaviour:
