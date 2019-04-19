@@ -9,6 +9,7 @@ public class LeaderboardScript : MonoBehaviour {
     public Transform leaderboardUI;
     public Text namePrompt;
     public timerScript Timer;
+    public UnityEngine.UI.Button nextButton;
    
     public void SavetoDictionary()
     {
@@ -21,6 +22,7 @@ public class LeaderboardScript : MonoBehaviour {
         string mapName = SceneManager.GetActiveScene().name;
         StartCoroutine(SQL_GetScores(mapName.Replace(" ", "_")));
         transform.Find("Leaderboard").Find("Title").GetComponent<Text>().text = mapName.Replace("Level_", "");
+        nextButton.Select();
     }
 
     public void CheckTime()
