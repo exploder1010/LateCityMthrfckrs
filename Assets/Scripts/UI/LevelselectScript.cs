@@ -29,7 +29,7 @@ public class LevelselectScript : MonoBehaviour {
         levels = GameObject.FindGameObjectsWithTag("Level");
         foreach(GameObject level in levels)
         {
-            level.transform.Find("BestTime").GetComponent<Text>().text = PlayerPrefs.GetFloat("BestTime " + "Level_" + level.name).ToString();
+            level.transform.Find("BestTime").GetComponent<Text>().text = PlayerPrefs.GetFloat("BestTime " + "Level_" + level.name).ToString("F2");
             print("BestTime " + "Level_" + level.name);
         }
         HideLevels();
