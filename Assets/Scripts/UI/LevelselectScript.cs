@@ -9,6 +9,10 @@ public class LevelselectScript : MonoBehaviour {
 
     public string selectedLevel;
     public GameObject LevelPreview;
+    public GameObject BreezyStreet;
+    public GameObject MachinationWay;
+    public GameObject Bravura;
+    public GameObject WallStreet;
 
     //Added changes to Title for level preview.
     public Text Title;
@@ -28,6 +32,15 @@ public class LevelselectScript : MonoBehaviour {
             level.transform.Find("BestTime").GetComponent<Text>().text = PlayerPrefs.GetFloat("BestTime " + "Level_" + level.name).ToString();
             print("BestTime " + "Level_" + level.name);
         }
+        HideLevels();
+    }
+
+    private void HideLevels()
+    {
+        Bravura.SetActive(true);
+        BreezyStreet.SetActive(true);
+        MachinationWay.SetActive(true);
+        WallStreet.SetActive(true);
     }
 
     public void SelectLevel(GameObject thisLevel)
