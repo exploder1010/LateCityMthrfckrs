@@ -933,8 +933,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1456,6 +1456,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4994906474065438, guid: 33561ef141e108c4e8e0924c029e8512,
     type: 2}
   m_PrefabInternal: {fileID: 1607698190}
+--- !u!114 &37178337 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
+    type: 2}
+  m_PrefabInternal: {fileID: 419987544}
+  m_Script: {fileID: 11500000, guid: f387ac66dc6b44243a1b93d30273d4c8, type: 3}
 --- !u!1001 &38095515
 Prefab:
   m_ObjectHideFlags: 0
@@ -7887,8 +7893,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12355,8 +12361,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12935,8 +12941,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13329,11 +13335,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.size
-      value: 17
-      objectReference: {fileID: 0}
     - target: {fileID: 4947736833571154, guid: 400cf66e48cd0364da2c98d70df3c119, type: 2}
       propertyPath: m_LocalPosition.x
       value: 4.5165873
@@ -13366,76 +13367,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 25
       objectReference: {fileID: 0}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[5]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[6]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[7]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[8]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[9]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[10]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[11]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[12]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[13]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[14]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[15]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[16]
-      value: 
-      objectReference: {fileID: 8300000, guid: 85f8d98616d0149478209137e81f51bc, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 0d5cc0a91c9b9b141bea93f6a4961293, type: 3}
-    - target: {fileID: 114258446101206862, guid: 400cf66e48cd0364da2c98d70df3c119,
-        type: 2}
-      propertyPath: Tracks.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 710c75c69a5841a458a46c3999973085, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 400cf66e48cd0364da2c98d70df3c119, type: 2}
   m_IsPrefabAsset: 0
@@ -14243,6 +14174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92e0bd082be9ca44b00d4fb9d10eeb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Audio: {fileID: 0}
 --- !u!4 &443397336 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4103961830089642, guid: 0d12d00085b70a442bc1355b38aec7e5,
@@ -17787,8 +17719,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21830,9 +21762,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
-        m_Mode: 3
+      - m_Target: {fileID: 37178337}
+        m_MethodName: PlayRandom
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -22283,8 +22215,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -22730,8 +22662,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28728,8 +28660,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -38596,8 +38528,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -45166,8 +45098,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -49634,8 +49566,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -57229,8 +57161,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -58553,8 +58485,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -59253,8 +59185,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -60609,8 +60541,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -63487,8 +63419,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -67372,8 +67304,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 440391318}
-        m_MethodName: BeginSelection
+      - m_Target: {fileID: 37178337}
+        m_MethodName: SelectSong
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

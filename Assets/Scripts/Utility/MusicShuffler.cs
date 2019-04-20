@@ -7,63 +7,66 @@ namespace Luminosity.IO
     public class MusicShuffler : MonoBehaviour
     {
 
-        AudioSource source;
-        List<AudioClip> Tracks;
-        List<AudioClip> q;
+        public AudioSource source;
+        public int TrackNum = 0;
+        Object[] Tracks;
 
-        int qindex = 0;
+        private void Awake()
+        {
+            Tracks = Resources.LoadAll("Music", typeof(AudioClip));
+            source.clip = Tracks[TrackNum] as AudioClip;
+        }
 
         // Use this for initialization
         void Start()
         {
-            source = GetComponent<AudioSource>();
-            Object[] t = Resources.LoadAll("Music", typeof(AudioClip));
-            Tracks = new List<AudioClip>();
-            foreach (Object o in t)
-                Tracks.Add((AudioClip)o);
-            Shuffle();
+            //source.Play();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (!source.isPlaying)
-            {
-                qindex = (qindex >= q.Count - 1) ? 0 : qindex + 1;
-                source.PlayOneShot(q[qindex]);
-            }
-
             if (InputManager.GetButtonDown("RadioBack"))
             {
-                //backplaylist
+                print(TrackNum);
+                TrackNum -= 1;
+                if (TrackNum == 0)
+                {
+                    TrackNum = 16;
+                }
+                source.clip = Tracks[TrackNum] as AudioClip;
+                print(TrackNum);
+                source.Play();
             }
 
             else if (InputManager.GetButtonDown("RadioForward"))
             {
-                //forwardplaylist
+                TrackNum += 1;
+                if(TrackNum == 17)
+                {
+                    TrackNum = 0;
+                }
+                source.clip = Tracks[TrackNum] as AudioClip;
+                source.Play();
+            }
+
+            if (!source.isPlaying)
+            {
+                print("Not Playing");
+                PlayRandom();
             }
         }
 
-        void Shuffle()
+        public void PlayRandom()
         {
-            q = new List<AudioClip>();
-            List<AudioClip> Remaining = new List<AudioClip>(Tracks);
-            while (Remaining.Count > 0)
-            {
-                int rnd = Random.Range(0, Remaining.Count);
-                q.Add(Remaining[rnd]);
-                Remaining.RemoveAt(rnd);
-            }
+            source.clip = Tracks[TrackNum = Random.Range(0, Tracks.Length)] as AudioClip;
+            source.Play();
         }
 
         public void SelectSong(int SongChoice)
         {
-            if (SongChoice >= Tracks.Count)
-            {
-                SongChoice = Random.Range(0, Tracks.Count);
-            }
-            source.Stop();
-            source.PlayOneShot(Tracks[SongChoice]);
+            source.clip = Tracks[TrackNum = SongChoice] as AudioClip;
+            source.Play();
         }
     }
 }
