@@ -88,6 +88,7 @@ public class ButtonScripts : MonoBehaviour {
             else
             {
                 loseText.gameObject.SetActive(true);
+                SoundScript.PlaySound(GameObject.Find("Player Source").GetComponent<AudioSource>(), "Car Crash");
             }
         }
       

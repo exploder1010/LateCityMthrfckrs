@@ -61,6 +61,7 @@ public class OptionsScripts : MonoBehaviour {
 
     public void SetFullscreen(bool fullscreen)
     {
+        //BUGS
         Screen.fullScreen = fullscreen;
     }
 }
