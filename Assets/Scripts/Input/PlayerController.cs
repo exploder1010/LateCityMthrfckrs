@@ -205,7 +205,6 @@ namespace Luminosity.IO
                     //If player has died, whether by ragdolling or being lower than an arbitrary threshold provided by the variable deadFloor.
                     if (curRider.checkRagdoll() != null || curRider.transform.position.y < floorPerson)
                     {
-                        //SoundScript.PlaySound(GetComponent<AudioSource>(), "Death");
                         if (Time.timeScale == 1)
                         {
                             SoundScript.PlaySound(playerSource, "Death");
@@ -447,6 +446,7 @@ namespace Luminosity.IO
             }
             comboMultiplier = 0;
             comboTimer = 0;
+            //SoundScript.PlaySound(playerSource, "Combo Cashout");
         }
 
         public void EnterVehicle(BasicVehicle newVehicle)
@@ -460,12 +460,14 @@ namespace Luminosity.IO
                 {
                     comboMultiplier++;
                     comboTimer = comboTimeSet;
+                    //SoundScript.PlaySound(playerSource, "Combo Add");
                 }
                 //start new combo
                 else if ((prevComboPosition - newVehicle.transform.position).magnitude >= comboDistance && !prevBroken && newVehicle.gameObject != prevVehicle)
                 {
                     if (comboBS)
                         comboBS.comboStart();
+                        //SoundScript.PlaySound(playerSource, "Combo Add");
                     comboMultiplier = 1;
                     comboTimer = comboTimeSet;
                 }
@@ -511,10 +513,17 @@ namespace Luminosity.IO
         //Brady: Added if statement to determine physics of launch. For the time being, the beginCarJump variable for carspeed is simply the car magnitude divided by 5.
         public void ExitVehicle()
         {
-            //SoundScript.PlaySound(GetComponent<AudioSource>(), "Jump");
+            var randomJump = Random.Range(0, 2);
 
             curVehicle.GetComponent<AudioSource>().Stop();
-            SoundScript.PlaySound(playerSource, "Jump");
+            if(randomJump == 0)
+            {
+                SoundScript.PlaySound(playerSource, "Jump");
+            }
+            else if (randomJump == 1)
+            {
+                //SoundScript.PlaySound(playerSource, "Jump2");
+            }
             //Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {

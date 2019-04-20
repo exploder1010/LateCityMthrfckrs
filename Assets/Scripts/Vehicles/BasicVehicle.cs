@@ -399,6 +399,7 @@ public class BasicVehicle : MonoBehaviour, IVehicle {
 
         if (!broken && prevPlayer == player == prevPlayer_2nd == prevPlayer_3rd && ((roofRoadHitBox != null && roofRoadHitBox.collidersCount() > 0) || vcheck1 || vcheck2 || vcheck3 ))
         {
+                //SoundScript.PlaySound(GameObject.Find("Player Source").GetComponent<AudioSource>(), "Car Crash");
 
                 //Debug.Log("Major Crash on Late City Highway");
                 broken = true;
