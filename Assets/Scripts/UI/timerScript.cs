@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class timerScript : MonoBehaviour {
 
@@ -74,6 +75,10 @@ public class timerScript : MonoBehaviour {
     public void setWin()
     {
         timePreview.text = timeRemaining.ToString();
+        if (timeRemaining > PlayerPrefs.GetFloat("BestTime " + SceneManager.GetActiveScene().name))
+        {
+            PlayerPrefs.SetFloat("BestTime " + SceneManager.GetActiveScene().name, timeRemaining);
+        }
         win = true;
     }
     public void setGame()

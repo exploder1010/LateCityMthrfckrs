@@ -13,6 +13,23 @@ public class LevelselectScript : MonoBehaviour {
     //Added changes to Title for level preview.
     public Text Title;
 
+    public void Start()
+    {
+        LoadTimes();
+    }
+
+    public void LoadTimes()
+    {
+        print("Loading times");
+        GameObject[] levels;
+        levels = GameObject.FindGameObjectsWithTag("Level");
+        foreach(GameObject level in levels)
+        {
+            level.transform.Find("BestTime").GetComponent<Text>().text = PlayerPrefs.GetFloat("BestTime " + "Level_" + level.name).ToString();
+            print("BestTime " + "Level_" + level.name);
+        }
+    }
+
     public void SelectLevel(GameObject thisLevel)
     {
         selectedLevel = thisLevel.name;
