@@ -10,11 +10,13 @@ namespace Luminosity.IO
 
         private GameObject MusicSource;
         public Text SongTitle;
+        public Slider MusicProg;
 
         // Use this for initialization
         void Start()
         {
             MusicSource = GameObject.Find("Music Source");
+            MusicProg.minValue = 0;
         }
 
         // Update is called once per frame
@@ -23,6 +25,8 @@ namespace Luminosity.IO
             if (MusicSource.GetComponent<AudioSource>().isPlaying)
             {
                 SongTitle.text = (MusicSource.GetComponent<MusicShuffler>().TrackNum + ".  " + MusicSource.GetComponent<AudioSource>().clip.name);
+                MusicProg.maxValue = MusicSource.GetComponent<AudioSource>().clip.length;
+                MusicProg.value = MusicSource.GetComponent<AudioSource>().time;
             }
         }
     }
