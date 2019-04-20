@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicSelection : MonoBehaviour
+namespace Luminosity.IO
 {
-    GameObject Audio;
-
-    void Start ()
+    public class MusicSelection : MonoBehaviour
     {
-        Audio = GameObject.Find("Music Source");
-    }
+        GameObject Audio;
 
-    public void BeginSelection(int SongChoice)
-    {
-        Audio.GetComponent<MusicShuffler>().SelectSong(SongChoice);
+        void Start()
+        {
+            Audio = GameObject.Find("Music Source");
+        }
+
+        public void BeginSelection(int SongChoice)
+        {
+            Audio.GetComponent<MusicShuffler>().SelectSong(SongChoice);
+        }
     }
 }
