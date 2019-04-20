@@ -19,7 +19,7 @@ public class PistonTriggered : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Vehicle") || other.gameObject.layer == LayerMask.NameToLayer("Player") && activated == false)
+        if ((other.gameObject.layer == LayerMask.NameToLayer("Vehicle") || other.gameObject.layer == LayerMask.NameToLayer("Rider")) && activated == false)
         {
             moving = true;
             activated = true;
