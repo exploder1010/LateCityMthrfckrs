@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 4574241946485574}
   - component: {fileID: 33331170686600158}
   - component: {fileID: 23544505620777218}
+  - component: {fileID: 64026468038729014}
   m_Layer: 0
   m_Name: trafficLight_Go
   m_TagString: Untagged
@@ -632,8 +633,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1846225282706366}
-  m_LocalRotation: {x: -0.020869978, y: -0.70679885, z: -0.7067986, w: 0.020870117}
-  m_LocalPosition: {x: 528.5, y: -1.7, z: 463}
+  m_LocalRotation: {x: -0.46923193, y: -0.5289816, z: -0.5289814, w: 0.46923187}
+  m_LocalPosition: {x: -25.63, y: -6.89, z: 129.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4742811275349248}
@@ -643,7 +644,7 @@ Transform:
   - {fileID: 4642171893044028}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -176.617}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -96.851006}
 --- !u!4 &4582249906629488
 Transform:
   m_ObjectHideFlags: 1
@@ -1007,6 +1008,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1150235638788872}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &64026468038729014
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1846225282706366}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 3d7f240ed3ea7c443bdae5d854415084, type: 3}
 --- !u!65 &65463591798430208
 BoxCollider:
   m_ObjectHideFlags: 1
