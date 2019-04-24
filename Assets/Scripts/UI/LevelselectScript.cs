@@ -37,10 +37,10 @@ public class LevelselectScript : MonoBehaviour {
 
     private void HideLevels()
     {
-        Bravura.SetActive(false);
+        Bravura.SetActive(true);
         BreezyStreet.SetActive(true);
-        MachinationWay.SetActive(false);
-        WallStreet.SetActive(false);
+        MachinationWay.SetActive(true);
+        WallStreet.SetActive(true);
     }
 
     public void SelectLevel(GameObject thisLevel)
