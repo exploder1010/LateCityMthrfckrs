@@ -443,7 +443,6 @@ namespace Luminosity.IO
             {
 
                 comboBS.comboEnd(comboMultiplier);
-                SoundScript.PlaySound(playerSource, "Combo Cashout");  
             }
             comboMultiplier = 0;
             comboTimer = 0;

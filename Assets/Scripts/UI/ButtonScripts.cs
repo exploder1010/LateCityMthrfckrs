@@ -21,6 +21,8 @@ public class ButtonScripts : MonoBehaviour {
     public Text bonusPrefab;
     public int scoreMultiplier = 1000;
 
+    AudioSource playerSource;
+
 	// Use this for initialization
 	void Start () {
         if(comboUI)
@@ -157,6 +159,11 @@ public class ButtonScripts : MonoBehaviour {
             bonustext.transform.SetParent(this.transform, false);
             bonustext.fontSize = (int)(30f * (1f + (multiplier * 0.3f)));
             bonustext.text = "TIME EXTENDED!!! " + (multiplier).ToString() + "s";
+
+            if(playerSource == null)
+                playerSource = GameObject.Find("Player Source").GetComponent<AudioSource>();
+            SoundScript.PlaySound(playerSource, "Combo Cashout");
+
             //comboUI.AddComponent<TextFade>();
             //comboUI.GetComponent<TextFade>().CanvasGroup = true;
         }
