@@ -14,8 +14,8 @@ public class timerScript : MonoBehaviour {
     public Text timePreview;
     public ButtonScripts buttonScripts;
 
-    bool spawning;
-    bool win;
+    public bool spawning;
+    public bool win;
 
     // Use this for initialization
     void Start()
