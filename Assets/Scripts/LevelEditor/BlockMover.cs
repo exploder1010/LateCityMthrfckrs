@@ -5,6 +5,7 @@ using UnityEngine;
 public class BlockMover : MonoBehaviour {
 
     public Vector3 speed;
+    public timerScript timeScript;
 
 	// Use this for initialization
 	void Start () {
@@ -13,6 +14,9 @@ public class BlockMover : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position += speed * Time.deltaTime;
+        if (timeScript.spawning == false)
+        {
+            transform.position += speed * Time.deltaTime;
+        }
 	}
 }

@@ -446,7 +446,6 @@ namespace Luminosity.IO
             }
             comboMultiplier = 0;
             comboTimer = 0;
-            //SoundScript.PlaySound(playerSource, "Combo Cashout");
         }
 
         public void EnterVehicle(BasicVehicle newVehicle)
@@ -467,7 +466,7 @@ namespace Luminosity.IO
                 {
                     if (comboBS)
                         comboBS.comboStart();
-                        //SoundScript.PlaySound(playerSource, "Combo Add");
+                    //SoundScript.PlaySound(playerSource, "Combo Add");
                     comboMultiplier = 1;
                     comboTimer = comboTimeSet;
                 }
@@ -515,6 +514,8 @@ namespace Luminosity.IO
         {
             var randomJump = Random.Range(0, 2);
 
+
+            // Replace the sound clip string in the second case when someone finds a second jump sound
             curVehicle.GetComponent<AudioSource>().Stop();
             if(randomJump == 0)
             {
@@ -522,8 +523,10 @@ namespace Luminosity.IO
             }
             else if (randomJump == 1)
             {
-                //SoundScript.PlaySound(playerSource, "Jump2");
+                SoundScript.PlaySound(playerSource, "Jump");
             }
+
+
             //Debug.Log("EXIT CAR " + buttonLaunch);
             if (curState != PlayerState.Dead)
             {

@@ -12,10 +12,12 @@ public class AirRing : MonoBehaviour {
     public float animLength;
     public float timeRemaining;
     private bool done = false;
+    float StartScale;
 
     // Use this for initialization
     void Start () {
         timeRemaining = animLength;
+        StartScale = transform.localScale.x;
     }
 	
 	// Update is called once per frame
@@ -50,7 +52,8 @@ public class AirRing : MonoBehaviour {
         speed = 400f;
         this.gameObject.transform.SetParent(GameObject.Find("BR_Business_NickTestVariables(Clone)").transform);
         this.gameObject.transform.localPosition = Vector3.zero;
-        this.gameObject.transform.localScale -= new Vector3(1.5f, 1.5f, 1.5f);
+        float fraction_left = (timeRemaining / animLength);
+        this.gameObject.transform.localScale = fraction_left * StartScale * Vector3.one;
         //wait a bit and put above line in a loop. Exit loop and use next 2 lines
         timeRemaining -= Time.deltaTime;
         if (timeRemaining <= 0)
