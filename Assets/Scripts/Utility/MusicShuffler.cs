@@ -30,7 +30,7 @@ namespace Luminosity.IO
             {
                 print(TrackNum);
                 TrackNum -= 1;
-                if (TrackNum == 0)
+                if (TrackNum < 0)
                 {
                     TrackNum = 16;
                 }
@@ -42,7 +42,7 @@ namespace Luminosity.IO
             else if (InputManager.GetButtonDown("RadioForward"))
             {
                 TrackNum += 1;
-                if(TrackNum == 17)
+                if(TrackNum >= 17)
                 {
                     TrackNum = 0;
                 }
