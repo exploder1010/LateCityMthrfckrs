@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using Steamworks;
 
 public class LeaderboardScript : MonoBehaviour {
     public Transform leaderboardUI;
@@ -13,12 +14,20 @@ public class LeaderboardScript : MonoBehaviour {
    
     public void SavetoDictionary()
     {
-        if (namePrompt.text != "")
-            StartCoroutine(SQL_Insert());
+        if (namePrompt.text != "") { }
+            //StartCoroutine(SQL_Insert());
     }
 
     public void ShowLeaderboard()
     {
+        if (SteamManager.Initialized)
+        {
+            namePrompt.text = SteamFriends.GetPersonaName();
+        }
+        else
+        {
+            namePrompt.text = "DefaultPlayer";
+        }
         string mapName = SceneManager.GetActiveScene().name;
         StartCoroutine(SQL_GetScores(mapName.Replace(" ", "_")));
         transform.Find("Leaderboard").Find("Title").GetComponent<Text>().text = mapName.Replace("Level_", "");
