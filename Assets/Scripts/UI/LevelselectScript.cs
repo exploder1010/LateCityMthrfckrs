@@ -41,10 +41,10 @@ public class LevelselectScript : MonoBehaviour {
         {
             Bravura.SetActive(false);
         }
-        if (BreezyStreet)
-        {
-            BreezyStreet.SetActive(false);
-        }
+        //if (BreezyStreet)
+        //{
+        //    BreezyStreet.SetActive(false);
+        //}
         if (MachinationWay)
         {
             MachinationWay.SetActive(false);

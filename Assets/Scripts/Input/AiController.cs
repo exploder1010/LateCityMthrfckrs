@@ -139,7 +139,7 @@ public class AiController : MonoBehaviour {
 
                         //lr movement based on waypoints
                         Vector3 target = Vector3.zero;
-                        if (curLBIQueue != null && curLBIQueue.Count > curWaypoint)
+                        if (curLBIQueue != null && curLBIQueue.Count > curWaypoint && curLBIQueue[curWaypoint] != null)
                         {
                             target = curLBIQueue[curWaypoint].position;
                             Vector3 targetDir = (target - transform.position);
