@@ -14,8 +14,10 @@ public class LeaderboardScript : MonoBehaviour {
    
     public void SavetoDictionary()
     {
-        if (namePrompt.text != "") { }
-            //StartCoroutine(SQL_Insert());
+        if (namePrompt.text != "")
+        {
+            StartCoroutine(SQL_Insert());
+        }
     }
 
     public void ShowLeaderboard()
