@@ -25,7 +25,9 @@ public class ButtonScripts : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if(comboUI)
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        if (comboUI)
         {
             comboUI.SetActive(false);
         }
